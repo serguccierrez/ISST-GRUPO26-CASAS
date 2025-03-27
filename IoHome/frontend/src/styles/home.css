@@ -1,0 +1,39 @@
+.home-container {
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .home-container h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .home-container p {
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .home-container button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 15px;
+    background-color: #007ac1;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .home-container button:hover {
+    background-color: #005b91;
+  }
+  
