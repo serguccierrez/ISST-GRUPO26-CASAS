@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUsuario, loginPropietario } from "../services/authService";
 
 const LoginForm = ({ tipo }) => {
+  const navigate = useNavigate();
   const [correoElectronico, setCorreo] = useState("");
   const [tokenUsuario, setTokenUsuario] = useState("");
   const [password, setPassword] = useState("");
@@ -12,9 +14,11 @@ const LoginForm = ({ tipo }) => {
       if (tipo === "usuario") {
         const res = await loginUsuario({ correoElectronico, tokenUsuario });
         alert("Bienvenido usuario: " + res.nombre);
+        navigate("/inicio-usuario"); // 👈 Redirige a la home del usuario
       } else {
         const res = await loginPropietario({ correoElectronico, password });
         alert("Bienvenido propietario: " + res.nombre);
+        navigate("/inicio-propietario"); // 👈 Redirige a la home del propietario
       }
     } catch (err) {
       alert("Error: " + err.message);
