@@ -1,0 +1,54 @@
+package com.example.backend.service;
+
+import com.example.backend.model.Propietario;
+import com.example.backend.model.Usuario;
+import com.example.backend.repository.PropietarioRepository;
+import com.example.backend.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class AuthService {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public Usuario registrarUsuario(Usuario usuario) {
+        // Comprobamos si ya existe alguien con ese correo
+        if (usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico()).isPresent()) {
+            throw new IllegalArgumentException("El correo ya está registrado");
+        }
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario login(String correoElectronico, int tokenUsuario) {
+        Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
+        if (usuario.isPresent() && usuario.get().getTokenUsuario() == tokenUsuario) {
+            return usuario.get();
+        } else {
+            throw new IllegalArgumentException("Credenciales inválidas");
+        }
+    }
+
+    @Autowired
+    private PropietarioRepository propietarioRepository;
+
+    public Propietario registrarPropietario(Propietario propietario) {
+        if (propietarioRepository.findByCorreoElectronico(propietario.getCorreoElectronico()).isPresent()) {
+            throw new IllegalArgumentException("El correo ya está registrado como propietario");
+        }
+        return propietarioRepository.save(propietario);
+    }
+
+    public Propietario loginPropietario(String correo, String password) {
+        Optional<Propietario> propietario = propietarioRepository.findByCorreoElectronico(correo);
+        if (propietario.isPresent() && propietario.get().getPassword().equals(password)) {
+            return propietario.get();
+        } else {
+            throw new IllegalArgumentException("Credenciales inválidas para propietario");
+        }
+    }
+
+}
