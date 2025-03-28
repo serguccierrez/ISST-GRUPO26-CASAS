@@ -1,13 +1,15 @@
 package com.example.backend.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.backend.model.Propietario;
 import com.example.backend.model.Usuario;
 import com.example.backend.repository.PropietarioRepository;
 import com.example.backend.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -50,5 +52,15 @@ public class AuthService {
             throw new IllegalArgumentException("Credenciales inválidas para propietario");
         }
     }
+
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    public List<Propietario> obtenerTodosLosPropietarios() {
+        return propietarioRepository.findAll();
+    }
+    
+    
 
 }
