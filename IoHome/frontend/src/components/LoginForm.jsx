@@ -13,12 +13,14 @@ const LoginForm = ({ tipo }) => {
     try {
       if (tipo === "usuario") {
         const res = await loginUsuario({ correoElectronico, tokenUsuario });
+        localStorage.setItem("usuario", JSON.stringify(res));
         alert("Bienvenido usuario: " + res.nombre);
-        navigate("/inicio-usuario"); // 👈 Redirige a la home del usuario
+        navigate("/inicio-usuario");
       } else {
         const res = await loginPropietario({ correoElectronico, password });
+        localStorage.setItem("propietario", JSON.stringify(res)); // ✅ Guardar
         alert("Bienvenido propietario: " + res.nombre);
-        navigate("/inicio-propietario"); // 👈 Redirige a la home del propietario
+        navigate("/inicio-propietario");
       }
     } catch (err) {
       alert("Error: " + err.message);

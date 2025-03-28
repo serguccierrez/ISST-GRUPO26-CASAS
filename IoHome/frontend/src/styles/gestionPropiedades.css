@@ -1,0 +1,55 @@
+.gestion-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 15px;
+  }
+  
+  .propiedad-card {
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .detalles ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .detalles li {
+    margin-bottom: 4px;
+  }
+  
+  .property-form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .property-form input, .property-form textarea {
+    margin: 5px 0;
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .property-form label {
+    margin-right: 10px;
+  }
+  
+  .property-form button {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
