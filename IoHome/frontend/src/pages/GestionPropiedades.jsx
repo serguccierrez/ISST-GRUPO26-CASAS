@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import RegistrarPropiedad from "../components/RegistrarPropiedad";
 import "../styles/gestionPropiedades.css";
+import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
+import { useNavigate } from "react-router-dom";
+
 
 const GestionPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
@@ -21,6 +25,10 @@ const GestionPropiedades = () => {
 
   return (
     <div className="gestion-container">
+       <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
+                <img src={logo} alt="Logo" className="logo" />
+                <h3>IoHome</h3>
+        </div>
       <h2>Mis propiedades</h2>
       {propiedades.map((p, index) => (
         <div key={p.id} className="propiedad-card">

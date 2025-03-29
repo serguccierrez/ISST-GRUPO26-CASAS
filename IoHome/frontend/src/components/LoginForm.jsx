@@ -18,7 +18,7 @@ const LoginForm = ({ tipo }) => {
         navigate("/inicio-usuario");
       } else {
         const res = await loginPropietario({ correoElectronico, password });
-        localStorage.setItem("propietario", JSON.stringify(res)); // ✅ Guardar
+        localStorage.setItem("propietario", JSON.stringify(res)); 
         alert("Bienvenido propietario: " + res.nombre);
         navigate("/inicio-propietario");
       }
