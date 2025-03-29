@@ -1,0 +1,106 @@
+.gestion-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #d0d7de; /* Gris claro */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar :hover {
+   cursor: pointer;
+}
+
+/* Tarjeta de propiedad */
+.propiedad-card {
+    border: none; /* Quitamos el borde gris */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;
+}
+
+.propiedad-card:hover {
+    transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+}
+
+/* Título de propiedad */
+.propiedad-card h3 {
+    font-size: 1.2rem;
+    color: #1d4ed8; /* Azul oscuro */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Lista de detalles */
+.detalles ul {
+    list-style-type: none; /* Quitamos los círculos */
+    padding-left: 0;
+}
+
+.detalles li {
+    margin-bottom: 6px;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.95rem;
+    color: #374151; /* Gris oscuro */
+}
+
+/* Agregar un icono tipo viñeta (círculo azul) */
+.detalles li::before {
+    content: "•";
+    color: #1d4ed8;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    margin-right: 8px; /* Espacio entre el icono y el texto */
+}
+
+/* Estilizar "Normas" */
+.normas {
+    font-weight: bold;
+    color: #d97706; /* Naranja oscuro */
+    margin-top: 10px;
+    display: block;
+    font-size: 0.95rem;
+}
+
+/* Formulario de nueva propiedad */
+.property-form {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.property-form input,
+.property-form textarea {
+    margin: 8px 0;
+    padding: 10px;
+    width: 96%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+/* Botón del formulario */
+.property-form button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #1d4ed8; /* Azul */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.property-form button:hover {
+    background-color: #153db2; /* Azul más oscuro */
+}

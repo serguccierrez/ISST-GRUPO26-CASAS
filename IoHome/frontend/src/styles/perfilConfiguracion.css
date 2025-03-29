@@ -1,0 +1,46 @@
+.perfil-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #d0d7de; /* Gris claro */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .perfil-card {
+    
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .perfil-form label {
+    display: block;
+    margin: 8px 0 4px;
+    font-weight: bold;
+  }
+  
+  .perfil-form input {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #1d4ed8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0245ff;
+  }
+  
