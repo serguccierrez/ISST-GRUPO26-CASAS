@@ -98,6 +98,56 @@ public ResponseEntity<List<Reserva>> obtenerReservasPorPropietario(@PathVariable
     return ResponseEntity.ok(reservas);
 }
 
+// Eliminar una reserva
+@DeleteMapping("/eliminar/{reservaId}")
+public ResponseEntity<Void> eliminarReserva(@PathVariable Long reservaId) {
+    try {
+        reservaService.eliminarReserva(reservaId);
+        return ResponseEntity.ok().build();
+    } catch (Exception e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+// Actualizar una reserva
+@PutMapping("/actualizar/{reservaId}")
+public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long reservaId, @RequestBody Reserva reserva) {
+    try {
+        Reserva reservaActualizada = reservaService.actualizarReserva(reservaId, reserva);
+        return ResponseEntity.ok(reservaActualizada);
+    } catch (Exception e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+// Actualizar una reserva
+@PutMapping("/actualizar/{usuarioId}/{propiedadId}/{reservaId}")
+public ResponseEntity<Reserva> actualizarReserva(
+    @PathVariable Long usuarioId,
+    @PathVariable Long propiedadId,
+    @PathVariable Long reservaId,
+    @RequestBody Reserva reservaActualizada) {
+    try {
+        Reserva reserva = reservaService.actualizarReserva(usuarioId, propiedadId, reservaId, reservaActualizada);
+        return ResponseEntity.ok(reserva);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(null);
+    }
+}
+
+// Obtener la última reserva activa de un usuario
+@GetMapping("/usuario/{usuarioId}/ultima-activa")
+public ResponseEntity<Reserva> obtenerUltimaReservaActiva(@PathVariable Long usuarioId) {
+    try {
+        Reserva reserva = reservaService.obtenerUltimaReservaActiva(usuarioId);
+        return ResponseEntity.ok(reserva);
+    } catch (Exception e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
+
 
 
 }

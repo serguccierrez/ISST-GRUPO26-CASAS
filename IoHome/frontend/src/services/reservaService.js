@@ -26,3 +26,28 @@ export const obtenerUsuarioPorCorreo = async (correo) => {
     if (!res.ok) throw new Error("Usuario no encontrado");
     return res.json();
 };
+
+// Eliminar una reserva
+export const eliminarReserva = async (reservaId) => {
+    await fetch(`${API_BASE}/eliminar/${reservaId}`, {
+        method: "DELETE",
+    });
+};
+
+
+// reservaService.js
+export const actualizarReserva = async (usuarioId, propiedadId, reservaId, reserva) => {
+    const res = await fetch(`${API_BASE}/actualizar/${usuarioId}/${propiedadId}/${reservaId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reserva),
+    });
+    if (!res.ok) throw new Error("Error al actualizar la reserva");
+    return res.json();
+};
+
+export const obtenerUltimaReservaActiva = async (usuarioId) => {
+    const res = await fetch(`http://localhost:8080/api/reservas/usuario/${usuarioId}/ultima-activa`);
+    if (!res.ok) throw new Error("No hay reservas activas");
+    return res.json();
+};

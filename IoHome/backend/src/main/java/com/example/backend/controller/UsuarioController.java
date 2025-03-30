@@ -24,5 +24,16 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Actualizar perfil del usuario
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioActualizado = usuarioService.actualizarUsuario(id, usuario);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 
