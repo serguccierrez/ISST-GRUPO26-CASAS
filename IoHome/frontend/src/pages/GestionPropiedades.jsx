@@ -3,6 +3,7 @@ import RegistrarPropiedad from "../components/RegistrarPropiedad";
 import "../styles/gestionPropiedades.css";
 import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
 import { useNavigate } from "react-router-dom";
+import WorkspaceInfo from "../components/workSpace";
 
 
 const GestionPropiedades = () => {
@@ -51,6 +52,8 @@ const GestionPropiedades = () => {
         </div>
       ))}
       <RegistrarPropiedad onPropertyCreated={handlePropertyCreated} />
+
+      <WorkspaceInfo />
     </div>
   );
 };
