@@ -12,3 +12,18 @@ export const obtenerPropiedades = async (propietarioId) => {
         throw err;
     }
 };
+export const eliminarPropiedad = async (id) => {
+    await fetch(`${API_BASE}/eliminar/${id}`, {
+        method: "DELETE",
+    });
+};
+
+export const actualizarPropiedad = async (id, propiedad) => {
+    const res = await fetch(`${API_BASE}/actualizar/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(propiedad),
+    });
+    if (!res.ok) throw new Error("Error al actualizar la propiedad");
+    return res.json();
+};

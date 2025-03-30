@@ -1,0 +1,43 @@
+/* cerraduras.css */
+.cerraduras-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f2f5f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.cerradura-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cerradura-info {
+    flex: 1;
+}
+
+.cerradura-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cerradura-actions button {
+    padding: 8px 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.cerradura-actions button:hover {
+    background: #2c82c9;
+}

@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import RegistrarPropiedad from "../components/RegistrarPropiedad";
+import ModificarPropiedad from "../components/ModificarPropiedad";
+import { obtenerPropiedades, eliminarPropiedad, actualizarPropiedad } from "../services/propiedadService";
 import "../styles/gestionPropiedades.css";
-import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
+import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-
 
 const GestionPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);
+  const [propiedadEdit, setPropiedadEdit] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
     if (propietario?.id) {
-      fetch(`http://localhost:8080/api/propiedades/propietario/${propietario.id}`)
-        .then((res) => res.json())
+      obtenerPropiedades(propietario.id)
         .then(setPropiedades)
         .catch((err) => console.error("Error al obtener propiedades", err));
     }
@@ -23,12 +24,35 @@ const GestionPropiedades = () => {
     setPropiedades((prev) => [...prev, newProperty]);
   };
 
+  const handleEliminar = async (id) => {
+    try {
+      await eliminarPropiedad(id);
+      setPropiedades((prev) => prev.filter((p) => p.id !== id));
+      //alert("Propiedad eliminada correctamente");
+    } catch (err) {
+      alert("Error al eliminar la propiedad: " + err.message);
+    }
+  };
+
+  const handleUpdate = async (propiedad) => {
+    try {
+      await actualizarPropiedad(propiedad.id, propiedad);
+      setPropiedades((prev) =>
+        prev.map((p) => (p.id === propiedad.id ? propiedad : p))
+      );
+      setPropiedadEdit(null);
+      //alert("Propiedad actualizada correctamente");
+    } catch (err) {
+      alert("Error al actualizar la propiedad: " + err.message);
+    }
+  };
+
   return (
     <div className="gestion-container">
-       <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
-                <img src={logo} alt="Logo" className="logo" />
-                <h3>IoHome</h3>
-        </div>
+      <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
+        <img src={logo} alt="Logo" className="logo" />
+        <h3>IoHome</h3>
+      </div>
       <h2>Mis propiedades</h2>
       {propiedades.map((p, index) => (
         <div key={p.id} className="propiedad-card">
@@ -47,9 +71,20 @@ const GestionPropiedades = () => {
               {p.garaje && <li>Garaje</li>}
             </ul>
             <p><strong>Normas:</strong> {p.normas || "No especificadas"}</p>
+            <button onClick={() => handleEliminar(p.id)}>Eliminar</button>
+            <button onClick={() => setPropiedadEdit(p)}>Modificar</button>
           </div>
         </div>
       ))}
+
+      {propiedadEdit && (
+        <ModificarPropiedad
+          propiedad={propiedadEdit}
+          onUpdate={handleUpdate}
+          onCancel={() => setPropiedadEdit(null)}
+        />
+      )}
+
       <RegistrarPropiedad onPropertyCreated={handlePropertyCreated} />
     </div>
   );

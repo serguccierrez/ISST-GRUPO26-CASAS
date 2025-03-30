@@ -1,7 +1,7 @@
 .home-container {
-    max-width: 42px;
-    margin: 50px auto;
-    padding: 30px;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
