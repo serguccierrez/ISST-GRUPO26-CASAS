@@ -2,9 +2,12 @@
 import { useState, useEffect } from "react";
 import { obtenerPropiedades } from "../services/propiedadService";
 import "../styles/cerraduras.css";
+import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Cerraduras = () => {
     const [propiedades, setPropiedades] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const propietario = JSON.parse(localStorage.getItem("propietario"));
@@ -25,6 +28,10 @@ const Cerraduras = () => {
 
     return (
         <div className="cerraduras-container">
+            <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
+        <img src={logo} alt="Logo" className="logo" />
+        <h3>IoHome</h3>
+      </div>
             <h2>Cerraduras</h2>
             {propiedades.map((propiedad) => (
                 <div key={propiedad.id} className="cerradura-card">
