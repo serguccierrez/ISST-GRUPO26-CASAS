@@ -95,4 +95,47 @@ public Reserva crearReserva(Long usuarioId, Long propiedadId, Reserva reserva) {
     return reservas;
 }
 
+// Eliminar una reserva
+public void eliminarReserva(Long reservaId) {
+    reservaRepository.deleteById(reservaId);
+}
+
+// Actualizar una reserva
+public Reserva actualizarReserva(Long reservaId, Reserva reservaActualizada) {
+    return reservaRepository.findById(reservaId)
+            .map(reserva -> {
+                reserva.setFechaInicio(reservaActualizada.getFechaInicio());
+                reserva.setFechaFin(reservaActualizada.getFechaFin());
+                reserva.setObservaciones(reservaActualizada.getObservaciones());
+                return reservaRepository.save(reserva);
+            })
+            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+}
+
+public Reserva actualizarReserva(Long usuarioId, Long propiedadId, Long reservaId, Reserva reservaActualizada) {
+    Usuario usuario = usuarioRepository.findById(usuarioId)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    Propiedad propiedad = propiedadRepository.findById(propiedadId)
+        .orElseThrow(() -> new RuntimeException("Propiedad no encontrada"));
+    Reserva reserva = reservaRepository.findById(reservaId)
+        .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+    reserva.setUsuario(usuario);
+    reserva.setPropiedad(propiedad);
+    reserva.setFechaInicio(reservaActualizada.getFechaInicio());
+    reserva.setFechaFin(reservaActualizada.getFechaFin());
+    reserva.setObservaciones(reservaActualizada.getObservaciones());
+
+    return reservaRepository.save(reserva);
+}
+
+
+public Reserva obtenerUltimaReservaActiva(Long usuarioId) {
+    List<Reserva> reservas = reservaRepository.findByUsuarioIdAndActivaTrue(usuarioId);
+    if (reservas.isEmpty()) {
+        throw new RuntimeException("No hay reservas activas");
+    }
+    return reservas.get(reservas.size() - 1); // Devuelve la última reserva activa
+}
+
 }

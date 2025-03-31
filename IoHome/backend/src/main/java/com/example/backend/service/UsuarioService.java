@@ -15,4 +15,16 @@ public class UsuarioService {
     public Usuario obtenerUsuarioPorCorreo(String correoElectronico) {
         return usuarioRepository.findByCorreoElectronico(correoElectronico).orElse(null);
     }
+
+    // Actualizar perfil del usuario
+    public Usuario actualizarUsuario(Long id, Usuario usuario) {
+        return usuarioRepository.findById(id).map(existingUser -> {
+            existingUser.setNombre(usuario.getNombre());
+            existingUser.setApellidos(usuario.getApellidos());
+            existingUser.setDni(usuario.getDni());
+            existingUser.setCorreoElectronico(usuario.getCorreoElectronico());
+            existingUser.setTelefono(usuario.getTelefono());
+            return usuarioRepository.save(existingUser);
+        }).orElse(null);
+    }
 }
