@@ -1,9 +1,11 @@
 package com.example.backend.controller;
 
-
-
 import com.seam.api.types.*;
+import com.example.backend.model.Cerradura;
+import com.example.backend.model.Propiedad;
 import com.example.backend.service.SeamService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +48,20 @@ public class SeamController {
         return seamService.listDevices();
     }
 
+    
+     // Crear un dispositivo en la base de datos
+    @PostMapping("/device/crear/{propietarioId}")
+    public ResponseEntity<Cerradura> crearCerradura(@PathVariable Long propietarioId, @RequestBody Cerradura cerradura) {
+        return ResponseEntity.ok(seamService.crearCerradura(propietarioId, cerradura));
+    }
+
+    // Obtener dispositivos de un propietario
+    @GetMapping("/device/propietario/{propietarioId}")
+    public ResponseEntity<List<Cerradura>> obtenerCerradurasDePropietario(@PathVariable Long propietarioId) {
+        return ResponseEntity.ok(seamService.obtenerCerradurasDePropietario(propietarioId));
+    }
+        
+
     // Bloquear una cerradura
     @PostMapping("/lock/{deviceId}")
     public String lockDevice(@PathVariable String deviceId) {
@@ -60,4 +76,3 @@ public class SeamController {
         return "Cerradura desbloqueada con éxito";
     }
 }
-
