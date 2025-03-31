@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SeamConnect = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [webView, setWebView] = useState(null);
   const [webviewId, setWebviewId] = useState(null);
@@ -38,6 +40,12 @@ const SeamConnect = () => {
       alert("Error: " + err.message);
     }
   };
+
+ // Modificación del handleCerraduraClick
+const handleCerraduraClick = (device) => {
+  navigate(`/cerradura/${device.device_id}`, { state: { device } }); // Pasamos el dispositivo completo a la ruta de detalles
+};
+
 
   const getUserDevices = async () => {
     try {
@@ -139,7 +147,11 @@ const SeamConnect = () => {
       <div className="device-cards-container">
         {userDevices.length > 0 &&
           userDevices.map((device) => (
-            <div key={device.device_id} className="device-card">
+            <div
+            key={device.device_id}
+            className="device-card"
+            onClick={() => handleCerraduraClick(device)} // Hacer clic redirige al detalle
+          >
               <h3>{device.nombre || "Sin nombre"}</h3>
               <p>
                 <strong>Tipo:</strong> {device.tipo}

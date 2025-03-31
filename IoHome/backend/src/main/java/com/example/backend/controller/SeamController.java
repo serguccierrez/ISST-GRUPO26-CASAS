@@ -62,17 +62,15 @@ public class SeamController {
     }
         
 
-    // Bloquear una cerradura
     @PostMapping("/lock/{deviceId}")
-    public String lockDevice(@PathVariable String deviceId) {
-        seamService.lockDoor(deviceId);
-        return "Cerradura bloqueada con éxito";
+    public ResponseEntity<?> lockDevice(@PathVariable String deviceId) {
+        ActionAttempt response = seamService.lockDoor(deviceId);
+        return ResponseEntity.ok(response);
     }
-
-    // Desbloquear una cerradura
+    
     @PostMapping("/unlock/{deviceId}")
-    public String unlockDevice(@PathVariable String deviceId) {
-        seamService.unlockDoor(deviceId);
-        return "Cerradura desbloqueada con éxito";
+    public ResponseEntity<?> unlockDevice(@PathVariable String deviceId) {
+        ActionAttempt response = seamService.unlockDoor(deviceId);
+        return ResponseEntity.ok(response);
     }
 }

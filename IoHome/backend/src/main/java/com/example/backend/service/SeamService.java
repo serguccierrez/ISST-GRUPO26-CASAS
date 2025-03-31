@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.seam.api.types.ActionAttempt;
 import com.example.backend.model.Cerradura;
 import com.example.backend.model.Propietario;
 import com.example.backend.repository.CerraduraRepository;
@@ -9,6 +10,7 @@ import com.seam.api.types.*;
 import com.seam.api.resources.locks.requests.*;
 import com.seam.api.resources.connectwebviews.requests.ConnectWebviewsCreateRequest;
 import com.seam.api.resources.devices.requests.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,16 +87,14 @@ public class SeamService {
         return cerraduraRepository.findByPropietario(propietario);
     }
 
-    // Bloquear una cerradura
-    public void lockDoor(String deviceId) {
-        seam.locks().lockDoor(LocksLockDoorRequest.builder()
+    public ActionAttempt lockDoor(String deviceId) {
+        return seam.locks().lockDoor(LocksLockDoorRequest.builder()
                 .deviceId(deviceId)
                 .build());
     }
-
-    // Desbloquear una cerradura
-    public void unlockDoor(String deviceId) {
-        seam.locks().unlockDoor(LocksUnlockDoorRequest.builder()
+    
+    public ActionAttempt unlockDoor(String deviceId) {
+        return seam.locks().unlockDoor(LocksUnlockDoorRequest.builder()
                 .deviceId(deviceId)
                 .build());
     }

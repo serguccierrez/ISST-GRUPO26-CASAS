@@ -6,6 +6,7 @@ import GestionPropiedades from "./pages/GestionPropiedades";
 import PerfilConfiguracion from "./pages/PerfilConfiguracion";
 import GestionReservas from "./pages/GestionReservas"; 
 import MisCerraduras from "./pages/MisCerraduras";
+import UnaCerradura from "./pages/UnaCerradura";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/propietario/perfil" element={<PerfilConfiguracion />} />
         <Route path="/propietario/reservas" element={<GestionReservas />} /> 
         <Route path="/propietario/cerraduras" element={<MisCerraduras />} />
+        <Route path="/cerradura/:id" element={<UnaCerradura />} />
       </Routes>
     </Router>
   );
