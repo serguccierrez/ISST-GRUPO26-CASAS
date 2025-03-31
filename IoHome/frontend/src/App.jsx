@@ -5,6 +5,7 @@ import OwnerHome from "./pages/OwnerHome";
 import GestionPropiedades from "./pages/GestionPropiedades";
 import PerfilConfiguracion from "./pages/PerfilConfiguracion";
 import GestionReservas from "./pages/GestionReservas"; 
+import MisCerraduras from "./pages/MisCerraduras";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/inicio-propietario" element={<OwnerHome />} />
         <Route path="/propietario/propiedades" element={<GestionPropiedades />} />
         <Route path="/propietario/perfil" element={<PerfilConfiguracion />} />
-        <Route path="/propietario/reservas" element={<GestionReservas />} /> {}
+        <Route path="/propietario/reservas" element={<GestionReservas />} /> 
+        <Route path="/propietario/cerraduras" element={<MisCerraduras />} />
       </Routes>
     </Router>
   );

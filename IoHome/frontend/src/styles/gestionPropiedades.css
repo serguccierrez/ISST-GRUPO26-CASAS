@@ -7,8 +7,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.navbar :hover {
-   cursor: pointer;
+.logo:hover, #nombre:hover {
+    cursor: pointer;
 }
 
 /* Tarjeta de propiedad */

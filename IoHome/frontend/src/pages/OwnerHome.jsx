@@ -66,6 +66,12 @@ const OwnerHome = () => {
             <span>Gestión de propiedades</span>
             <button onClick={() => navigate("/propietario/propiedades")}>GO</button>
           </div>
+
+          <div className="card">
+            <span>Mis cerraduras</span>
+            <button onClick={() => navigate("/propietario/cerraduras")}>GO</button>
+          </div>
+
         </div>
       </section>
 

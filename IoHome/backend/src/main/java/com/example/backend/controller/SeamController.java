@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/seam")
+@CrossOrigin(origins = "http://localhost:5173") // permite llamadas desde React
 public class SeamController {
 
     private final SeamService seamService;
@@ -22,6 +23,21 @@ public class SeamController {
     @GetMapping("/workspace")
     public Workspace getWorkspace() {
         return seamService.getWorkspace();
+    }
+
+    @GetMapping("/accounts")
+    public List<ConnectedAccount> listConnectedAccounts() {
+        return seamService.listConnectedAccounts();
+    }
+
+    @GetMapping("/webview")
+    public ConnectWebview createConnectWebview() {
+        return seamService.createConnectWebview();
+    }
+
+    @GetMapping("/webview-list")
+    public List<ConnectWebview> listWebViews() {
+        return seamService.listWebViews();
     }
 
     // Listar cerraduras disponibles

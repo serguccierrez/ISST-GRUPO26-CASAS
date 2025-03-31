@@ -3,7 +3,7 @@ import RegistrarPropiedad from "../components/RegistrarPropiedad";
 import "../styles/gestionPropiedades.css";
 import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
 import { useNavigate } from "react-router-dom";
-import WorkspaceInfo from "../components/workSpace";
+import WorkspaceInfo from "../components/SeamConnect";
 
 
 const GestionPropiedades = () => {
@@ -26,9 +26,9 @@ const GestionPropiedades = () => {
 
   return (
     <div className="gestion-container">
-       <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
-                <img src={logo} alt="Logo" className="logo" />
-                <h3>IoHome</h3>
+       <div className="navbar" >
+                <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/inicio-propietario")}/>
+                <h3 id="nombre" onClick={() => navigate("/inicio-propietario")} >IoHome</h3>
         </div>
       <h2>Mis propiedades</h2>
       {propiedades.map((p, index) => (
@@ -52,8 +52,6 @@ const GestionPropiedades = () => {
         </div>
       ))}
       <RegistrarPropiedad onPropertyCreated={handlePropertyCreated} />
-
-      <WorkspaceInfo />
     </div>
   );
 };
