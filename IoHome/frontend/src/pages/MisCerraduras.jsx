@@ -14,7 +14,7 @@ return (
                 <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>IoHome</h3>
             </div>
             <h2>Mis cerraduras</h2>
-            <SeamConnect />
+            <SeamConnect/>
         </div>
         
     </>

@@ -1,0 +1,110 @@
+/* Contenedor principal con centrado del texto */
+.lock-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #d0d7de; /* Gris claro */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center; /* Centra el texto dentro del contenedor */
+  }
+  
+  /* Estilo de los encabezados */
+  .lock-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .lock-container h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .lock-container p {
+    font-size: 16px;
+    margin: 10px 0; /* Aumenta el espacio entre los párrafos */
+  }
+  
+  .lock-status {
+    font-weight: bold;
+    color: #153db2; /* Azul oscuro */
+  }
+  
+  /* Contenedor de los sliders */
+  .lock-slider-container {
+    margin-top: 20px;
+    text-align: center; /* Asegura que los sliders estén centrados */
+  }
+  
+  /* Estilo de los sliders */
+  .lock-slider {
+    -webkit-appearance: none;
+    width: 80%; /* Ajusta el ancho del slider para que se vea bien centrado */
+    height: 8px;
+    border-radius: 5px;
+    background: #b0c4de; /* Gris azulado */
+    outline: none;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    margin: 0 auto; /* Centra el slider */
+  }
+  
+  .lock-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #153db2; /* Azul oscuro */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .lock-slider::-webkit-slider-thumb:active {
+    background: #1c4fa1; /* Azul más oscuro */
+  }
+  
+  .lock-slider-label {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+  }
+  
+  /* Efecto al pasar el mouse por los sliders */
+  .lock-slider:hover {
+    background: #a0b3c1;
+  }
+  
+  .lock-slider::-webkit-slider-thumb:hover {
+    background: #1c4fa1; /* Azul más oscuro */
+  }
+  
+  /* Card con dispositivo */
+  .device-card {
+    border: none; /* Quitamos el borde gris */
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;
+    margin: 20px auto;
+    text-align: center; /* Centra el texto dentro de la tarjeta */
+  }
+  
+  .device-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .device-card p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  .device-card:hover {
+    transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+  }
+  
