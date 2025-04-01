@@ -2,8 +2,6 @@ package com.example.backend.controller;
 
 import com.example.backend.model.Propietario;
 import com.example.backend.model.Reserva;
-import com.example.backend.model.Usuario;
-import com.example.backend.repository.UsuarioRepository;
 import com.example.backend.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
