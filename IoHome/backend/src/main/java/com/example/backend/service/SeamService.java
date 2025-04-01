@@ -1,10 +1,11 @@
 package com.example.backend.service;
 
-import com.seam.api.types.ActionAttempt;
 import com.example.backend.model.Cerradura;
+import com.example.backend.model.Propiedad;
 import com.example.backend.model.Propietario;
 import com.example.backend.repository.CerraduraRepository;
 import com.example.backend.repository.PropietarioRepository;
+import com.example.backend.repository.PropiedadRepository;
 import com.seam.api.Seam;
 import com.seam.api.types.*;
 import com.seam.api.resources.locks.requests.*;
@@ -27,6 +28,8 @@ public class SeamService {
     @Autowired
     private PropietarioRepository propietarioRepository;
 
+   @Autowired
+    private PropiedadRepository propiedadRepository; // Asegúrate de inyectar PropiedadRepository
     private final Seam seam;
 
     public SeamService(@Value("${seam.api.key}") String apiKey) {
@@ -77,6 +80,24 @@ public class SeamService {
         Propietario propietario = propietarioRepository.findById(propietarioId)
                 .orElseThrow(() -> new IllegalArgumentException("Propietario no encontrado"));
         cerradura.setPropietario(propietario);
+        return cerraduraRepository.save(cerradura);
+    }
+
+ 
+    
+    public Cerradura asignarPropiedadACerradura(String cerraduraId, Long propiedadId) {
+        // Buscar la cerradura por ID
+        Cerradura cerradura = cerraduraRepository.findById(cerraduraId)
+                .orElseThrow(() -> new IllegalArgumentException("Cerradura con ID " + cerraduraId + " no encontrada"));
+    
+        // Buscar la propiedad por ID
+        Propiedad propiedad = propiedadRepository.findById(propiedadId) // Usar propiedadRepository en lugar de PropiedadRepository
+                .orElseThrow(() -> new IllegalArgumentException("Propiedad con ID " + propiedadId + " no encontrada"));
+    
+        // Asignar la propiedad a la cerradura
+        cerradura.setPropiedad(propiedad);
+    
+        // Guardar la cerradura actualizada
         return cerraduraRepository.save(cerradura);
     }
         
