@@ -46,7 +46,6 @@ IoHome-Backend/
 Contiene los controladores REST que exponen los endpoints de la API:
 
 - **`AuthController.java`** → Maneja la autenticación y generación de tokens JWT.
-- **`GoogleController.java`** → Manejo del google calendar.
 - **`PropiedadController.java`** → Gestión de alojamientos.
 - **`ReservaController.java`** → Manejo de reservas y sincronización con Google Calendar.
 - **`CerraduraController.java`** → Control de accesos mediante cerraduras inteligentes.
@@ -98,9 +97,6 @@ Modelos de datos utilizados en la aplicación:
  mvn spring-boot:run
 ```
 
----
-
-
 
 ---
 
@@ -108,7 +104,8 @@ Modelos de datos utilizados en la aplicación:
 
 📩 **Autor:** [Segio Gutiérrez, Valeria González, Álvaro Tagarro, Alejandro Cerezo, Patricia Rodriguez]
 
-
+<br><br>
+<br><br>
 
 **ENGLISH VERSION**
 
@@ -158,7 +155,6 @@ IoHome-Backend/
 Contains the REST controllers that expose the API endpoints:
 
 - **`AuthController.java`** → Handles authentication and JWT token generation.
-- **`GoogleController.java`** → Manages Google Calendar integration.
 - **`PropiedadController.java`** → Manages accommodations.
 - **`ReservaController.java`** → Handles reservations and Google Calendar synchronization.
 - **`CerraduraController.java`** → Manages access control via smart locks.
