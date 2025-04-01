@@ -15,6 +15,10 @@ const AuthSwitcher = () => {
     setVista("login");
   };
 
+  const redirigirHome = () => {
+    window.location.href = "http://localhost:3000/";
+  };
+
   return (
   
     <div className="auth-container">
@@ -26,6 +30,10 @@ const AuthSwitcher = () => {
         <h2>¡Bienvenido!</h2>
       </div>
       
+      <div className="home-button">
+        <button onClick={redirigirHome}>🌐  Accede a nuestra Página Web</button>
+      </div>
+
     
       <div className="switch-buttons">
         <button onClick={() => cambiarTipo("usuario")}>👤 Huésped</button>
