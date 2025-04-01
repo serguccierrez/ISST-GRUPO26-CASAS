@@ -3,9 +3,11 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/userHome.css";
 import logo from "../assets/logo.png";
+import CerraduraUsuario from "../components/CerraduraUsuario"; // Asegúrate de la ruta correcta
 
 const UserHome = () => {
   const [nombre, setNombre] = useState("");
+  const [usuarioId, setUsuarioId] = useState(null);
   const navigate = useNavigate();
   const servicesRef = useRef(null);
 
@@ -14,6 +16,7 @@ const UserHome = () => {
     if (data) {
       const usuario = JSON.parse(data);
       setNombre(usuario.nombre);
+      setUsuarioId(usuario.id); // Guardamos el ID del usuario
     }
   }, []);
 
@@ -46,26 +49,27 @@ const UserHome = () => {
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
       
 
-      <div className="lock-buttons">
-          <button className="open-lock">Abrir Cerradura</button>
-          <button className="close-lock">Cerrar Cerradura</button>
+
+        <div className="infolock">
+          {usuarioId ? (
+            <CerraduraUsuario usuarioId={usuarioId} />
+          ) : (
+            <p>No hay cerradura asociada</p>
+          )}
         </div>
       </header>
 
       <section ref={servicesRef} className="user-services">
         <h2>Servicios</h2>
-
         <div className="service-buttons">
           <div className="card" onClick={() => navigate("/usuario/perfil")}>
             <span>Perfil y configuración</span>
             <button>GO</button>
           </div>
-
           <div className="card" onClick={() => alert("Cerca de mí")}>
             <span>Cerca de mí</span>
             <button>GO</button>
           </div>
-
           <div className="card" onClick={() => navigate("/usuario/alojamiento")}>
             <span>Mi alojamiento</span>
             <button>GO</button>

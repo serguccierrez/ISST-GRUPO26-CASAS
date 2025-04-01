@@ -1,10 +1,13 @@
 package com.example.backend.service;
 
-import com.seam.api.types.ActionAttempt;
 import com.example.backend.model.Cerradura;
+import com.example.backend.model.Propiedad;
 import com.example.backend.model.Propietario;
+import com.example.backend.model.Reserva;
 import com.example.backend.repository.CerraduraRepository;
 import com.example.backend.repository.PropietarioRepository;
+import com.example.backend.repository.PropiedadRepository;
+import com.example.backend.service.ReservaService;
 import com.seam.api.Seam;
 import com.seam.api.types.*;
 import com.seam.api.resources.locks.requests.*;
@@ -27,7 +30,13 @@ public class SeamService {
     @Autowired
     private PropietarioRepository propietarioRepository;
 
+   @Autowired
+    private PropiedadRepository propiedadRepository; // Asegúrate de inyectar PropiedadRepository
     private final Seam seam;
+
+    @Autowired
+    private ReservaService reservaService;
+
 
     public SeamService(@Value("${seam.api.key}") String apiKey) {
         this.seam = Seam.builder()
@@ -79,6 +88,24 @@ public class SeamService {
         cerradura.setPropietario(propietario);
         return cerraduraRepository.save(cerradura);
     }
+
+ 
+    
+    public Cerradura asignarPropiedadACerradura(String cerraduraId, Long propiedadId) {
+        // Buscar la cerradura por ID
+        Cerradura cerradura = cerraduraRepository.findById(cerraduraId)
+                .orElseThrow(() -> new IllegalArgumentException("Cerradura con ID " + cerraduraId + " no encontrada"));
+    
+        // Buscar la propiedad por ID
+        Propiedad propiedad = propiedadRepository.findById(propiedadId) // Usar propiedadRepository en lugar de PropiedadRepository
+                .orElseThrow(() -> new IllegalArgumentException("Propiedad con ID " + propiedadId + " no encontrada"));
+    
+        // Asignar la propiedad a la cerradura
+        cerradura.setPropiedad(propiedad);
+    
+        // Guardar la cerradura actualizada
+        return cerraduraRepository.save(cerradura);
+    }
         
 
     public List<Cerradura> obtenerCerradurasDePropietario(Long propietarioId) {
@@ -86,6 +113,22 @@ public class SeamService {
                 .orElseThrow(() -> new IllegalArgumentException("Propietario no encontrado"));
         return cerraduraRepository.findByPropietario(propietario);
     }
+
+    public Cerradura obtenerCerraduraDePropiedad(Long propiedadId) {
+        // Buscar la propiedad por ID
+        Propiedad propiedad = propiedadRepository.findById(propiedadId)
+                .orElseThrow(() -> new IllegalArgumentException("Propiedad con ID " + propiedadId + " no encontrada"));
+        
+        // Buscar la cerradura asociada a la propiedad
+        Cerradura cerradura = cerraduraRepository.findByPropiedad(propiedad);
+        
+        if (cerradura == null) {
+            throw new IllegalArgumentException("No se encontró cerradura asociada a la propiedad con ID " + propiedadId);
+        }
+        
+        return cerradura;
+    }
+    
 
     public ActionAttempt lockDoor(String deviceId) {
         return seam.locks().lockDoor(LocksLockDoorRequest.builder()
@@ -98,4 +141,15 @@ public class SeamService {
                 .deviceId(deviceId)
                 .build());
     }
+
+    public Cerradura obtenerCerraduraDeUltimaReserva(Long usuarioId) {
+    // Obtener la última reserva activa del usuario
+    Reserva ultimaReserva = reservaService.obtenerUltimaReservaActiva(usuarioId);
+    if (ultimaReserva != null) {
+        Long propiedadId = ultimaReserva.getPropiedad().getId();
+        return obtenerCerraduraDePropiedad(propiedadId);
+    }
+    throw new RuntimeException("No se encontró cerradura para la última reserva activa.");
+}
+
 }

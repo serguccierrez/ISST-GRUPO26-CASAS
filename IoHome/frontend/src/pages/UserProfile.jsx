@@ -32,11 +32,14 @@ const UserProfile = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/usuarios/${usuario.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(usuario),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/usuarios/${usuario.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(usuario),
+        }
+      );
 
       if (!response.ok) throw new Error("Error al actualizar el perfil");
       const updatedUsuario = await response.json();
@@ -49,46 +52,45 @@ const UserProfile = () => {
 
   return (
     <div className="perfil-container">
-      <div className="navbar" onClick={() => navigate("/inicio-usuario")}>
-        <img src={logo} alt="Logo" className="logo" />
-        <h3>IoHome</h3>
+      <div className="navbar">
+        <img
+          src={logo}
+          alt="Logo"
+          className="logo"
+          onClick={() => navigate("/inicio-usuario")}
+        />
+        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
+          IoHome
+        </h3>
       </div>
       <div className="perfil-card">
         <h2>Perfil y Configuración de Usuario</h2>
         <div className="perfil-form">
           <label>Nombre:</label>
-          <input 
-            name="nombre" 
-            value={usuario.nombre} 
-            onChange={handleChange} 
-          />
+          <input name="nombre" value={usuario.nombre} onChange={handleChange} />
 
           <label>Apellidos:</label>
-          <input 
-            name="apellidos" 
-            value={usuario.apellidos} 
-            onChange={handleChange} 
+          <input
+            name="apellidos"
+            value={usuario.apellidos}
+            onChange={handleChange}
           />
 
           <label>DNI:</label>
-          <input 
-            name="dni" 
-            value={usuario.dni} 
-            onChange={handleChange} 
-          />
+          <input name="dni" value={usuario.dni} onChange={handleChange} />
 
           <label>Correo Electrónico:</label>
-          <input 
-            name="correoElectronico" 
-            value={usuario.correoElectronico} 
-            onChange={handleChange} 
+          <input
+            name="correoElectronico"
+            value={usuario.correoElectronico}
+            onChange={handleChange}
           />
 
           <label>Teléfono:</label>
-          <input 
-            name="telefono" 
-            value={usuario.telefono} 
-            onChange={handleChange} 
+          <input
+            name="telefono"
+            value={usuario.telefono}
+            onChange={handleChange}
           />
 
           <button onClick={handleSave}>Guardar Cambios</button>

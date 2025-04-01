@@ -17,7 +17,9 @@ body {
 .logo:hover, #nombre:hover {
   cursor: pointer;
 }
-
+.logo:hover, #nombre:hover {
+  cursor: pointer;
+}
 
 /* Tarjeta de reserva */
 .reserva-card {

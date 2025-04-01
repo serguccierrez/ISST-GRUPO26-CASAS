@@ -25,6 +25,9 @@
     margin-bottom: 20px;
     padding: 10px;
 }
+.logo:hover, #nombre:hover {
+    cursor: pointer;
+  }
 
 .select-field, .date-field {
     padding: 8px;

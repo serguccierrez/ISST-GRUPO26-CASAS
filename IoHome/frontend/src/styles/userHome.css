@@ -149,3 +149,11 @@
     color: #6b7280;
     margin-top: 30px;
 }
+
+.centered-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px auto;
+}

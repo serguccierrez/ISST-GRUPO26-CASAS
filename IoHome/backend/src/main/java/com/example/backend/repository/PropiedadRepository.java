@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface PropiedadRepository extends JpaRepository<Propiedad, Long> {
     List<Propiedad> findByPropietario(Propietario propietario);
-
 }

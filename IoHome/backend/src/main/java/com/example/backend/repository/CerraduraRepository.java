@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CerraduraRepository extends JpaRepository<Cerradura, Long> {
-    List<Cerradura> findByPropiedadId(Propiedad propiedad);
+public interface CerraduraRepository extends JpaRepository<Cerradura, String> {
+    Cerradura findByPropiedad(Propiedad propiedad);
     List<Cerradura> findByPropietario(Propietario propietario);
 }

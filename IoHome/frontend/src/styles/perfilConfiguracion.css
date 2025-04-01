@@ -16,7 +16,9 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
     transition: transform 0.2s ease-in-out;
   }
-  
+  .logo:hover, #nombre:hover {
+    cursor: pointer;
+  }
   .perfil-form label {
     display: block;
     margin: 8px 0 4px;
