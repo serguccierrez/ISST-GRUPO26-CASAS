@@ -5,12 +5,22 @@ import { obtenerPropiedades, eliminarPropiedad, actualizarPropiedad } from "../s
 import "../styles/gestionPropiedades.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import WorkspaceInfo from "../components/SeamConnect";
+import { useRef } from "react"; 
+
 
 const GestionPropiedades = () => {
+  const modifierRef = useRef(null);
   const [propiedades, setPropiedades] = useState([]);
   const [propiedadEdit, setPropiedadEdit] = useState(null);
   const navigate = useNavigate();
+
+  const scrollToModifyForm = () => {
+    setTimeout(() => {
+      if (modifierRef.current) {
+        modifierRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100); 
+  };
 
   useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
@@ -75,18 +85,22 @@ const GestionPropiedades = () => {
             </ul>
             <p><strong>Normas:</strong> {p.normas || "No especificadas"}</p>
             <button onClick={() => handleEliminar(p.id)}>Eliminar</button>
-            <button onClick={() => setPropiedadEdit(p)}>Modificar</button>
+            <button onClick={() => { setPropiedadEdit(p); scrollToModifyForm(); }}>Modificar</button>
           </div>
         </div>
       ))}
 
       {propiedadEdit && (
+        <div ref={modifierRef} className="modificar-propiedad">
+          <h2>Modificar Propiedad</h2>
         <ModificarPropiedad
           propiedad={propiedadEdit}
           onUpdate={handleUpdate}
           onCancel={() => setPropiedadEdit(null)}
         />
+        </div>
       )}
+  
 
       <RegistrarPropiedad onPropertyCreated={handlePropertyCreated} />
     </div>

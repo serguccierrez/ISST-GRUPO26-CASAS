@@ -10,7 +10,6 @@ import MisCerraduras from "./pages/MisCerraduras";
 import UnaCerradura from "./pages/UnaCerradura";
 
 import SecurityLogs from "./pages/SecurityLogs";
-import Cerraduras from "./pages/Cerraduras";
 import UserProfile from "./pages/UserProfile"; // Nueva importación
 import MiAlojamiento from "./pages/MiAlojamiento";
 
@@ -30,7 +29,6 @@ function App() {
         <Route path="/propietario/cerraduras" element={<MisCerraduras />} />
         <Route path="/cerradura/:id" element={<UnaCerradura />} />
         <Route path="/propietario/seguridad" element={<SecurityLogs />} />
-        <Route path="/propietario/cerraduras" element={<Cerraduras />} />
         <Route path="/usuario/perfil" element={<UserProfile />} />
         <Route path="/usuario/alojamiento" element={<MiAlojamiento />} />{" "}
         {/* Nueva ruta */}

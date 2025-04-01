@@ -48,12 +48,6 @@ const OwnerHome = () => {
             <button>GO</button>
           </div>
 
-         
-          <div className="card">
-            <span>Cerraduras</span>
-            <button onClick={() => navigate("/propietario/cerraduras")}>GO</button>
-          </div>
-
 
 
           <div className="card">

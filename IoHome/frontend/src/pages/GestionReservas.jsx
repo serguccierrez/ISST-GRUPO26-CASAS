@@ -7,12 +7,25 @@ import { obtenerPropiedades } from "../services/propiedadService";
 import "../styles/gestionReservas.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react"; 
+
+
+
 
 const GestionReservas = () => {
+  const modifierRef = useRef(null);
   const [reservas, setReservas] = useState([]);
   const [propiedades, setPropiedades] = useState([]);
   const [reservaEdit, setReservaEdit] = useState(null);
   const navigate = useNavigate();
+
+  const scrollToModifyForm2 = () => {
+    setTimeout(() => {
+      if (modifierRef.current) {
+        modifierRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100); 
+  };
 
   useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
@@ -74,19 +87,21 @@ const GestionReservas = () => {
               <p>Fecha de Fin: {reserva.fechaFin}</p>
               <p>Observaciones: {reserva.observaciones}</p>
             </div>
-            <button onClick={() => handleEdit(reserva)}>Modificar</button>
+            <button onClick={() => { handleEdit(reserva); scrollToModifyForm2(); }}>Modificar</button>
             <button onClick={() => handleEliminar(reserva.id)}>Eliminar</button>
             <hr />
           </div>
         ))}
       </div>
       {reservaEdit && (
-        <div className="reserva-form">
-          <ModificarReservaForm
-            reserva={reservaEdit}
-            onUpdate={handleUpdate}
-            onCancel={handleCancelEdit}
-          />
+        <div ref={modifierRef} className="modificar-reserva">
+          <div className="reserva-form">
+            <ModificarReservaForm
+              reserva={reservaEdit}
+              onUpdate={handleUpdate}
+              onCancel={handleCancelEdit}
+            />
+          </div>
         </div>
       )}
       <h3>Crear Nueva Reserva</h3>
