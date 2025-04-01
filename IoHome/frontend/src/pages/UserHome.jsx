@@ -35,11 +35,13 @@ const UserHome = () => {
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
-      
 
-      <div className="lock-buttons">
-          <button className="open-lock">Abrir Cerradura</button>
-          <button className="close-lock">Cerrar Cerradura</button>
+        <div className="infolock">
+          <p></p>
+          <div className="lock-buttons">
+            <button className="open-lock">Abrir Cerradura</button>
+            <button className="close-lock">Cerrar Cerradura</button>
+          </div>
         </div>
       </header>
 
@@ -57,7 +59,10 @@ const UserHome = () => {
             <button>GO</button>
           </div>
 
-          <div className="card" onClick={() => navigate("/usuario/alojamiento")}>
+          <div
+            className="card"
+            onClick={() => navigate("/usuario/alojamiento")}
+          >
             <span>Mi alojamiento</span>
             <button>GO</button>
           </div>

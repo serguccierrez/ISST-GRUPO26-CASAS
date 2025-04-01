@@ -57,9 +57,9 @@ const UserProfile = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-propietario")}
+          onClick={() => navigate("/inicio-usuario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
           IoHome
         </h3>
       </div>
