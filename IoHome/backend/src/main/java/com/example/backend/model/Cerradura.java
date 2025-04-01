@@ -1,7 +1,5 @@
 package com.example.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-
 import jakarta.persistence.*;
 
 @Entity
