@@ -103,7 +103,7 @@ const GestionPropiedades = () => {
               <li><strong>Cerradura:</strong> {cerraduras[p.id] || "Cargando..."}</li>
             </ul>
             <p><strong>Normas:</strong> {p.normas || "No especificadas"}</p>
-            <button onClick={() => handleEliminar(p.id)}>Eliminar</button>
+            <button id="Modificar" onClick={() => handleEliminar(p.id)}>Eliminar</button>
             <button onClick={() => { setPropiedadEdit(p); scrollToModifyForm(); }}>Modificar</button>
           </div>
         </div>

@@ -91,14 +91,7 @@ const GestionReservas = () => {
               <p>Fecha de Fin: {reserva.fechaFin}</p>
               <p>Observaciones: {reserva.observaciones}</p>
             </div>
-            <button
-              onClick={() => {
-                handleEdit(reserva);
-                scrollToModifyForm2();
-              }}
-            >
-              Modificar
-            </button>
+            <button id="Modificar" onClick={() => { handleEdit(reserva); scrollToModifyForm2(); }}>Modificar</button>
             <button onClick={() => handleEliminar(reserva.id)}>Eliminar</button>
             <hr />
           </div>

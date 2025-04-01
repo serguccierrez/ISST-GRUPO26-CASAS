@@ -2,6 +2,10 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
 
+const redirigirHome = () => {
+  window.location.href = "http://localhost:5173/";
+};
+
 const Layout = () => (
   <div>
     {/* Header común */}
@@ -16,8 +20,9 @@ const Layout = () => (
         <Link to="/about" className="nav-link">Nosotros</Link>
         <Link to="/contact" className="nav-link">Contacto</Link>
       </nav>
-      <div className="header-right">
-        <Link to="/iniciasesion" className="contact-button">Inicia Sesión</Link>
+      
+      <div className="home-button">
+        <button onClick={redirigirHome}>🌐  Accede a nuestra Aplicación</button>
       </div>
     </header>
 

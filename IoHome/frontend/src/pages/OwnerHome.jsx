@@ -23,6 +23,10 @@ const OwnerHome = () => {
     }
   };
 
+  const redirigirHome = () => {
+    window.location.href = "http://localhost:3000/";
+  };
+
   return (
     <div className="owner-home">
       <header className="owner-header">
@@ -34,6 +38,12 @@ const OwnerHome = () => {
           </button>
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
+
+        <div className="home-button">
+        <button onClick={redirigirHome}>🌐  Accede a nuestra Página Web</button>
+      </div>
+
+
         <p>Gestiona fácilmente tus propiedades, accesos y reservas desde un solo lugar.</p>
         <CalendarView />
       </header>
