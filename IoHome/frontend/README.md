@@ -98,3 +98,109 @@ Contiene las vistas principales:
 ## 💌 Contacto
 
 📩 **Autor:** [Segio Gutiérrez, Valeria González, Álvaro Tagarro, Alejandro Cerezo, Patricia Rodriguez]
+
+<br><br>
+<br><br>
+
+**ENGLISH VERSION**
+
+# 🏠 IoHome - Frontend
+
+> Frontend developed for managing tourist accommodations through **smart locks**, built with **React** and focused on an intuitive and efficient user experience.
+
+---
+
+## 🛠️ Technologies Used
+
+- ✨ **React 18** → Main library for the user interface.
+- 📁 **Vite** → Fast and efficient development environment.
+- 📃 **React Router** → Page navigation.
+- 🌐 **Axios** → HTTP requests to the backend.
+- 🛡️ **JWT (JSON Web Token)** → Secure authentication.
+- 🗃️ **Tailwind CSS** → Modern and responsive styling.
+- 🛠️ **Redux Toolkit** → Global state management.
+- 🎨 **Shadcn/ui** → Pre-designed components for an attractive interface.
+- 🌐 **Google Calendar API** → Synchronization of reservations with Google Calendar.
+
+---
+
+## 📂 Project Structure
+
+```
+IoHome-Frontend/
+├── src/
+│   ├── assets/                # Images, icons, and static files
+│   ├── components/            # Reusable UI components
+│   ├── pages/                 # Main application views
+│   ├── styles/                # Web page styles
+│   ├── app.css/               # General design
+│   ├── services/              # API calls
+│   ├── utils/                 # Helper functions
+│   ├── App.jsx                # Main application component
+│   ├── main.jsx               # Main entry point with React and Vite
+├── public/                    # Static files and metadata
+├── index.html                 # Main HTML file
+├── package.json               # Project dependencies and configuration
+├── vite.config.js             # Vite configuration
+```
+
+---
+
+## 📌 Key Modules and Files
+
+### 📁 `services/`
+Services for backend communication:
+- **`authService.js`** → Authentication management and JWT tokens.
+- **`reservaService.js`** → API calls for reservations.
+- **`propiedadService.js`** → Property management.
+- **`calendar.cjs`** → Google Calendar integration.
+
+
+### 📁 `components/`
+Contains reusable components for the entire application:
+- **`AuthSwitcher.jsx`** → Home page.
+- **`CalendarView.jsx`** → Google Calendar view.
+- **`LoginForm.jsx`** → Login form.
+- **`ModificarPropiedad.jsx`** → Form to modify owner properties.
+- **`ModificarReservaForm.jsx`** → Form to modify reservations.
+- **`RegisterForm.jsx`** → User registration form.
+- **`RegistrarPropiedad.jsx`** → Form to register a new property. 
+- **`SeamConnect.jsx`** → Component for Seam API integration, allowing connection and management of smart locks.
+
+### 📁 `pages/`
+Contains the main views:
+- **`MiAlojamiento.jsx`** → Accommodation page view.
+- **`MisCerraduras.jsx`** → View of an owner’s locks.
+- **`GestionReservas.jsx`** → Reservation management.
+- **`GestionPropiedades.jsx`** → Property listing and management.
+- **`PerfilConfiguracion.jsx`** → User profile page.
+- **`SecurityLog.jsx`** → Monitors real-time access, manages lock status, and receives suspicious activity alerts.
+- **`UnaCerradura.jsx`** → Information on the reserved property lock.
+- **`UserHome.jsx`** → Main user homepage.
+- **`UserProfile.jsx`** → User profile page.
+
+---
+
+## 🏢 Installation and Execution
+
+1️⃣ Clone the repository:
+```sh
+ git clone <https://github.com/serguccierrez/ISST-GRUPO26-CASAS>
+ cd IoHome-Frontend
+```
+
+2️⃣ Install dependencies:
+```sh
+ npm install
+```
+
+3️⃣ Run the frontend:
+```sh
+ npm run dev
+```
+
+---
+
+## 💌 Contact
+
+📩 **Authors:** [Sergio Gutiérrez, Valeria González, Álvaro Tagarro, Alejandro Cerezo, Patricia Rodriguez]
