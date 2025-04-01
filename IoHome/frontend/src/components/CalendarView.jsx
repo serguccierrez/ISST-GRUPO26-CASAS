@@ -3,32 +3,19 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useEffect, useState } from 'react';
 
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+
+
 const CalendarView = () => {
-  const [events, setEvents] = useState([]);
-
-  const API_KEY = 'TU_API_KEY';
-  const CALENDAR_ID = 'TU_CALENDAR_ID';
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const res = await fetch(
-        `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}`
-      );
-      const data = await res.json();
-      const formatted = data.items.map(event => ({
-        title: event.summary,
-        date: event.start.date || event.start.dateTime,
-      }));
-      setEvents(formatted);
-    };
-    fetchEvents();
-  }, []);
-
   return (
-    <div>
-      <h3>Eventos programados</h3>
-      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" events={events} />
-    </div>
+    <iframe
+      src="https://calendar.google.com/calendar/embed?src=TU_EMAIL@gmail.com&ctz=Europe/Madrid"
+      style={{ border: "solid 1px #777" }}
+      width="450"
+      height="450"
+      frameBorder="0"
+      scrolling="no"
+    ></iframe>
   );
 };
 
