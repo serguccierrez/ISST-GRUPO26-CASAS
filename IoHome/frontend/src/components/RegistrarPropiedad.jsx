@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/registrarPropiedad.css"; // Asegúrate de que la ruta sea correcta
 
 const RegistrarPropiedad = ({ onPropertyCreated }) => {
   const [formData, setFormData] = useState({
@@ -59,6 +60,7 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
       <input name="habitaciones" type="number" placeholder="Habitaciones" onChange={handleChange} required />
       <input name="banos" type="number" placeholder="Baños" onChange={handleChange} required />
       
+      <div className="checkbox-group">
       <label><input type="checkbox" name="aireAcondicionado" onChange={handleChange} /> Aire Acondicionado</label>
       <label><input type="checkbox" name="cocinaEquipada" onChange={handleChange} /> Cocina Equipada</label>
       <label><input type="checkbox" name="secador" onChange={handleChange} /> Secador</label>
@@ -67,6 +69,7 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
       <label><input type="checkbox" name="toallasYSabanas" onChange={handleChange} /> Toallas y Sábanas</label>
       <label><input type="checkbox" name="piscina" onChange={handleChange} /> Piscina</label>
       <label><input type="checkbox" name="garaje" onChange={handleChange} /> Garaje</label>
+      </div>
 
       <textarea name="normas" placeholder="Normas de la propiedad" onChange={handleChange}></textarea>
 
@@ -76,3 +79,5 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
 };
 
 export default RegistrarPropiedad;
+
+

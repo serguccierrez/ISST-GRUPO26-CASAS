@@ -1,10 +1,20 @@
 .perfil-container {
-    max-width: 400px;
-    margin: 20px auto;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #d0d7de; /* Gris claro */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .perfil-card {
+    
+    border-radius: 12px;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;
   }
   
   .perfil-form label {
@@ -14,7 +24,7 @@
   }
   
   .perfil-form input {
-    width: 100%;
+    width: 95%;
     padding: 8px;
     margin-bottom: 12px;
     border-radius: 4px;
@@ -23,7 +33,7 @@
   
   button {
     padding: 10px;
-    background-color: #3498db;
+    background-color: #1d4ed8;
     color: white;
     border: none;
     border-radius: 5px;
@@ -31,6 +41,6 @@
   }
   
   button:hover {
-    background-color: #2980b9;
+    background-color: #0245ff;
   }
   

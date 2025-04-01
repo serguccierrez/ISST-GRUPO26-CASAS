@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Importa useNavigate
+import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/ownerHome.css";
 import CalendarView from "../components/CalendarView";
+import logo from "../assets/logo.png";
 
 const OwnerHome = () => {
   const [nombre, setNombre] = useState("");
-  const navigate = useNavigate(); // 👈 Usa el hook
+  const navigate = useNavigate();
+  const servicesRef = useRef(null);
 
   useEffect(() => {
     const data = localStorage.getItem("propietario");
@@ -15,39 +17,73 @@ const OwnerHome = () => {
     }
   }, []);
 
+  const scrollToServices = () => {
+    if (servicesRef.current) {
+      servicesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="owner-home">
       <header className="owner-header">
+        <div className="navbar">
+          <img src={logo} alt="Logo" className="logo" />
+          <h3>IoHome</h3>
+          <button className="scroll-button" onClick={scrollToServices}>
+            Nuestros Servicios
+          </button>
+        </div>
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
         <p>Gestiona fácilmente tus propiedades, accesos y reservas desde un solo lugar.</p>
         <CalendarView />
       </header>
 
-      <section className="owner-services">
+
+      <section ref={servicesRef} className="owner-services">
         <h2>Servicios</h2>
-        
+
         <div className="service-buttons">
           <div className="card" onClick={() => navigate("/propietario/perfil")}>
             <span>Perfil y configuración</span>
             <button>GO</button>
           </div>
 
+         
+          <div className="card">
+            <span>Cerraduras</span>
+            <button onClick={() => navigate("/propietario/cerraduras")}>GO</button>
+          </div>
+
+
+
           <div className="card">
             <span>Seguridad</span>
-            <button onClick={() => alert("Seguridad")}>GO</button>
+            <button onClick={() => navigate("/propietario/seguridad")}>GO</button>
           </div>
+
+
+
           <div className="card">
-            <span>Gestión de usuarios</span>
-            <button onClick={() => alert("Usuarios")}>GO</button>
+            <span>Gestión de reservas</span>
+            <button onClick={() => navigate("/propietario/reservas")}>GO</button>
           </div>
+
           <div className="card">
             <span>Gestión de propiedades</span>
-            <button onClick={() => navigate("/propietario/propiedades")}>GO</button> {/* ✅ Aquí navega */}
+            <button onClick={() => navigate("/propietario/propiedades")}>GO</button>
           </div>
+
+          <div className="card">
+            <span>Mis cerraduras</span>
+            <button onClick={() => navigate("/propietario/cerraduras")}>GO</button>
+          </div>
+
         </div>
       </section>
 
-      <footer className="owner-footer">© 2025 IOHOME. Todos los derechos reservados</footer>
+      <footer className="owner-footer">
+        © 2025 IOHOME. Todos los derechos reservados
+      </footer>
     </div>
   );
 };

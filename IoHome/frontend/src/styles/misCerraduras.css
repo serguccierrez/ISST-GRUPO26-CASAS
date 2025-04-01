@@ -1,0 +1,57 @@
+.gestion-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #d0d7de; /* Gris claro */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo:hover, #nombre:hover {
+    cursor: pointer;
+}
+
+.seam-connect-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.seam-connect-container button:hover {
+    background-color: #153db2; /* Azul oscuro */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+/* misCerraduras.css */
+.device-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .device-card {
+ border: none; /* Quitamos el borde gris */
+    border-radius: 12px;
+    padding: 20px;
+    width: 250px; /* Ancho fijo para las tarjetas */
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .device-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .device-card p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  .device-card:hover {
+    transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+}
+  

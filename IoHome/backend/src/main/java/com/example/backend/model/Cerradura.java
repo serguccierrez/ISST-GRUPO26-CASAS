@@ -1,29 +1,26 @@
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 import jakarta.persistence.*;
 
 @Entity
 public class Cerradura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String device_id;
 
     private String nombre;
 
-    @Enumerated(EnumType.STRING)
-    private TipoCerradura tipo;
-
-    @Enumerated(EnumType.STRING)
-    private EstadoCerradura estado;
+    private String tipo;
 
     @ManyToOne
-    @JoinColumn(name = "propiedad_id")
+    @JoinColumn(name = "propiedad_id", nullable = true)
     private Propiedad propiedad;
 
-    public enum TipoCerradura {
-        PIN, BLUETOOTH
-    }
+    @ManyToOne
+    @JoinColumn(name = "propietario_id")
+    private Propietario propietario;
 
     public enum EstadoCerradura {
         ACTIVA, DESACTIVADA
@@ -32,13 +29,7 @@ public class Cerradura {
     public Cerradura() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+   
 
     public String getNombre() {
         return nombre;
@@ -48,29 +39,36 @@ public class Cerradura {
         this.nombre = nombre;
     }
 
-    public TipoCerradura getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoCerradura tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public EstadoCerradura getEstado() {
-        return estado;
+    /*
+     * 
+     * public Propiedad getPropiedad() {
+     * return propiedad;
+     * }
+     * 
+     * public void setPropiedad(Propiedad propiedad) {
+     * this.propiedad = propiedad;
+     * }
+     */
+
+    public Propietario getPropietario() { // Getter para Propietario
+        return propietario;
     }
 
-    public void setEstado(EstadoCerradura estado) {
-        this.estado = estado;
+    public void setPropietario(Propietario propietario) { // Setter para Propietario
+        this.propietario = propietario;
     }
-
-    public Propiedad getPropiedad() {
-        return propiedad;
+    public String getDevice_id() {
+        return device_id;
     }
-
-    public void setPropiedad(Propiedad propiedad) {
-        this.propiedad = propiedad;
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
-
-
 }

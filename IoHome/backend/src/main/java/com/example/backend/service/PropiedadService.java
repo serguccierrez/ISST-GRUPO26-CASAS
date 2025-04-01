@@ -30,4 +30,30 @@ public class PropiedadService {
                 .orElseThrow(() -> new IllegalArgumentException("Propietario no encontrado"));
         return propiedadRepository.findByPropietario(propietario);
     }
+
+    public Propiedad actualizarPropiedad(Long id, Propiedad nuevaPropiedad) {
+        Propiedad propiedad = propiedadRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Propiedad no encontrada"));
+        propiedad.setNombre(nuevaPropiedad.getNombre());
+        propiedad.setDireccion(nuevaPropiedad.getDireccion());
+        propiedad.setCiudad(nuevaPropiedad.getCiudad());
+        propiedad.setCp(nuevaPropiedad.getCp());
+        propiedad.setPiso(nuevaPropiedad.getPiso());
+        propiedad.setHabitaciones(nuevaPropiedad.getHabitaciones());
+        propiedad.setBanos(nuevaPropiedad.getBanos());
+        propiedad.setAireAcondicionado(nuevaPropiedad.isAireAcondicionado());
+        propiedad.setCocinaEquipada(nuevaPropiedad.isCocinaEquipada());
+        propiedad.setSecador(nuevaPropiedad.isSecador());
+        propiedad.setPlancha(nuevaPropiedad.isPlancha());
+        propiedad.setCafetera(nuevaPropiedad.isCafetera());
+        propiedad.setToallasYSabanas(nuevaPropiedad.isToallasYSabanas());
+        propiedad.setPiscina(nuevaPropiedad.isPiscina());
+        propiedad.setGaraje(nuevaPropiedad.isGaraje());
+        propiedad.setNormas(nuevaPropiedad.getNormas());
+        return propiedadRepository.save(propiedad);
+    }
+
+    public void eliminarPropiedad(Long id) {
+        propiedadRepository.deleteById(id);
+    }
 }

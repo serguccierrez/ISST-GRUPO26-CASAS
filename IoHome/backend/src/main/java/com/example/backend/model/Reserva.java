@@ -1,9 +1,10 @@
 package com.example.backend.model;
 
-
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
+// Reserva.java
 @Entity
 public class Reserva {
 
@@ -11,11 +12,18 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private EstadoReserva estado;
+    private boolean activa;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaInicio;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaFin;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fechaCreacion;
+
+    private String observaciones;
 
     @ManyToOne
     @JoinColumn(name = "propiedad_id")
@@ -25,11 +33,9 @@ public class Reserva {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    public enum EstadoReserva {
-        PENDIENTE, CONFIRMADA, CANCELADA
-    }
-    
     public Reserva() {
+        this.fechaCreacion = LocalDateTime.now();
+        this.activa = true;
     }
 
     public Long getId() {
@@ -40,12 +46,12 @@ public class Reserva {
         this.id = id;
     }
 
-    public EstadoReserva getEstado() {
-        return estado;
+    public boolean isActiva() {
+        return activa;
     }
 
-    public void setEstado(EstadoReserva estado) {
-        this.estado = estado;
+    public void setActiva(boolean activa) {
+        this.activa = activa;
     }
 
     public LocalDateTime getFechaInicio() {
@@ -64,6 +70,22 @@ public class Reserva {
         this.fechaFin = fechaFin;
     }
 
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
     public Propiedad getPropiedad() {
         return propiedad;
     }
@@ -80,4 +102,6 @@ public class Reserva {
         this.usuario = usuario;
     }
 
+    // Getters y Setters
 }
+    
