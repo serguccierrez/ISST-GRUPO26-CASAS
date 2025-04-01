@@ -66,6 +66,10 @@ body {
   margin-right: 8px;
 }
 
+#Modificar{
+  margin-right: 10px;
+}
+
 /* Formulario de nueva reserva */
 .reserva-form {
   margin-top: 20px;

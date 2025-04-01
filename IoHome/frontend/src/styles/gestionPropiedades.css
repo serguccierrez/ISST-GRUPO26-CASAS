@@ -11,6 +11,9 @@
     cursor: pointer;
 }
 
+#Modificar {
+    border-right: 10px;
+}
 /* Tarjeta de propiedad */
 .propiedad-card {
     border: none; /* Quitamos el borde gris */
