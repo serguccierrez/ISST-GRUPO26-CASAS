@@ -22,6 +22,9 @@
     transition: transform 0.2s ease-in-out;
 }
 
+.logo:hover, #nombre:hover {
+    cursor: pointer;
+  }
 .propiedad-card:hover {
     transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
 }

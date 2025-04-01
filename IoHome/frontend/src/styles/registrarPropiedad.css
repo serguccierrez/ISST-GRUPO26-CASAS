@@ -17,7 +17,9 @@
     width: 100%; /* Asegura que cada label ocupe el mismo ancho */
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
-
+.logo:hover, #nombre:hover {
+    cursor: pointer;
+  }
 /* Estilo para los checkboxes */
 .checkbox-group input {
     height: 18px;

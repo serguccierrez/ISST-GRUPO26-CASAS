@@ -7,10 +7,7 @@ import { obtenerPropiedades } from "../services/propiedadService";
 import "../styles/gestionReservas.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react"; 
-
-
-
+import { useRef } from "react";
 
 const GestionReservas = () => {
   const modifierRef = useRef(null);
@@ -24,7 +21,7 @@ const GestionReservas = () => {
       if (modifierRef.current) {
         modifierRef.current.scrollIntoView({ behavior: "smooth" });
       }
-    }, 100); 
+    }, 100);
   };
 
   useEffect(() => {
@@ -69,8 +66,15 @@ const GestionReservas = () => {
   return (
     <div className="gestion-container">
       <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
-        <img src={logo} alt="Logo" className="logo" />
-        <h3>IoHome</h3>
+        <img
+          src={logo}
+          alt="Logo"
+          className="logo"
+          onClick={() => navigate("/inicio-propietario")}
+        />
+        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+          IoHome
+        </h3>
       </div>
       <h2>Gestionar Reservas</h2>
       <div>
@@ -87,7 +91,14 @@ const GestionReservas = () => {
               <p>Fecha de Fin: {reserva.fechaFin}</p>
               <p>Observaciones: {reserva.observaciones}</p>
             </div>
-            <button onClick={() => { handleEdit(reserva); scrollToModifyForm2(); }}>Modificar</button>
+            <button
+              onClick={() => {
+                handleEdit(reserva);
+                scrollToModifyForm2();
+              }}
+            >
+              Modificar
+            </button>
             <button onClick={() => handleEliminar(reserva.id)}>Eliminar</button>
             <hr />
           </div>

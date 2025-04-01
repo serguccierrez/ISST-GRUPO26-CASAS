@@ -9,7 +9,7 @@ const SecurityLogs = () => {
   const [propiedades, setPropiedades] = useState([]);
   const [propiedadSeleccionada, setPropiedadSeleccionada] = useState("");
   const [fecha, setFecha] = useState("");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
@@ -22,9 +22,16 @@ const SecurityLogs = () => {
 
   return (
     <div className="security-container">
-      <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
-        <img src={logo} alt="Logo" className="logo" />
-        <h3>IoHome</h3>
+      <div className="navbar">
+        <img
+          src={logo}
+          alt="Logo"
+          className="logo"
+          onClick={() => navigate("/inicio-usuario")}
+        />
+        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
+          IoHome
+        </h3>
       </div>
       <div className="header">
         <h2>Seguridad y Control de Accesos</h2>

@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import com.seam.api.types.*;
 import com.example.backend.model.Cerradura;
-import com.example.backend.model.Propiedad;
 import com.example.backend.service.SeamService;
 
 import org.springframework.http.ResponseEntity;
