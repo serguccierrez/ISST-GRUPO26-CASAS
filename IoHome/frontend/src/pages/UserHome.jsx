@@ -34,17 +34,20 @@ const UserHome = () => {
     <div className="user-home">
       <header className="user-header">
         <div className="navbar">
+        
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
+          
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
+        
+        <button onClick={redirigirHome}>🌐 </button>
+      
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
 
-        <div className="home-button">
-        <button onClick={redirigirHome}>🌐  Accede a nuestra Página Web</button>
-      </div>
+        
 
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
       

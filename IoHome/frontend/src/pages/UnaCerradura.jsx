@@ -86,6 +86,7 @@ const CerraduraDetalle = () => {
 
 return (
     <div className="lock-container">
+      <div className="lock-main">
     
             <div className="navbar">
                 <img
@@ -151,6 +152,7 @@ return (
                     className="lock-slider"
                 />
             </div>
+        </div>
         </div>
     </div>
 );

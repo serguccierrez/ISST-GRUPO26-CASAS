@@ -65,7 +65,6 @@ public class SeamService {
         try {
             ConnectWebview createdConnectWebview = seam.connectWebviews().create(
                     ConnectWebviewsCreateRequest.builder()
-                            .customRedirectUrl("https://localhost:5173/")
                             .build());
             return createdConnectWebview;
         } catch (Exception e) {

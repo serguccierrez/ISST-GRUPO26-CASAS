@@ -28,15 +28,13 @@
 .device-cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
     margin-top: 20px;
   }
   
   .device-card {
  border: none; /* Quitamos el borde gris */
     border-radius: 12px;
-    padding: 20px;
-    width: 250px; /* Ancho fijo para las tarjetas */
+    padding: 20px; /* Ancho fijo para las tarjetas */
     background: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil */
     transition: transform 0.2s ease-in-out;

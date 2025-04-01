@@ -31,17 +31,20 @@ const OwnerHome = () => {
     <div className="owner-home">
       <header className="owner-header">
         <div className="navbar">
-          <img src={logo} alt="Logo" className="logo" />
-          <h3>IoHome</h3>
-          <button className="scroll-button" onClick={scrollToServices}>
-            Nuestros Servicios
-          </button>
-        </div>
+                
+                  <img src={logo} alt="Logo" className="logo" />
+                  <h3>IoHome</h3>
+                  
+                  <button className="scroll-button" onClick={scrollToServices}>
+                    Servicios
+                  </button>
+                
+                <button onClick={redirigirHome}>🌐 </button>
+              
+                </div>
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
 
-        <div className="home-button">
-        <button onClick={redirigirHome}>🌐  Accede a nuestra Página Web</button>
-      </div>
+        
 
 
         <p>Gestiona fácilmente tus propiedades, accesos y reservas desde un solo lugar.</p>
