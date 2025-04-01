@@ -31,6 +31,16 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
                 .then(setPropiedades)
                 .catch((err) => console.error("Error al obtener propiedades", err));
         }
+
+        const fetchCerraduras = async () => {
+            try {
+                const propiedadesData = await obtenerPropiedades(propietario.id);
+                setPropiedades(propiedadesData);
+            } catch (error) {
+                console.error("Error al obtener propiedades:", error);
+            }
+        }
+
     }, []);
 
     const handleSubmit = async (e) => {

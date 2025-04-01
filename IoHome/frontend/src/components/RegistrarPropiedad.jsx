@@ -78,17 +78,32 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const propietario = JSON.parse(localStorage.getItem("propietario"));
-
+  
     try {
+      // 1️⃣ Crear la propiedad
       const response = await fetch(`http://localhost:8080/api/propiedades/crear/${propietario.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, cerradura_id: cerraduraSeleccionada }),
+        body: JSON.stringify(formData),
       });
-
+  
       if (!response.ok) throw new Error("Error al registrar la propiedad");
       const nuevaPropiedad = await response.json();
-      alert("Propiedad registrada correctamente");
+  
+      // 2️⃣ Asociar la cerradura a la propiedad
+      if (cerraduraSeleccionada) {
+        const asignarResponse = await fetch(
+          `http://localhost:8080/seam/cerradura/${cerraduraSeleccionada}/propiedad/${nuevaPropiedad.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+  
+        if (!asignarResponse.ok) throw new Error("Error al asignar cerradura a la propiedad");
+      }
+  
+      alert("Propiedad registrada y cerradura asociada correctamente");
       onPropertyCreated(nuevaPropiedad);
     } catch (err) {
       console.error("Error al registrar la propiedad:", err);
@@ -99,13 +114,13 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
   return (
     <form onSubmit={handleSubmit} className="property-form">
       <h3>Registrar nueva propiedad</h3>
-      <input name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
-      <input name="direccion" placeholder="Dirección" value={formData.direccion} onChange={handleChange} required />
-      <input name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required />
-      <input name="cp" placeholder="Código Postal" value={formData.cp} onChange={handleChange} required />
-      <input name="piso" placeholder="Piso" value={formData.piso} onChange={handleChange} required />
-      <input name="habitaciones" type="number" placeholder="Habitaciones" value={formData.habitaciones} onChange={handleChange} required />
-      <input name="banos" type="number" placeholder="Baños" value={formData.banos} onChange={handleChange} required />
+      <input name="nombre" placeholder="Nombre"  onChange={handleChange} required />
+      <input name="direccion" placeholder="Dirección"  onChange={handleChange} required />
+      <input name="ciudad" placeholder="Ciudad"  onChange={handleChange} required />
+      <input name="cp" placeholder="Código Postal"  onChange={handleChange} required />
+      <input name="piso" placeholder="Piso"  onChange={handleChange} required />
+      <input name="habitaciones" type="number" placeholder="Habitaciones"  onChange={handleChange} required />
+      <input name="banos" type="number" placeholder="Baños"  onChange={handleChange} required />
       
       <SelectCerraduras cerraduraSeleccionada={cerraduraSeleccionada} setCerraduraSeleccionada={setCerraduraSeleccionada} />
       

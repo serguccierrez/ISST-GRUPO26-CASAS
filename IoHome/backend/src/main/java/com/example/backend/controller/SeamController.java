@@ -60,6 +60,11 @@ public class SeamController {
         return ResponseEntity.ok(seamService.obtenerCerradurasDePropietario(propietarioId));
     }
 
+    @GetMapping("device/propiedad/{propiedadId}")
+    public Cerradura obtenerCerraduraDePropiedad(@PathVariable Long propiedadId) {
+        return seamService.obtenerCerraduraDePropiedad(propiedadId);
+    }
+
     @PutMapping("/cerradura/{cerraduraId}/propiedad/{propiedadId}")
     public ResponseEntity<Cerradura> asignarPropiedadACerradura(@PathVariable String cerraduraId, @PathVariable Long propiedadId) {
             Cerradura cerraduraActualizada = seamService.asignarPropiedadACerradura(cerraduraId, propiedadId);

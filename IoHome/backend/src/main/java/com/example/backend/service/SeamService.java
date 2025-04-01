@@ -108,6 +108,22 @@ public class SeamService {
         return cerraduraRepository.findByPropietario(propietario);
     }
 
+    public Cerradura obtenerCerraduraDePropiedad(Long propiedadId) {
+        // Buscar la propiedad por ID
+        Propiedad propiedad = propiedadRepository.findById(propiedadId)
+                .orElseThrow(() -> new IllegalArgumentException("Propiedad con ID " + propiedadId + " no encontrada"));
+        
+        // Buscar la cerradura asociada a la propiedad
+        Cerradura cerradura = cerraduraRepository.findByPropiedad(propiedad);
+        
+        if (cerradura == null) {
+            throw new IllegalArgumentException("No se encontró cerradura asociada a la propiedad con ID " + propiedadId);
+        }
+        
+        return cerradura;
+    }
+    
+
     public ActionAttempt lockDoor(String deviceId) {
         return seam.locks().lockDoor(LocksLockDoorRequest.builder()
                 .deviceId(deviceId)
