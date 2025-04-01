@@ -13,8 +13,6 @@ const CalendarView = () => {
       style={{ border: "solid 1px #777" }}
       width="450"
       height="450"
-      frameBorder="0"
-      scrolling="no"
     ></iframe>
   );
 };
