@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import "../styles/registrarPropiedad.css";
+import SelectCerradurasModificar from "./SelectCerradurasModificar";
 
 const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({});
+  const [cerraduraSeleccionada, setCerraduraSeleccionada] = useState("");
 
   useEffect(() => {
     if (propiedad) {
-      setFormData(propiedad); // Inicializar con los datos actuales
+      setFormData(propiedad);
+      setCerraduraSeleccionada(propiedad.cerraduraId || "");
     }
   }, [propiedad]);
 
@@ -21,7 +24,22 @@ const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      formData.cerraduraId = cerraduraSeleccionada;
+
       await onUpdate(formData);
+
+      // Asignar cerradura a la propiedad
+      if (cerraduraSeleccionada) {
+        const response = await fetch(
+          `http://localhost:8080/seam/cerradura/${cerraduraSeleccionada}/propiedad/${formData.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (!response.ok) throw new Error("Error al asignar la cerradura");
+      }
+
       alert("Propiedad actualizada correctamente");
     } catch (err) {
       alert("Error al actualizar la propiedad: " + err.message);
@@ -66,65 +84,11 @@ const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
         onChange={handleChange}
         required
       />
-      <input
-        name="habitaciones"
-        type="number"
-        placeholder="Habitaciones"
-        value={formData.habitaciones || ""}
-        onChange={handleChange}
-        required
+      <SelectCerradurasModificar 
+        propiedadId={formData.id} 
+        cerraduraSeleccionada={cerraduraSeleccionada} 
+        setCerraduraSeleccionada={setCerraduraSeleccionada} 
       />
-      <input
-        name="banos"
-        type="number"
-        placeholder="Baños"
-        value={formData.banos || ""}
-        onChange={handleChange}
-        required
-      />
-
-      <div className="checkbox-group">
-        <label>
-          <input type="checkbox" name="aireAcondicionado" checked={formData.aireAcondicionado} onChange={handleChange} />
-          Aire Acondicionado
-        </label>
-        <label>
-          <input type="checkbox" name="cocinaEquipada" checked={formData.cocinaEquipada} onChange={handleChange} />
-          Cocina Equipada
-        </label>
-        <label>
-          <input type="checkbox" name="secador" checked={formData.secador} onChange={handleChange} />
-          Secador
-        </label>
-        <label>
-          <input type="checkbox" name="plancha" checked={formData.plancha} onChange={handleChange} />
-          Plancha
-        </label>
-        <label>
-          <input type="checkbox" name="cafetera" checked={formData.cafetera} onChange={handleChange} />
-          Cafetera
-        </label>
-        <label>
-          <input type="checkbox" name="toallasYSabanas" checked={formData.toallasYSabanas} onChange={handleChange} />
-          Toallas y Sábanas
-        </label>
-        <label>
-          <input type="checkbox" name="piscina" checked={formData.piscina} onChange={handleChange} />
-          Piscina
-        </label>
-        <label>
-          <input type="checkbox" name="garaje" checked={formData.garaje} onChange={handleChange} />
-          Garaje
-        </label>
-      </div>
-
-      <textarea
-        name="normas"
-        placeholder="Normas de la propiedad"
-        value={formData.normas || ""}
-        onChange={handleChange}
-      ></textarea>
-
       <button type="submit">Guardar Cambios</button>
       <button type="button" onClick={onCancel}>Cancelar</button>
     </form>

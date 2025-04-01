@@ -3,9 +3,11 @@ package com.example.backend.service;
 import com.example.backend.model.Cerradura;
 import com.example.backend.model.Propiedad;
 import com.example.backend.model.Propietario;
+import com.example.backend.model.Reserva;
 import com.example.backend.repository.CerraduraRepository;
 import com.example.backend.repository.PropietarioRepository;
 import com.example.backend.repository.PropiedadRepository;
+import com.example.backend.service.ReservaService;
 import com.seam.api.Seam;
 import com.seam.api.types.*;
 import com.seam.api.resources.locks.requests.*;
@@ -31,6 +33,10 @@ public class SeamService {
    @Autowired
     private PropiedadRepository propiedadRepository; // Asegúrate de inyectar PropiedadRepository
     private final Seam seam;
+
+    @Autowired
+    private ReservaService reservaService;
+
 
     public SeamService(@Value("${seam.api.key}") String apiKey) {
         this.seam = Seam.builder()
@@ -135,4 +141,15 @@ public class SeamService {
                 .deviceId(deviceId)
                 .build());
     }
+
+    public Cerradura obtenerCerraduraDeUltimaReserva(Long usuarioId) {
+    // Obtener la última reserva activa del usuario
+    Reserva ultimaReserva = reservaService.obtenerUltimaReservaActiva(usuarioId);
+    if (ultimaReserva != null) {
+        Long propiedadId = ultimaReserva.getPropiedad().getId();
+        return obtenerCerraduraDePropiedad(propiedadId);
+    }
+    throw new RuntimeException("No se encontró cerradura para la última reserva activa.");
+}
+
 }

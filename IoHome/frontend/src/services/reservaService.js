@@ -51,3 +51,17 @@ export const obtenerUltimaReservaActiva = async (usuarioId) => {
     if (!res.ok) throw new Error("No hay reservas activas");
     return res.json();
 };
+
+export const obtenerCerraduraDeUltimaReserva = async (usuarioId) => {
+    try {
+        const res = await fetch(`http://localhost:8080/seam/device/usuario/${usuarioId}/ultima-reserva`);
+        if (!res.ok) {
+            const errorMessage = await res.text();
+            throw new Error(errorMessage);
+        }
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener la cerradura de la última reserva activa:", error.message);
+        return null;
+    }
+};

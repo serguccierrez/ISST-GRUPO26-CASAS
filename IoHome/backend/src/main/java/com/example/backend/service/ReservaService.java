@@ -138,4 +138,9 @@ public Reserva obtenerUltimaReservaActiva(Long usuarioId) {
     return reservas.get(reservas.size() - 1); // Devuelve la última reserva activa
 }
 
+
+
+
+
+
 }

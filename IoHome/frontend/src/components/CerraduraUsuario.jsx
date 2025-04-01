@@ -1,105 +1,112 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../styles/unaCerradura.css"; // Asegúrate de que la ruta sea correcta
-import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
+import "../styles/unaCerradura.css";
+import logo from "../assets/logo.png";
+import { obtenerCerraduraUsuario } from "../services/cerraduraService";
+import { useNavigate } from "react-router-dom";
 
-const CerraduraDetalle = () => {
-    const navigate = useNavigate();
-  const { state } = useLocation();
-  const { device } = state || {}; // Extraemos el dispositivo
-  const [selectedDevice, setSelectedDevice] = useState(null);
+const CerraduraUsuario = ({ usuarioId }) => {
+  const [cerradura, setCerradura] = useState(null);
   const [error, setError] = useState(null);
   const [lockSlider, setLockSlider] = useState(0);
   const [unlockSlider, setUnlockSlider] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (device?.device_id) {
-      fetchDevice();
+    if (usuarioId) {
+      fetchCerradura();
     }
-  }, [device?.device_id]);
+  }, [usuarioId]);
 
-  const fetchDevice = async () => {
+  const fetchCerradura = async () => {
     try {
-      const response = await fetch("http://localhost:8080/seam/devices");
-      if (!response.ok)
-        throw new Error("No se pudo obtener la lista de dispositivos");
-      const data = await response.json();
-
-      const filteredDevice = data.find((d) => d.device_id === device.device_id);
-      if (!filteredDevice) throw new Error("Cerradura no encontrada en la API");
-
-      setSelectedDevice(filteredDevice);
+      const data = await obtenerCerraduraUsuario(usuarioId);
+      if (data) {
+        setCerradura(data);
+      } else {
+        setError("No se encontró una cerradura asociada a la última reserva.");
+      }
     } catch (err) {
       setError("Error: " + err.message);
     }
   };
 
   const toggleLock = async (lock) => {
-    if (!selectedDevice) return;
+    if (!cerradura) return;
 
     const endpoint = lock
-      ? `http://localhost:8080/seam/lock/${device.device_id}`
-      : `http://localhost:8080/seam/unlock/${device.device_id}`;
+      ? `http://localhost:8080/seam/lock/${cerradura.device_id}`
+      : `http://localhost:8080/seam/unlock/${cerradura.device_id}`;
 
     try {
+      console.log("Llamando a la API para cambiar el estado de la cerradura...");
+      console.log("Endpoint:", cerradura);
       const response = await fetch(endpoint, { method: "POST" });
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error(
           `No se pudo ${lock ? "bloquear" : "desbloquear"} la cerradura`
         );
-
-      // Volver a cargar datos después de cambiar el estado
+      }
       setTimeout(() => {
-        fetchDevice();
-      }, 8000); // Espera 1 segundo antes de llamar a fetchDevice
+        fetchCerradura();
+        console.log(cerradura)
+      }, 10000);
     } catch (err) {
       setError("Error: " + err.message);
     }
   };
 
-  // Manejar el slider de bloquear
   const handleLockChange = (value) => {
     setLockSlider(value);
     if (value === 1) {
       toggleLock(true);
-      setTimeout(() => setLockSlider(0), 500); // Reinicia el slider
+      setTimeout(() => setLockSlider(0), 500);
     }
   };
 
-  // Manejar el slider de desbloquear
   const handleUnlockChange = (value) => {
     setUnlockSlider(value);
     if (value === 0) {
       toggleLock(false);
-      setTimeout(() => setUnlockSlider(1), 500); // Reinicia el slider
+      setTimeout(() => setUnlockSlider(1), 500);
     }
   };
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error">{error}</div>;
   }
 
-  if (!selectedDevice) {
+  if (!cerradura) {
     return <div>Cargando detalles de la cerradura...</div>;
   }
 
   return (
     <div className="lock-card">
+      <div className="navbar">
+        <img
+          src={logo}
+          alt="Logo"
+          className="logo"
+          onClick={() => navigate("/inicio-propietario")}
+        />
+        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+          IoHome
+        </h3>
+      </div>
+
       <h2>Detalles de la Cerradura</h2>
-      <h3>{selectedDevice.properties.name || "Sin nombre"}</h3>
-      <p><strong>Tipo:</strong> {selectedDevice.device_type}</p>
-      <p><strong>ID del Dispositivo:</strong> {selectedDevice.device_id}</p>
+      <h3>{cerradura.properties?.name || "Sin nombre"}</h3>
+      <p><strong>Tipo:</strong> {cerradura.device_type}</p>
+      <p><strong>ID del Dispositivo:</strong> {cerradura.device_id}</p>
       <p><strong>Estado de la Cerradura:</strong>
         <span className="lock-status">
-          {selectedDevice.properties.locked ? " Cerrada" : " Abierta"}
+          {cerradura.properties?.locked ? " Cerrada" : " Abierta"}
         </span>
       </p>
       <p><strong>Estado de Conexión:</strong>
-        {selectedDevice.properties.online ? " En línea" : " Desconectada"}
+        {cerradura.properties?.online ? " En línea" : " Desconectada"}
       </p>
       <p><strong>Nivel de batería: </strong>
-        {(selectedDevice.properties.battery_level * 100).toFixed(0)}%
+        {(cerradura.properties?.battery_level * 100).toFixed(0)}%
       </p>
 
       <div className="lock-slider-container">
@@ -131,4 +138,4 @@ const CerraduraDetalle = () => {
   );
 };
 
-export default CerraduraDetalle;
+export default CerraduraUsuario;
