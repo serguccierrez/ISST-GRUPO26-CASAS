@@ -27,8 +27,6 @@ public class Cerradura {
     public Cerradura() {
     }
 
-   
-
     public String getNombre() {
         return nombre;
     }
@@ -45,16 +43,13 @@ public class Cerradura {
         this.tipo = tipo;
     }
 
-    /*
-     * 
-     * public Propiedad getPropiedad() {
-     * return propiedad;
-     * }
-     * 
-     * public void setPropiedad(Propiedad propiedad) {
-     * this.propiedad = propiedad;
-     * }
-     */
+    public Propiedad getPropiedad() {
+        return propiedad;
+    }
+
+    public void setPropiedad(Propiedad propiedad) {
+        this.propiedad = propiedad;
+    }
 
     public Propietario getPropietario() { // Getter para Propietario
         return propietario;
@@ -63,9 +58,11 @@ public class Cerradura {
     public void setPropietario(Propietario propietario) { // Setter para Propietario
         this.propietario = propietario;
     }
+
     public String getDevice_id() {
         return device_id;
     }
+
     public void setDevice_id(String device_id) {
         this.device_id = device_id;
     }
