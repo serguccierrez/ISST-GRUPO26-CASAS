@@ -109,3 +109,45 @@ form button {
   margin-top: 15px;
   transition: background 0.3s ease;
 }
+.home-button {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.home-button button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.home-button button:hover {
+  background-color: #0056b3;
+}
+
+.home-button {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.home-button button {
+  padding: 10px;
+  margin: 0 5px;
+  border: none;
+  background: #01315f; /* Azul oscuro */
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.home-button button:hover {
+  background: #61aab8; /* Azul aún más oscuro al pasar el ratón */
+}
+
+.home-button button:focus {
+  background: #61aab8; /* Azul oscuro más intenso al enfocar */
+}
