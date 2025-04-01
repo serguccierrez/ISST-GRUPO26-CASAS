@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import "../styles/unaCerradura.css";
 import logo from "../assets/logo.png";
 import { obtenerCerraduraUsuario } from "../services/cerraduraService";
+import { obtenerPropiedadDeUltimaReserva } from "../services/reservaService";
 import { useNavigate } from "react-router-dom";
 
 const CerraduraUsuario = ({ usuarioId }) => {
   const [cerradura, setCerradura] = useState(null);
+  const [propiedad, setPropiedad] = useState(null);
   const [error, setError] = useState(null);
   const [lockSlider, setLockSlider] = useState(0);
   const [unlockSlider, setUnlockSlider] = useState(1);
@@ -14,6 +16,7 @@ const CerraduraUsuario = ({ usuarioId }) => {
   useEffect(() => {
     if (usuarioId) {
       fetchCerradura();
+      fetchPropiedad();
     }
   }, [usuarioId]);
 
@@ -24,6 +27,19 @@ const CerraduraUsuario = ({ usuarioId }) => {
         setCerradura(data);
       } else {
         setError("No se encontró una cerradura asociada a la última reserva.");
+      }
+    } catch (err) {
+      setError("Error: " + err.message);
+    }
+  };
+
+  const fetchPropiedad = async () => {
+    try {
+      const data = await obtenerPropiedadDeUltimaReserva(usuarioId);
+      if (data) {
+        setPropiedad(data);
+      } else {
+        setError("No se encontró una propiedad asociada a la última reserva.");
       }
     } catch (err) {
       setError("Error: " + err.message);
@@ -48,7 +64,7 @@ const CerraduraUsuario = ({ usuarioId }) => {
       }
       setTimeout(() => {
         fetchCerradura();
-        console.log(cerradura)
+        console.log(cerradura);
       }, 10000);
     } catch (err) {
       setError("Error: " + err.message);
@@ -82,32 +98,35 @@ const CerraduraUsuario = ({ usuarioId }) => {
   return (
     <div className="lock-card">
       <div className="navbar">
-        <img
-          src={logo}
-          alt="Logo"
-          className="logo"
-          onClick={() => navigate("/inicio-propietario")}
-        />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
-          IoHome
-        </h3>
+        
       </div>
 
-      <h2>Detalles de la Cerradura</h2>
+      <h2>
+        Cerradura de {propiedad?.nombre || "Propiedad desconocida"} 
+        {propiedad?.direccion ? ` (${propiedad.direccion})` : ""}
+      </h2>
+      <img src={cerradura.properties.image_url} alt="Cerradura" className="lock-image" />
       <h3>{cerradura.properties?.name || "Sin nombre"}</h3>
-      <p><strong>Tipo:</strong> {cerradura.device_type}</p>
-      <p><strong>ID del Dispositivo:</strong> {cerradura.device_id}</p>
-      <p><strong>Estado de la Cerradura:</strong>
-        <span className="lock-status">
-          {cerradura.properties?.locked ? " Cerrada" : " Abierta"}
-        </span>
-      </p>
-      <p><strong>Estado de Conexión:</strong>
-        {cerradura.properties?.online ? " En línea" : " Desconectada"}
-      </p>
-      <p><strong>Nivel de batería: </strong>
-        {(cerradura.properties?.battery_level * 100).toFixed(0)}%
-      </p>
+      <div className="lock-info">
+        <p className="lock-detail">
+          <strong>Estado de la Cerradura:</strong>
+          <span className="lock-status">
+            {cerradura.properties?.locked ? " Cerrada" : " Abierta"}
+          </span>
+        </p>
+        <p className="lock-detail">
+          <strong>Estado de Conexión:</strong>
+          <span className="lock-connection">
+            {cerradura.properties?.online ? " En línea" : " Desconectada"}
+          </span>
+        </p>
+        <p className="lock-detail">
+          <strong>Nivel de batería:</strong>
+          <span className="lock-battery">
+            {(cerradura.properties?.battery_level * 100).toFixed(0)}%
+          </span>
+        </p>
+      </div>
 
       <div className="lock-slider-container">
         <label className="lock-slider-label">Bloquear Cerradura</label>

@@ -37,7 +37,10 @@ const UserHome = () => {
           </button>
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
-        <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
+        <div className="centered-text">
+  <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
+</div>
+
 
         <div className="infolock">
           {usuarioId ? (

@@ -65,3 +65,18 @@ export const obtenerCerraduraDeUltimaReserva = async (usuarioId) => {
         return null;
     }
 };
+
+export const obtenerPropiedadDeUltimaReserva = async (usuarioId) => {
+    try {
+        const res = await fetch(`http://localhost:8080/api/reservas/usuario/${usuarioId}/ultima-activa`);
+        if (!res.ok) {
+            const errorMessage = await res.text();
+            throw new Error(errorMessage);
+        }
+        const reserva = await res.json();
+        return reserva.propiedad;
+    } catch (error) {
+        console.error("Error al obtener la propiedad de la última reserva activa:", error.message);
+        return null;
+    }
+};
