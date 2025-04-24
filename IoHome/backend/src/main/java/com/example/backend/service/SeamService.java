@@ -7,12 +7,13 @@ import com.example.backend.model.Reserva;
 import com.example.backend.repository.CerraduraRepository;
 import com.example.backend.repository.PropietarioRepository;
 import com.example.backend.repository.PropiedadRepository;
-import com.example.backend.service.ReservaService;
 import com.seam.api.Seam;
 import com.seam.api.types.*;
 import com.seam.api.resources.locks.requests.*;
 import com.seam.api.resources.connectwebviews.requests.ConnectWebviewsCreateRequest;
-import com.seam.api.resources.devices.requests.*;
+import com.seam.api.resources.events.requests.EventsListRequest; 
+
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +150,31 @@ public class SeamService {
         return obtenerCerraduraDePropiedad(propiedadId);
     }
     throw new RuntimeException("No se encontró cerradura para la última reserva activa.");
+    }
+
+//Obtener logs (events) de una cerradura filtrando por su id asociado a una propiedad y un intervalo de tiempo
+public List<Event> obtenerLogsDesdeSeam( String since) {
+    
+    // Construir la solicitud con el deviceId y el intervalo de tiempo
+    EventsListRequest request = EventsListRequest.builder()
+            .since(since )
+            .build();
+
+    // Llamada a la API de Seam con la solicitud construida
+    try {
+        return seam.events().list(request); // Devuelve la lista de eventos
+    } catch (Exception e) {
+        throw new RuntimeException("Error HUHIUGFUISFD al obtener los logs desde Seam: " + e.getMessage(), e);
+    }
 }
 
+
+
+
+
+
 }
+
+
+
+

@@ -1,6 +1,11 @@
 package com.example.backend.model;
 
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cerradura {
@@ -19,6 +24,10 @@ public class Cerradura {
     @ManyToOne
     @JoinColumn(name = "propietario_id")
     private Propietario propietario;
+
+    @OneToMany(mappedBy = "cerradura", cascade = CascadeType.ALL)
+    @JsonIgnore // Para evitar ciclos infinitos en la serialización
+    private List<Evento> eventos = new ArrayList<>();
 
     public enum EstadoCerradura {
         ACTIVA, DESACTIVADA

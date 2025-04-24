@@ -47,10 +47,10 @@ public class SeamController {
         return seamService.listDevices();
     }
 
-    
-     // Crear un dispositivo en la base de datos
+    // Crear un dispositivo en la base de datos
     @PostMapping("/device/crear/{propietarioId}")
-    public ResponseEntity<Cerradura> crearCerradura(@PathVariable Long propietarioId, @RequestBody Cerradura cerradura) {
+    public ResponseEntity<Cerradura> crearCerradura(@PathVariable Long propietarioId,
+            @RequestBody Cerradura cerradura) {
         return ResponseEntity.ok(seamService.crearCerradura(propietarioId, cerradura));
     }
 
@@ -60,28 +60,26 @@ public class SeamController {
         return ResponseEntity.ok(seamService.obtenerCerradurasDePropietario(propietarioId));
     }
 
-
-    //USAR ESTE 
+    // USAR ESTE
     @GetMapping("device/propiedad/{propiedadId}")
     public Cerradura obtenerCerraduraDePropiedad(@PathVariable Long propiedadId) {
         return seamService.obtenerCerraduraDePropiedad(propiedadId);
     }
 
-
-    //LUEGO ESTE
+    // LUEGO ESTE
     @PutMapping("/cerradura/{cerraduraId}/propiedad/{propiedadId}")
-    public ResponseEntity<Cerradura> asignarPropiedadACerradura(@PathVariable String cerraduraId, @PathVariable Long propiedadId) {
-            Cerradura cerraduraActualizada = seamService.asignarPropiedadACerradura(cerraduraId, propiedadId);
-            return ResponseEntity.ok(cerraduraActualizada);  
+    public ResponseEntity<Cerradura> asignarPropiedadACerradura(@PathVariable String cerraduraId,
+            @PathVariable Long propiedadId) {
+        Cerradura cerraduraActualizada = seamService.asignarPropiedadACerradura(cerraduraId, propiedadId);
+        return ResponseEntity.ok(cerraduraActualizada);
     }
-        
 
     @PostMapping("/lock/{deviceId}")
     public ResponseEntity<?> lockDevice(@PathVariable String deviceId) {
         ActionAttempt response = seamService.lockDoor(deviceId);
         return ResponseEntity.ok(response);
     }
-    
+
     @PostMapping("/unlock/{deviceId}")
     public ResponseEntity<?> unlockDevice(@PathVariable String deviceId) {
         ActionAttempt response = seamService.unlockDoor(deviceId);
@@ -89,16 +87,19 @@ public class SeamController {
     }
 
     // Obtener la cerradura de la última reserva activa de un usuario
-@GetMapping("/device/usuario/{usuarioId}/ultima-reserva")
-public ResponseEntity<Cerradura> obtenerCerraduraDeUltimaReserva(@PathVariable Long usuarioId) {
-    try {
-        Cerradura cerradura = seamService.obtenerCerraduraDeUltimaReserva(usuarioId);
-        return ResponseEntity.ok(cerradura);
-    } catch (Exception e) {
-        return ResponseEntity.notFound().build();
+    @GetMapping("/device/usuario/{usuarioId}/ultima-reserva")
+    public ResponseEntity<Cerradura> obtenerCerraduraDeUltimaReserva(@PathVariable Long usuarioId) {
+        try {
+            Cerradura cerradura = seamService.obtenerCerraduraDeUltimaReserva(usuarioId);
+            return ResponseEntity.ok(cerradura);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
-
+    @GetMapping("/device/events/{since}")
+    public List<Event> obtenerLogsSeam( @PathVariable String since) {
+        return seamService.obtenerLogsDesdeSeam( since);
+    }
 
 }
