@@ -1,0 +1,60 @@
+package com.example.backend.controller;
+
+import com.example.backend.model.Cerradura;
+import com.example.backend.model.Evento;
+import com.example.backend.service.EventoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.backend.repository.CerraduraRepository;
+import com.example.backend.repository.EventoRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/eventos")
+public class EventoController {
+
+    @Autowired
+    private EventoService eventoService;
+
+    @Autowired
+    private EventoRepository eventoRepository;
+
+    @PostMapping("/guardar")
+    public ResponseEntity<Evento> guardarEvento(@RequestParam String eventId,
+            @RequestParam String deviceId,
+            @RequestParam String descripcion,
+            @RequestParam String status,
+            @RequestParam String actionType) {
+        try {
+            // Llamamos al servicio para guardar el evento, 'occurredAt' se genera
+            // automáticamente
+            Evento evento = eventoService.guardarEventoDesdeParametros(eventId, deviceId, descripcion, status,
+                    actionType);
+            return ResponseEntity.ok(evento); // Retornamos el evento guardado con un código 200
+        } catch (IllegalArgumentException e) {
+            // Si no se encuentra la cerradura, retornamos un error 404
+            return ResponseEntity.status(404).body(null);
+        } catch (Exception e) {
+            // Manejamos otros posibles errores
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @GetMapping("/all")
+    public List<Evento> obtenerTodosLosEventos() {
+        return eventoRepository.findAll();
+    }
+
+    @GetMapping("/{deviceId}")
+    public ResponseEntity<List<Evento>> obtenerEventosPorDeviceId(@PathVariable String deviceId) {
+        List<Evento> eventos = eventoService.obtenerEventos(deviceId);
+        if (eventos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(eventos);
+        }
+    }
+}

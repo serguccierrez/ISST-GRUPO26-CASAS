@@ -1,6 +1,7 @@
 // SecurityLogs.jsx
 import { useState, useEffect } from "react";
 import { obtenerPropiedades } from "../services/propiedadService";
+
 import "../styles/securityLogs.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,10 @@ import { useNavigate } from "react-router-dom";
 const SecurityLogs = () => {
   const [propiedades, setPropiedades] = useState([]);
   const [propiedadSeleccionada, setPropiedadSeleccionada] = useState("");
-  const [fecha, setFecha] = useState("");
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+  const [dispositivoSeleccionado, setDispositivoSeleccionado] = useState([]);
+  const [eventos, setEventos] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,8 +21,52 @@ const SecurityLogs = () => {
       obtenerPropiedades(propietario.id)
         .then(setPropiedades)
         .catch((err) => console.error("Error al obtener propiedades", err));
+      events();
     }
   }, []);
+
+  const events = async () => {
+    try {
+      const sinceISO = fechaInicio
+        ? new Date(`${fechaInicio}T00:00:00Z`).toISOString()
+        : null;
+
+      const response = await fetch("http://localhost:8080/api/eventos/all");
+      if (!response.ok)
+        throw new Error("No se pudo obtener la lista de eventos");
+      const data = await response.json();
+      console.log(data); // Puedes manejar los datos aquí
+      setEventos(data);
+    } catch (error) {
+      console.error("Error al obtener dispositivos:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchDevice = async () => {
+      if (!propiedadSeleccionada) return;
+      if (!fechaInicio) return;
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/seam/device/propiedad/${propiedadSeleccionada}`
+        );
+        if (!response.ok) throw new Error("No se pudo obtener el dispositivo");
+
+        const data = await response.json();
+        setDispositivoSeleccionado(data.device_id);
+
+        const sinceISO = fechaInicio
+          ? new Date(`${fechaInicio}T00:00:00Z`).toISOString()
+          : null;
+        events(data.device_id, sinceISO);
+      } catch (error) {
+        console.error("Error al obtener dispositivo:", error);
+      }
+    };
+
+    fetchDevice();
+  }, [propiedadSeleccionada, fechaInicio]);
 
   return (
     <div className="security-container">
@@ -27,9 +75,9 @@ const SecurityLogs = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-usuario")}
+          onClick={() => navigate("/inicio-propietario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
+        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
           IoHome
         </h3>
       </div>
@@ -56,29 +104,52 @@ const SecurityLogs = () => {
           ))}
         </select>
 
-        <label>Fecha:</label>
+        <label>Desde:</label>
         <input
           type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
+          value={fechaInicio}
+          onChange={(e) => setFechaInicio(e.target.value)}
+          className="date-field"
+        />
+
+        <label>Hasta:</label>
+        <input
+          type="date"
+          value={fechaFin}
+          onChange={(e) => setFechaFin(e.target.value)}
           className="date-field"
         />
       </div>
 
       <div className="logs-section">
-        <h3>Logs</h3>
-        <div className="log-entry">Cerradura 301 | Acceso concedido</div>
-        <div className="log-entry">Cerradura 302 | Acceso no autorizado</div>
-        <div className="log-entry">
-          Cerradura 303 | Token caducado | Ana Torres
-        </div>
-        <div className="log-entry">
-          Cerradura 304 | Bloqueo de seguridad activado
-        </div>
-        <div className="log-entry">
-          Cerradura 305 | Acceso denegado - Usuario no registrado
-        </div>
-      </div>
+  
+  <div className="logs-scroll">
+    {eventos.length > 0 ? (
+      <table className="logs-table">
+        <thead>
+          <tr>
+            <th>Cerradura</th>
+            <th>Acción</th>
+            <th>Estado</th>
+            <th>Fecha y Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          {eventos.map((evento, index) => (
+            <tr className="log-entry" key={index}>
+              <td>{evento.cerradura?.nombre || "Desconocida"}</td>
+              <td>{evento.actionType}</td>
+              <td>{evento.status}</td>
+              <td>{evento.occurredAt}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <div className="log-entry">Sin eventos registrados</div>
+    )}
+  </div>
+</div>
 
       <div className="disclaimer">
         La información proporcionada será eliminada una vez el huésped abandone

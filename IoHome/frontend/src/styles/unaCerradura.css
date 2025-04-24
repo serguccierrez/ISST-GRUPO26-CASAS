@@ -151,3 +151,35 @@
   margin-left: 5px;
   font-weight: bold;
 }
+
+
+.processing-message {
+  font-size: 18px;
+  color: #007BFF;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out infinite, bounce 1s infinite;
+}
+
+/* Efecto de desvanecimiento */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Efecto de rebote en el texto */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}

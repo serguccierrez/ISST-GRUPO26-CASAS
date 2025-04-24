@@ -9,6 +9,32 @@
     text-align: center;
 }
 
+.logs-section {
+  margin: 20px 0;
+}
+
+.logs-scroll {
+  max-height: 300px; /* Ajusta la altura como prefieras */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.log-entry {
+  padding: 8px;
+  margin: 5px 0;
+  background: #f0f4f8;
+  border-radius: 8px;
+  font-family: monospace;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
 .header h2 {
     color: #2c3e50;
     margin-bottom: 10px;
@@ -25,9 +51,10 @@
     margin-bottom: 20px;
     padding: 10px;
 }
+
 .logo:hover, #nombre:hover {
     cursor: pointer;
-  }
+}
 
 .select-field, .date-field {
     padding: 8px;
@@ -46,16 +73,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.log-entry {
-    padding: 8px;
-    margin: 5px 0;
-    background: #f0f4f8;
-    border-radius: 8px;
-}
-
 .disclaimer {
     margin-top: 20px;
-    font-size: 0.9rem;
+    font-size: 0.rem;
     color: #777;
     background: #e0e7ff;
     padding: 10px;
@@ -66,4 +86,51 @@
     margin-top: 15px;
     font-size: 0.8rem;
     color: #555;
+}
+
+/* Mejoras para la tabla de logs */
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* Fondo blanco para que se vea limpio */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+.logs-table th, .logs-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Línea sutil entre las filas */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Color de texto oscuro */
+}
+
+.logs-table th {
+    /* Fondo azul para los encabezados */
+    color: 007BFF; /* Texto blanco para el encabezado */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.logs-table td {
+    font-size: 0.8rem;
+    background-color: #f9f9f9; /* Fondo gris claro para las celdas */
+}
+
+.logs-table tr:nth-child(even) td {
+    background-color: #f1f1f1; /* Color alternativo para filas pares */
+}
+
+.logs-table tr:hover td {
+    background-color: #e0e7ff; /* Color suave al pasar el ratón sobre una fila */
+}
+
+.logs-table .empty-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #888;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
