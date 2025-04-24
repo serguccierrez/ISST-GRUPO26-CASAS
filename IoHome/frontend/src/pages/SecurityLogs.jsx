@@ -141,14 +141,14 @@ const SecurityLogs = () => {
           onChange={(e) => setPropiedadSeleccionada(e.target.value)}
           className="select-field"
         >
-          <option value="all">Seleccione una propiedad</option>
+          <option value="all">Todas mis propiedades</option>
           {propiedades.map((prop) => (
             <option key={prop.id} value={prop.id}>
               {prop.nombre} - {prop.direccion}
             </option>
           ))}
         </select>
-
+        <div>
         <label>Desde:</label>
         <input
           type="date"
@@ -164,6 +164,7 @@ const SecurityLogs = () => {
           onChange={(e) => setFechaFin(e.target.value)}
           className="date-field"
         />
+        </div>
       </div>
 
       <div className="logs-section">
