@@ -1,16 +1,12 @@
 package com.example.backend.controller;
 
-import com.example.backend.model.Cerradura;
+
 import com.example.backend.model.Evento;
 import com.example.backend.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.backend.repository.CerraduraRepository;
 import com.example.backend.repository.EventoRepository;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
