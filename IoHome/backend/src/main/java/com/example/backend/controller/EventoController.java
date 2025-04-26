@@ -41,9 +41,21 @@ public class EventoController {
     }
 
     @GetMapping("/all")
-    public List<Evento> obtenerTodosLosEventos() {
-        return eventoRepository.findAll();
+    public ResponseEntity<List<Evento>> obtenerEventosPorPropietario(@RequestParam Long ownerId) {
+        try {
+            List<Evento> eventos = eventoService.obtenerEventosPorPropietario(ownerId);
+            if (eventos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.ok(eventos);
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
     }
+
 
     @GetMapping("/{deviceId}")
     public ResponseEntity<List<Evento>> obtenerEventosPorDeviceId(@PathVariable String deviceId) {
