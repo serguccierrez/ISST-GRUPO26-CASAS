@@ -8,6 +8,7 @@ import com.example.backend.model.Cerradura;
 public interface EventoRepository extends JpaRepository<Evento, String> {
   List<Evento> findByCerradura(Cerradura cerradura);
 
+  List<Evento> findByCerraduraIn(List<Cerradura> cerraduras);
 
 
 }
