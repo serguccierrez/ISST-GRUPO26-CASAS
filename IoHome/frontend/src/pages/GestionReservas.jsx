@@ -83,13 +83,20 @@ const GestionReservas = () => {
             <h3>Reserva en {reserva.propiedad?.nombre}</h3>
             <div className="reserva-detalles">
               <p>Dirección: {reserva.propiedad?.direccion}</p>
-              <p>
-                Usuario: {reserva.usuario?.nombre} {reserva.usuario?.apellidos}{" "}
-                ({reserva.usuario?.correoElectronico})
-              </p>
+
+              {reserva.usuario ? (
+                <p>
+                  Usuario: {reserva.usuario?.nombre} {reserva.usuario?.apellidos} ({reserva.usuario?.correoElectronico})
+                </p>
+              ) : (
+                <p><strong>Usuario:</strong> No asignado aún</p>
+              )}
+
+
               <p>Fecha de Inicio: {reserva.fechaInicio}</p>
               <p>Fecha de Fin: {reserva.fechaFin}</p>
               <p>Observaciones: {reserva.observaciones}</p>
+              <p><strong>Token de acceso:</strong> {reserva.token || "No disponible"}</p> {/* NUEVO */}
             </div>
             <button id="Modificar" onClick={() => { handleEdit(reserva); scrollToModifyForm2(); }}>Modificar</button>
             <button onClick={() => handleEliminar(reserva.id)}>Eliminar</button>

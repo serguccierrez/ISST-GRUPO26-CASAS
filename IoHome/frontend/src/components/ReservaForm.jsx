@@ -18,7 +18,7 @@ const formatFecha = (fecha) => {
 
 
 const ReservaForm = ({ propiedades }) => {
-    const [correoUsuario, setCorreoUsuario] = useState("");
+    //const [correoUsuario, setCorreoUsuario] = useState("");
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
     const [observaciones, setObservaciones] = useState("");
@@ -28,8 +28,8 @@ const ReservaForm = ({ propiedades }) => {
         e.preventDefault();
         try {
             // Obtener el ID del usuario a partir del correo
-            const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
-            const usuarioId = usuario.id;
+            //const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
+            //const usuarioId = usuario.id;
     
             // Crear el objeto reserva con los datos necesarios
             const reserva = {
@@ -40,7 +40,7 @@ const ReservaForm = ({ propiedades }) => {
             console.log("Reserva a crear:", reserva);
     
             // Llamar al servicio para crear la reserva
-            await crearReserva(usuarioId, propiedadSeleccionada, reserva);
+            await crearReserva(propiedadSeleccionada, reserva);
             alert("Reserva creada con éxito");
         } catch (err) {
             alert("Error al crear la reserva: " + err.message);
@@ -49,15 +49,6 @@ const ReservaForm = ({ propiedades }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>Correo del Usuario:</label>
-            <input
-                type="email"
-                placeholder="Correo del usuario"
-                value={correoUsuario}
-                onChange={(e) => setCorreoUsuario(e.target.value)}
-                required
-            />
-
             <label>Propiedad:</label>
             <select
                 value={propiedadSeleccionada}

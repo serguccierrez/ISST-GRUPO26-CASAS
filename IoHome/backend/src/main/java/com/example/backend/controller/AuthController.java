@@ -30,9 +30,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Usuario login(@RequestBody Usuario usuario) {
-        return authService.login(usuario.getCorreoElectronico(), usuario.getTokenUsuario());
+    public ResponseEntity<?> loginUsuario(@RequestBody Map<String, String> loginData) {
+        String correo = loginData.get("correoElectronico");
+        String password = loginData.get("password");
+        try {
+            return ResponseEntity.ok(authService.loginUsuario(correo, password));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
+    
 
     @PostMapping("/register/propietario")
     public ResponseEntity<?> registrarPropietario(@RequestBody Propietario propietario) {

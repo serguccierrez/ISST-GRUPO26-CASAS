@@ -31,20 +31,20 @@ const OwnerHome = () => {
     <div className="owner-home">
       <header className="owner-header">
         <div className="navbar">
-                
-                  <img src={logo} alt="Logo" className="logo" />
-                  <h3>IoHome</h3>
-                  
-                  <button className="scroll-button" onClick={scrollToServices}>
-                    Servicios
-                  </button>
-                
-                <button onClick={redirigirHome}>🌐 </button>
-              
-                </div>
+
+          <img src={logo} alt="Logo" className="logo" />
+          <h3>IoHome</h3>
+
+          <button className="scroll-button" onClick={scrollToServices}>
+            Servicios
+          </button>
+
+          <button onClick={redirigirHome}>🌐 </button>
+
+        </div>
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
 
-        
+
 
 
         <p>Gestiona fácilmente tus propiedades, accesos y reservas desde un solo lugar.</p>
@@ -87,6 +87,12 @@ const OwnerHome = () => {
 
         </div>
       </section>
+
+      <div className="contact-button-container">
+        <button className="contact-button" onClick={() => window.location.href = "http://localhost:3000/contact"}>
+          📞 Contacta con nosotros
+        </button>
+      </div>
 
       <footer className="owner-footer">
         © 2025 IOHOME. Todos los derechos reservados

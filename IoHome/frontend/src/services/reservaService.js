@@ -9,8 +9,8 @@ export const obtenerReservas = async (propietarioId) => {
 
 // reservaService.js
 
-export const crearReserva = async (usuarioId, propiedadId, reserva) => {
-    const res = await fetch(`${API_BASE}/crear/${usuarioId}/${propiedadId}`, {
+export const crearReserva = async (propiedadId, reserva) => {
+    const res = await fetch(`${API_BASE}/crear/${propiedadId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reserva), // Solo enviar los campos de la reserva
@@ -36,8 +36,8 @@ export const eliminarReserva = async (reservaId) => {
 
 
 // reservaService.js
-export const actualizarReserva = async (usuarioId, propiedadId, reservaId, reserva) => {
-    const res = await fetch(`${API_BASE}/actualizar/${usuarioId}/${propiedadId}/${reservaId}`, {
+export const actualizarReserva = async (reservaId, reserva) => {
+    const res = await fetch(`${API_BASE}/actualizar/${reservaId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reserva),
@@ -45,6 +45,7 @@ export const actualizarReserva = async (usuarioId, propiedadId, reservaId, reser
     if (!res.ok) throw new Error("Error al actualizar la reserva");
     return res.json();
 };
+
 
 export const obtenerUltimaReservaActiva = async (usuarioId) => {
     const res = await fetch(`http://localhost:8080/api/reservas/usuario/${usuarioId}/ultima-activa`);
@@ -79,4 +80,26 @@ export const obtenerPropiedadDeUltimaReserva = async (usuarioId) => {
         console.error("Error al obtener la propiedad de la última reserva activa:", error.message);
         return null;
     }
+};
+
+
+// reservaService.js
+export const obtenerUltimaReservaActivaCompleta = async (usuarioId) => {
+    const res = await fetch(`http://localhost:8080/api/reservas/usuario/${usuarioId}/ultima-activa`);
+    if (!res.ok) {
+        const errorMessage = await res.text();
+        throw new Error(errorMessage);
+    }
+    return res.json(); // Devolver toda la reserva, no solo propiedad
+};
+
+export const asociarReservaPorToken = async (usuarioId, token) => {
+    const res = await fetch(`http://localhost:8080/api/reservas/asociar-por-token/${usuarioId}?token=${token}`, {
+        method: "POST",
+    });
+    if (!res.ok) {
+        const errorMessage = await res.text();
+        throw new Error(errorMessage || "Error al asociar la reserva por token");
+    }
+    return res.json();
 };

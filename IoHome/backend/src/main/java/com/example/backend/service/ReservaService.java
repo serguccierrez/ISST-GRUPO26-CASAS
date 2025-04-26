@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID; // importar arriba
 
 @Service
 public class ReservaService {
@@ -29,14 +30,19 @@ public class ReservaService {
 
     // Crear nueva reserva
     // ReservaService.java
-public Reserva crearReserva(Long usuarioId, Long propiedadId, Reserva reserva) {
-    Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+public Reserva crearReserva(Long propiedadId, Reserva reserva) {
+    //Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     Propiedad propiedad = propiedadRepository.findById(propiedadId).orElseThrow(() -> new RuntimeException("Propiedad no encontrada"));
     
-    reserva.setUsuario(usuario);
+    //reserva.setUsuario(usuario);
     reserva.setPropiedad(propiedad);
     reserva.setActiva(true);
     reserva.setFechaCreacion(LocalDateTime.now());
+
+    // 🔥 Generar un token aleatorio
+    String tokenGenerado = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); 
+    reserva.setToken(tokenGenerado);
+    
     return reservaRepository.save(reserva);
 }
 
@@ -111,7 +117,7 @@ public Reserva actualizarReserva(Long reservaId, Reserva reservaActualizada) {
             })
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 }
-
+/*
 public Reserva actualizarReserva(Long usuarioId, Long propiedadId, Long reservaId, Reserva reservaActualizada) {
     Usuario usuario = usuarioRepository.findById(usuarioId)
         .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -128,7 +134,7 @@ public Reserva actualizarReserva(Long usuarioId, Long propiedadId, Long reservaI
 
     return reservaRepository.save(reserva);
 }
-
+*/
 
 public Reserva obtenerUltimaReservaActiva(Long usuarioId) {
     List<Reserva> reservas = reservaRepository.findByUsuarioIdAndActivaTrue(usuarioId);
@@ -138,6 +144,19 @@ public Reserva obtenerUltimaReservaActiva(Long usuarioId) {
     return reservas.get(reservas.size() - 1); // Devuelve la última reserva activa
 }
 
+public Reserva asociarReservaPorToken(Long usuarioId, String token) {
+    List<Reserva> reservas = reservaRepository.findAll();
+    for (Reserva reserva : reservas) {
+        if (token.equals(reserva.getToken()) && reserva.getUsuario() == null) {
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            reserva.setUsuario(usuario);
+            return reservaRepository.save(reserva);
+        }
+    }
+    throw new RuntimeException("Token inválido o reserva ya asociada");
+}
 
 
 

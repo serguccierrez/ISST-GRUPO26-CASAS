@@ -17,7 +17,7 @@ const formatFecha = (fecha) => {
 };
 
 const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
-    const [correoUsuario, setCorreoUsuario] = useState(reserva.usuario?.correoElectronico);
+    //const [correoUsuario, setCorreoUsuario] = useState(reserva.usuario?.correoElectronico);
     const [propiedadSeleccionada, setPropiedadSeleccionada] = useState(reserva.propiedad?.id);
     const [fechaInicio, setFechaInicio] = useState(reserva.fechaInicio);
     const [fechaFin, setFechaFin] = useState(reserva.fechaFin);
@@ -47,8 +47,8 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
         e.preventDefault();
         try {
             // Obtener el ID del usuario a partir del correo ingresado
-            const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
-            const usuarioId = usuario.id;
+            //const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
+            //const usuarioId = usuario.id;
 
             const reservaActualizada = {
                 fechaInicio: formatFecha(fechaInicio),
@@ -56,7 +56,7 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
                 observaciones,
             };
 
-            await actualizarReserva(usuarioId, propiedadSeleccionada, reserva.id, reservaActualizada);
+            await actualizarReserva(reserva.id, reservaActualizada);
             alert("Reserva actualizada con éxito");
             onUpdate();
         } catch (err) {
@@ -67,14 +67,6 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
     return (
         <form onSubmit={handleSubmit}>
             <h3>Modificar Reserva</h3>
-            <label>Correo del Usuario:</label>
-            <input
-                type="email"
-                placeholder="Correo del usuario"
-                value={correoUsuario}
-                onChange={(e) => setCorreoUsuario(e.target.value)}
-                required
-            />
 
             <label>Propiedad:</label>
             <select
