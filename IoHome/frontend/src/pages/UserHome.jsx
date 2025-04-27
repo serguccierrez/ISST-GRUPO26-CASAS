@@ -135,7 +135,7 @@ const UserHome = () => {
             <span>Perfil y configuración</span>
             <button>GO</button>
           </div>
-          <div className="card" onClick={() => alert("Cerca de mí")}>
+          <div className="card" onClick={() => navigate("/usuario/CercaDeMi")}>
             <span>Cerca de mí</span>
             <button>GO</button>
           </div>
