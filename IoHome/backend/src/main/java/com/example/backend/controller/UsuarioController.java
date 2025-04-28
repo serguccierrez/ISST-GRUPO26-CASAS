@@ -4,6 +4,7 @@ import com.example.backend.model.Usuario;
 import com.example.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +28,8 @@ public class UsuarioController {
 
     // Actualizar perfil del usuario
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER')") // Solo USER puede actualizar su perfil
+
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioActualizado = usuarioService.actualizarUsuario(id, usuario);
         if (usuarioActualizado != null) {

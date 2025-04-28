@@ -26,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public Usuario registrarUsuario(@RequestBody Usuario usuario) {
+        usuario.setRol("USER"); // Asignar rol USER por defecto
         return authService.registrarUsuario(usuario);
     }
 
@@ -43,6 +44,7 @@ public class AuthController {
 
     @PostMapping("/register/propietario")
     public ResponseEntity<?> registrarPropietario(@RequestBody Propietario propietario) {
+        propietario.setRol("ADMIN"); // Asignar rol ADMIN por defecto
         try {
             return ResponseEntity.ok(authService.registrarPropietario(propietario));
         } catch (IllegalArgumentException e) {

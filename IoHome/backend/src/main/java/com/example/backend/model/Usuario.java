@@ -15,6 +15,7 @@ public class Usuario {
     private String correoElectronico;
     private String telefono;
     private String password;
+    private String rol = "USER"; // por defecto el rol es usuario
 
 
     // Consturctor vacio xq no neceesita spring para crear un usuario
@@ -65,4 +66,13 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
 }
