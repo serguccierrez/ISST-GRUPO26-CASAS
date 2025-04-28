@@ -12,6 +12,7 @@ import UnaCerradura from "./pages/UnaCerradura";
 import SecurityLogs from "./pages/SecurityLogs";
 import UserProfile from "./pages/UserProfile"; // Nueva importación
 import MiAlojamiento from "./pages/MiAlojamiento";
+import CercaDeMi from "./pages/CercaDeMi"; 
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
         <Route path="/cerradura/:id" element={<UnaCerradura />} />
         <Route path="/propietario/seguridad" element={<SecurityLogs />} />
         <Route path="/usuario/perfil" element={<UserProfile />} />
-        <Route path="/usuario/alojamiento" element={<MiAlojamiento />} />{" "}
+        <Route path="/usuario/alojamiento" element={<MiAlojamiento />} />
+        <Route path="/usuario/CercaDeMi" element={<CercaDeMi />} />{" "}
         {/* Nueva ruta */}
       </Routes>
     </Router>
