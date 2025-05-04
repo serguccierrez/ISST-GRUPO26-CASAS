@@ -108,14 +108,13 @@ const CercaDeMi = () => {
 
   const fetchNearbyPlaces = async (lat, lng) => {
     try {
-      const radius = 1000; // 30km radius
+      const radius = 30000; // 30km radius
       const query = `[out:json];
         (
           node(around:${radius},${lat},${lng})[amenity~"restaurant|cafe|pub|pharmacy"];
           node(around:${radius},${lat},${lng})[shop];
         );
         out body;`;
-        
       
       const response = await fetch(
         `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`
