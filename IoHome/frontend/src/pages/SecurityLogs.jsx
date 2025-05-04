@@ -112,6 +112,17 @@ const SecurityLogs = () => {
 
   }, [fechaInicio, fechaFin, eventosOriginales]); // Dependencias: fechaInicio, fechaFin y eventosOriginales
 
+
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+  };
+  
   return (
     <div className="security-container">
       <div className="navbar">
@@ -119,12 +130,16 @@ const SecurityLogs = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-propietario")}
+          onClick={() => navigate("/propietario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>
           IoHome
         </h3>
       </div>
+
+      <button className="logout-button" onClick={() => navigate("/")}>
+        Logout
+      </button>
 
       <div className="header">
         <h2>Seguridad y Control de Accesos</h2>

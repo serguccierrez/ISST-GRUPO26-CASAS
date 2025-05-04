@@ -27,6 +27,16 @@ const OwnerHome = () => {
     window.location.href = "http://localhost:3000/";
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
+
   return (
     <div className="owner-home">
       <header className="owner-header">
@@ -42,6 +52,10 @@ const OwnerHome = () => {
           <button onClick={redirigirHome}>🌐 </button>
 
         </div>
+
+        <button className="logout-button" onClick={handleLogout}>
+          Logout  
+        </button>
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
 
 

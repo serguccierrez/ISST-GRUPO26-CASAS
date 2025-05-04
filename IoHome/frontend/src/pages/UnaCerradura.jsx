@@ -155,6 +155,16 @@ const CerraduraDetalle = () => {
     return <div>Cargando detalles de la cerradura...</div>;
   }
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
+
   return (
     <div className="lock-container">
       <div className="lock-main">
@@ -163,12 +173,18 @@ const CerraduraDetalle = () => {
             src={logo}
             alt="Logo"
             className="logo"
-            onClick={() => navigate("/inicio-propietario")}
+            onClick={() => navigate("/propietario")}
           />
-          <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+          <h3 id="nombre" onClick={() => navigate("/propietario")}>
             IoHome
           </h3>
         </div>
+
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+        
         <div className="lock-card">
           <h2>Detalles de la Cerradura</h2>
           <h3>{selectedDevice.properties.name || "Sin nombre"}</h3>

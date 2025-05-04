@@ -24,6 +24,13 @@ export const registrarUsuario = (data) => fetch(`${API_BASE}/register`, {
   body: JSON.stringify(data)
 }).then(res => res.json());
 
+export const logout = () => {
+  return fetch("http://localhost:8080/api/auth/logout", {
+    method: "POST",
+    credentials: "include", // Incluye cookies si usas sesiones
+  });
+};
+
 export const registrarPropietario = (data) => fetch(`${API_BASE}/register/propietario`, {
   method: "POST",
   headers: { "Content-Type": "application/json" },

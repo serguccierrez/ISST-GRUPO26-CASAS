@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,14 @@ import com.example.backend.model.Propietario;
 import com.example.backend.model.Usuario;
 import com.example.backend.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173") // permite llamadas desde React
+//@CrossOrigin(origins = "http://localhost:5173") // permite llamadas desde React
 public class AuthController {
 
     @Autowired
@@ -40,7 +46,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
-    
 
     @PostMapping("/register/propietario")
     public ResponseEntity<?> registrarPropietario(@RequestBody Propietario propietario) {
@@ -71,6 +76,21 @@ public class AuthController {
     @GetMapping("/propietarios")
     public ResponseEntity<?> obtenerPropietarios() {
         return ResponseEntity.ok(authService.obtenerTodosLosPropietarios());
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextHolder.clearContext();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return ResponseEntity.ok("Logout exitoso");
     }
 
 }

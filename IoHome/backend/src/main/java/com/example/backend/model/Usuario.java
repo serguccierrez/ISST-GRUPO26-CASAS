@@ -15,7 +15,7 @@ public class Usuario {
     private String correoElectronico;
     private String telefono;
     private String password;
-    private String rol = "USER"; // por defecto el rol es usuario
+    private String rol = "ROLE_USER"; // por defecto el rol es usuario
 
 
     // Consturctor vacio xq no neceesita spring para crear un usuario

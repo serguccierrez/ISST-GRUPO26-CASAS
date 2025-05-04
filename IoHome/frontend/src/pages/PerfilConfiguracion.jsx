@@ -29,6 +29,16 @@ const PerfilConfiguracion = () => {
     }));
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
+
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -57,12 +67,17 @@ const PerfilConfiguracion = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-propietario")}
+          onClick={() => navigate("/propietario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>
           IoHome
         </h3>
       </div>
+
+      <button className="logout-button" onClick={() => navigate("/")}>
+        Logout
+        </button>
+
       <div className="perfil-card">
         <h2>Perfil y Configuración</h2>
         <div className="perfil-form">

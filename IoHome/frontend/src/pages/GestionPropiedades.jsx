@@ -77,12 +77,24 @@ const GestionPropiedades = () => {
     }
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
+
   return (
     <div className="gestion-container">
       <div className="navbar">
-        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/inicio-propietario")} />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>IoHome</h3>
+        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/propietario")} />
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
       </div>
+      <button onClick={handleLogout }>logout</button>
+
 
       <h2>Mis propiedades</h2>
       {propiedades.map((p, index) => (

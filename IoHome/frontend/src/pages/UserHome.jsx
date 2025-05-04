@@ -24,6 +24,16 @@ const UserHome = () => {
       validarReserva(usuario.id); // <--- NUEVA FUNCIÓN
     }
   }, []);
+  
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
 
   const validarReserva = async (usuarioId) => {
     try {
@@ -91,13 +101,15 @@ const UserHome = () => {
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
 
+
+          
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
 
           <button onClick={redirigirHome}>🌐 </button>
-
-        </div>
+          <button onClick={handleLogout }>logout</button>
+          </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
 
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>

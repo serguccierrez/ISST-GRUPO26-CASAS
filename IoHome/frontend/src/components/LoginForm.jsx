@@ -15,12 +15,12 @@ const LoginForm = ({ tipo }) => {
         const res = await loginUsuario({ correoElectronico, password });
         localStorage.setItem("usuario", JSON.stringify(res));
         //alert("Bienvenido usuario: " + res.nombre);
-        navigate("/inicio-usuario");
+        navigate("/usuario");
       } else {
         const res = await loginPropietario({ correoElectronico, password });
         localStorage.setItem("propietario", JSON.stringify(res));
         //alert("Bienvenido propietario: " + res.nombre);
-        navigate("/inicio-propietario");
+        navigate("/propietario");
       }
     } catch (err) {
       alert("Error: " + err.message);

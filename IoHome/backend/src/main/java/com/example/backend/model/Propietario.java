@@ -21,7 +21,7 @@ public class Propietario {
     private String correoElectronico;
     private String password;
     private String telefono;
-    private String rol = "ADMIN"; // por defecto el rol es propietario
+    private String rol = "ROLE_ADMIN"; // por defecto el rol es propietario
 
     public Propietario() {
     }
