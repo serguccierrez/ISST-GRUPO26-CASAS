@@ -115,6 +115,7 @@ const CercaDeMi = () => {
           node(around:${radius},${lat},${lng})[shop];
         );
         out body;`;
+        
       
       const response = await fetch(
         `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`
