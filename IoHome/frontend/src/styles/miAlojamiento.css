@@ -49,12 +49,20 @@
     color: #555;
 }
 
-.logout {
+.logout-button {
     position: absolute;
-    top: 20px; /* Ajusta según la altura deseada */
-    right: 20px; /* Ajusta según la distancia del borde derecho */
-    padding: 10px 20px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-    font-size: 16px; /* Tamaño de fuente */
-}
+    top: 20px; /* Ajusta según sea necesario */
+    right: 20px; /* Ajusta según sea necesario */
+    padding: 10px 15px;
+    background-color: #0245ff; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #0245ff; 
+  }

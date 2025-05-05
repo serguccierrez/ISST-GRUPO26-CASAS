@@ -1,6 +1,7 @@
 /* userHome.css */
 
 .user-home {
+    position: relative;
     max-width: 500px;
     margin: 30px auto;
     padding: 20px;
@@ -21,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 5px;
+    gap: 0px;
 }
 
 .logo {
@@ -225,14 +226,5 @@
   }
 
 
-  .logout {
-    position: absolute;
-    top: 20px; /* Ajusta según la altura deseada */
-    right: 20px; /* Ajusta según la distancia del borde derecho */
-    padding: 10px 20px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-    font-size: 16px; /* Tamaño de fuente */
-}
 
   

@@ -42,7 +42,7 @@ const MiAlojamiento = () => {
           IoHome
         </h3>
       </div>
-      <button onClick={handleLogout }>logout</button>
+      <button className="logout-button" onClick={handleLogout }>Logout</button>
 
       
       <h2>Mi Alojamiento</h2>

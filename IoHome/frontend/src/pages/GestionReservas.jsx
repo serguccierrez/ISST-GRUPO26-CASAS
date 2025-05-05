@@ -86,7 +86,7 @@ const GestionReservas = () => {
           IoHome
         </h3>
       </div>
-      <button onClick={handleLogout}>logout</button>
+      <button className= "logout-button" onClick={handleLogout}>Logout</button>
 
       <h2>Gestionar Reservas</h2>
       <div>

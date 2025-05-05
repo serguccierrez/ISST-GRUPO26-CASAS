@@ -24,7 +24,7 @@ return (
                 <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
             </div>
 
-            <button onClick={handleLogout}>logout</button>
+            <button className= "logout-button" onClick={handleLogout}>Logout</button>
             
             <h2>Mis cerraduras</h2>
             <SeamConnect/>

@@ -40,22 +40,21 @@ const OwnerHome = () => {
   return (
     <div className="owner-home">
       <header className="owner-header">
-        <div className="navbar">
+      <div className="navbar">
+   
+        <img src={logo} alt="Logo" className="logo" />
+        <h3>IoHome</h3>
 
-          <img src={logo} alt="Logo" className="logo" />
-          <h3>IoHome</h3>
-
-          <button className="scroll-button" onClick={scrollToServices}>
-            Servicios
-          </button>
-
-          <button onClick={redirigirHome}>🌐 </button>
-
-        </div>
-
-        <button className="logout-button" onClick={handleLogout}>
-          Logout  
+        <button className="scroll-button" onClick={scrollToServices}>
+          Servicios
         </button>
+
+        <button onClick={redirigirHome}>🌐 </button>
+        <button onClick={handleLogout }>Logout</button>
+        </div>
+             
+
+
         <h1>Bienvenido a IOHOME, {nombre || "propietario"}</h1>
 
 

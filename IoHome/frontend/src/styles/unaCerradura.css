@@ -161,6 +161,24 @@
   animation: fadeIn 2s ease-in-out infinite, bounce 1s infinite;
 }
 
+.logout-button {
+  position: absolute;
+  top: 20px; /* Ajusta según sea necesario */
+  right: 20px; /* Ajusta según sea necesario */
+  padding: 10px 15px;
+  background-color: #0245ff; /* Rojo para destacar */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #0245ff; /* Rojo más oscuro al pasar el cursor */
+}
+
 /* Efecto de desvanecimiento */
 @keyframes fadeIn {
   0% {

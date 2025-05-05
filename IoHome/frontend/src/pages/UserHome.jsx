@@ -101,15 +101,14 @@ const UserHome = () => {
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
 
-
-          
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
 
           <button onClick={redirigirHome}>🌐 </button>
-          <button onClick={handleLogout }>logout</button>
+          <button onClick={handleLogout }>Logout</button>
           </div>
+          
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
 
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>

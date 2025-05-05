@@ -72,11 +72,13 @@ const UserProfile = () => {
         <h3 id="nombre" onClick={() => navigate("/usuario")}>
           IoHome
         </h3>
-      </div>
-    
-      <button className="logout-button" onClick={handleLogout}>
+        <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>
+
+      </div>
+    
+
 
       <div className="perfil-card">
         <h2>Perfil y Configuración de Usuario</h2>

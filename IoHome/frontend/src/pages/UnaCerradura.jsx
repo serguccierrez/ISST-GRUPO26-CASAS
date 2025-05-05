@@ -177,14 +177,13 @@ const CerraduraDetalle = () => {
           />
           <h3 id="nombre" onClick={() => navigate("/propietario")}>
             IoHome
-          </h3>
+          </h3> 
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
 
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-
-        
+       
         <div className="lock-card">
           <h2>Detalles de la Cerradura</h2>
           <h3>{selectedDevice.properties.name || "Sin nombre"}</h3>
