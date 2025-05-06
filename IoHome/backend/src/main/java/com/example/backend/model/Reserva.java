@@ -25,6 +25,8 @@ public class Reserva {
 
     private String observaciones;
 
+    private String token; // 🔥 Nuevo campo
+
     @ManyToOne
     @JoinColumn(name = "propiedad_id")
     private Propiedad propiedad;
@@ -101,6 +103,9 @@ public class Reserva {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
 
     // Getters y Setters
 }

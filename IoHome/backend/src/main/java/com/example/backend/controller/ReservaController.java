@@ -18,18 +18,16 @@ public class ReservaController {
     private ReservaService reservaService;
 
     // ReservaController.java
-    @PostMapping("/crear/{usuarioId}/{propiedadId}")
-    public ResponseEntity<Reserva> crearReserva(
-        @PathVariable Long usuarioId,
-        @PathVariable Long propiedadId,
-        @RequestBody Reserva reserva) {
-    try {
-        Reserva nuevaReserva = reservaService.crearReserva(usuarioId, propiedadId, reserva);
-        return ResponseEntity.ok(nuevaReserva);
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body(null);
+    @PostMapping("/crear/{propiedadId}")
+    public ResponseEntity<Reserva> crearReserva(@PathVariable Long propiedadId, @RequestBody Reserva reserva) {
+        try {
+            Reserva nuevaReserva = reservaService.crearReserva(propiedadId, reserva);
+            return ResponseEntity.ok(nuevaReserva);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
+    
 
 
     // Obtener todas las reservas activas de un usuario
@@ -117,8 +115,7 @@ public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long reservaId, @
         return ResponseEntity.notFound().build();
     }
 }
-
-// Actualizar una reserva
+/*
 @PutMapping("/actualizar/{usuarioId}/{propiedadId}/{reservaId}")
 public ResponseEntity<Reserva> actualizarReserva(
     @PathVariable Long usuarioId,
@@ -132,6 +129,7 @@ public ResponseEntity<Reserva> actualizarReserva(
         return ResponseEntity.badRequest().body(null);
     }
 }
+*/
 
 // Obtener la última reserva activa de un usuario
 @GetMapping("/usuario/{usuarioId}/ultima-activa")
@@ -141,6 +139,16 @@ public ResponseEntity<Reserva> obtenerUltimaReservaActiva(@PathVariable Long usu
         return ResponseEntity.ok(reserva);
     } catch (Exception e) {
         return ResponseEntity.notFound().build();
+    }
+}
+
+@PostMapping("/asociar-por-token/{usuarioId}")
+public ResponseEntity<Reserva> asociarReservaPorToken(@PathVariable Long usuarioId, @RequestParam String token) {
+    try {
+        Reserva reserva = reservaService.asociarReservaPorToken(usuarioId, token);
+        return ResponseEntity.ok(reserva);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
     }
 }
 

@@ -52,7 +52,7 @@ Sigue estos pasos para instalar y ejecutar el proyecto:
 ```sh
 -Opcion 1
 cd IoHome/frontend
-npm install
+npm install --legacy-peer-deps 
 npm run dev
 
 -Opcion 2
@@ -141,7 +141,7 @@ Follow these steps to install and run the project
 ```sh
   -Option 1
   cd IoHome/frontend
-  npm install
+  npm install --legacy-peer-deps
   npm run dev
 
   -Option 2

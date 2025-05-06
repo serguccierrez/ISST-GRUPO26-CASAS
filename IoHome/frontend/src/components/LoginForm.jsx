@@ -12,13 +12,13 @@ const LoginForm = ({ tipo }) => {
     e.preventDefault();
     try {
       if (tipo === "usuario") {
-        const res = await loginUsuario({ correoElectronico, tokenUsuario });
+        const res = await loginUsuario({ correoElectronico, password });
         localStorage.setItem("usuario", JSON.stringify(res));
         //alert("Bienvenido usuario: " + res.nombre);
         navigate("/inicio-usuario");
       } else {
         const res = await loginPropietario({ correoElectronico, password });
-        localStorage.setItem("propietario", JSON.stringify(res)); 
+        localStorage.setItem("propietario", JSON.stringify(res));
         //alert("Bienvenido propietario: " + res.nombre);
         navigate("/inicio-propietario");
       }
@@ -37,23 +37,14 @@ const LoginForm = ({ tipo }) => {
         onChange={(e) => setCorreo(e.target.value)}
         required
       />
-      {tipo === "usuario" ? (
-        <input
-          type="number"
-          placeholder="Token"
-          value={tokenUsuario}
-          onChange={(e) => setTokenUsuario(e.target.value)}
-          required
-        />
-      ) : (
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      )}
+      <input
+        type="password"
+        placeholder="Contraseña"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+
       <button type="submit">Iniciar sesión</button>
     </form>
   );

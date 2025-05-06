@@ -10,4 +10,5 @@ import java.util.List;
 public interface CerraduraRepository extends JpaRepository<Cerradura, String> {
     Cerradura findByPropiedad(Propiedad propiedad);
     List<Cerradura> findByPropietario(Propietario propietario);
+    
 }

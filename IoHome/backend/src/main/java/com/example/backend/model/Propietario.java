@@ -3,6 +3,7 @@ package com.example.backend.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -20,6 +21,7 @@ public class Propietario {
     private String correoElectronico;
     private String password;
     private String telefono;
+    private String rol = "ADMIN"; // por defecto el rol es propietario
 
     public Propietario() {
     }
@@ -79,6 +81,15 @@ public class Propietario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
 
     // relación con propiedad
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)

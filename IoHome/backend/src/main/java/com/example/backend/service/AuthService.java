@@ -24,15 +24,17 @@ public class AuthService {
         }
         return usuarioRepository.save(usuario);
     }
-
-    public Usuario login(String correoElectronico, int tokenUsuario) {
-        Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
-        if (usuario.isPresent() && usuario.get().getTokenUsuario() == tokenUsuario) {
-            return usuario.get();
-        } else {
-            throw new IllegalArgumentException("Credenciales inválidas");
+    public Usuario loginUsuario(String correo, String password) {
+        Usuario usuario = usuarioRepository.findByCorreoElectronico(correo)
+            .orElseThrow(() -> new IllegalArgumentException("Correo electrónico no encontrado"));
+    
+        if (!usuario.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Contraseña incorrecta");
         }
+    
+        return usuario;
     }
+    
 
     @Autowired
     private PropietarioRepository propietarioRepository;

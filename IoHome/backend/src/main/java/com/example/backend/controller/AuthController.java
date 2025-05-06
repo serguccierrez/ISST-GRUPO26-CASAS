@@ -26,16 +26,25 @@ public class AuthController {
 
     @PostMapping("/register")
     public Usuario registrarUsuario(@RequestBody Usuario usuario) {
+        usuario.setRol("USER"); // Asignar rol USER por defecto
         return authService.registrarUsuario(usuario);
     }
 
     @PostMapping("/login")
-    public Usuario login(@RequestBody Usuario usuario) {
-        return authService.login(usuario.getCorreoElectronico(), usuario.getTokenUsuario());
+    public ResponseEntity<?> loginUsuario(@RequestBody Map<String, String> loginData) {
+        String correo = loginData.get("correoElectronico");
+        String password = loginData.get("password");
+        try {
+            return ResponseEntity.ok(authService.loginUsuario(correo, password));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
+    
 
     @PostMapping("/register/propietario")
     public ResponseEntity<?> registrarPropietario(@RequestBody Propietario propietario) {
+        propietario.setRol("ADMIN"); // Asignar rol ADMIN por defecto
         try {
             return ResponseEntity.ok(authService.registrarPropietario(propietario));
         } catch (IllegalArgumentException e) {
