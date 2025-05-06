@@ -1,13 +1,41 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ownerHome.css";
-import CalendarView from "../components/CalendarView";
 import logo from "../assets/logo.png";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import moment from 'moment';
+
+const localizer = momentLocalizer(moment);
 
 const OwnerHome = () => {
   const [nombre, setNombre] = useState("");
+  const [prop, setProp] = useState(null);
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const navigate = useNavigate();
   const servicesRef = useRef(null);
+
+  const login = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/calendar.readonly",
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        setProp(tokenResponse);
+        setCalendarEvents(res.data.items);
+      } catch (err) {
+        console.error("Error al obtener eventos del calendario", err);
+      }
+    },
+  });
 
   useEffect(() => {
     const data = localStorage.getItem("propietario");
@@ -16,6 +44,12 @@ const OwnerHome = () => {
       setNombre(propietario.nombre);
     }
   }, []);
+
+  const formattedEvents = calendarEvents.map(ev => ({
+    title: ev.summary,
+    start: new Date(ev.start.dateTime || ev.start.date),
+    end: new Date(ev.end?.dateTime || ev.start.date),
+  }));
 
   const scrollToServices = () => {
     if (servicesRef.current) {
@@ -48,7 +82,23 @@ const OwnerHome = () => {
 
 
         <p>Gestiona fácilmente tus propiedades, accesos y reservas desde un solo lugar.</p>
-        <CalendarView />
+        <section className="user-calendar">
+                <h2>Mi Google Calendar</h2>
+                {!prop ? (
+                  <button onClick={login}>Conectar con Google</button>
+                ) : (
+                  <div>
+                    <button onClick={() => { googleLogout(); setProp(null); }}>Cerrar sesión</button>
+                    <Calendar
+                      localizer={localizer}
+                      events={formattedEvents}
+                      startAccessor="start"
+                      endAccessor="end"
+                      style={{ height: 600 }}
+                    />
+                  </div>
+                )}
+              </section>
       </header>
 
 

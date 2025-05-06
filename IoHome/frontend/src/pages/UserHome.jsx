@@ -5,6 +5,13 @@ import "../styles/userHome.css";
 import logo from "../assets/logo.png";
 import CerraduraUsuario from "../components/CerraduraUsuario"; // Asegúrate de la ruta correcta
 import { obtenerUltimaReservaActivaCompleta, asociarReservaPorToken } from "../services/reservaService";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import moment from 'moment';
+
+const localizer = momentLocalizer(moment);
 
 const UserHome = () => {
   const [nombre, setNombre] = useState("");
@@ -12,8 +19,30 @@ const UserHome = () => {
   const [mostrarCerradura, setMostrarCerradura] = useState(false); // <--- NUEVO ESTADO
   const [token, setToken] = useState(""); // <-- NUEVO ESTADO PARA TOKEN
   const [errorToken, setErrorToken] = useState(""); // <-- NUEVO ESTADO PARA ERRORES
+  const [user, setUser] = useState(null);
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const navigate = useNavigate();
   const servicesRef = useRef(null);
+
+  const login = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/calendar.readonly",
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        setUser(tokenResponse);
+        setCalendarEvents(res.data.items);
+      } catch (err) {
+        console.error("Error al obtener eventos del calendario", err);
+      }
+    },
+  });
 
   useEffect(() => {
     const data = localStorage.getItem("usuario");
@@ -83,25 +112,25 @@ const UserHome = () => {
     window.location.href = "http://localhost:3000/";
   };
 
+  const formattedEvents = calendarEvents.map(ev => ({
+    title: ev.summary,
+    start: new Date(ev.start.dateTime || ev.start.date),
+    end: new Date(ev.end?.dateTime || ev.start.date),
+  }));
+
   return (
     <div className="user-home">
       <header className="user-header">
         <div className="navbar">
-
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
-
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
-
           <button onClick={redirigirHome}>🌐 </button>
-
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
-
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
-
 
         <div className="infolock">
           {usuarioId && mostrarCerradura ? (
@@ -123,10 +152,27 @@ const UserHome = () => {
               </div>
               {errorToken && <p className="token-error">{errorToken}</p>}
             </div>
-
           )}
         </div>
-      </header >
+      </header>
+
+      <section className="user-calendar">
+        <h2>Mi Google Calendar</h2>
+        {!user ? (
+          <button onClick={login}>Conectar con Google</button>
+        ) : (
+          <div>
+            <button onClick={() => { googleLogout(); setUser(null); }}>Cerrar sesión</button>
+            <Calendar
+              localizer={localizer}
+              events={formattedEvents}
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: 600 }}
+            />
+          </div>
+        )}
+      </section>
 
       <section ref={servicesRef} className="user-services">
         <h2>Servicios</h2>
@@ -155,7 +201,7 @@ const UserHome = () => {
       <footer className="user-footer">
         © 2025 IOHOME. Todos los derechos reservados
       </footer>
-    </div >
+    </div>
   );
 };
 
