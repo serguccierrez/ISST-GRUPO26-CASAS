@@ -17,16 +17,7 @@ const SecurityLogs = () => {
   const [prop, setProp] = useState('null');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const propietario = JSON.parse(localStorage.getItem("propietario"));
-    setProp(propietario);
-    if (propietario?.id) {
-      obtenerPropiedades(propietario.id)
-        .then(setPropiedades)
-        .catch((err) => console.error("Error al obtener propiedades", err));
-      events(propietario.id);
-    }
-  }, []);
+  
 
   const events = async (id = prop?.id) => {
     try {
@@ -44,6 +35,18 @@ const SecurityLogs = () => {
       console.error("Error al obtener eventos:", error);
     }
   };
+
+useEffect(() => {
+    const propietario = JSON.parse(localStorage.getItem("propietario"));
+    setProp(propietario);
+    if (propietario?.id) {
+      obtenerPropiedades(propietario.id)
+        .then(setPropiedades)
+        .catch((err) => console.error("Error al obtener propiedades", err));
+        console.log(propietario.id);
+      events(propietario.id);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchDeviceAndEvents = async () => {

@@ -40,8 +40,8 @@ public class EventoController {
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Evento>> obtenerEventosPorPropietario(@RequestParam Long ownerId) {
+    @GetMapping("/all/{ownerId}")
+    public ResponseEntity<List<Evento>> obtenerEventosPorPropietario(@PathVariable Long ownerId) {
         try {
             List<Evento> eventos = eventoService.obtenerEventosPorPropietario(ownerId);
             if (eventos.isEmpty()) {
