@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.model.Propietario;
@@ -17,18 +18,23 @@ public class AuthService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Usuario registrarUsuario(Usuario usuario) {
         // Comprobamos si ya existe alguien con ese correo
         if (usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico()).isPresent()) {
             throw new IllegalArgumentException("El correo ya está registrado");
         }
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
+
     public Usuario loginUsuario(String correo, String password) {
         Usuario usuario = usuarioRepository.findByCorreoElectronico(correo)
             .orElseThrow(() -> new IllegalArgumentException("Correo electrónico no encontrado"));
     
-        if (!usuario.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, usuario.getPassword())) {
             throw new IllegalArgumentException("Contraseña incorrecta");
         }
     
@@ -43,12 +49,13 @@ public class AuthService {
         if (propietarioRepository.findByCorreoElectronico(propietario.getCorreoElectronico()).isPresent()) {
             throw new IllegalArgumentException("El correo ya está registrado como propietario");
         }
+        propietario.setPassword(passwordEncoder.encode(propietario.getPassword()));
         return propietarioRepository.save(propietario);
     }
 
     public Propietario loginPropietario(String correo, String password) {
         Optional<Propietario> propietario = propietarioRepository.findByCorreoElectronico(correo);
-        if (propietario.isPresent() && propietario.get().getPassword().equals(password)) {
+        if (propietario.isPresent() && passwordEncoder.matches(password, propietario.get().getPassword())) {
             return propietario.get();
         } else {
             throw new IllegalArgumentException("Credenciales inválidas para propietario");
