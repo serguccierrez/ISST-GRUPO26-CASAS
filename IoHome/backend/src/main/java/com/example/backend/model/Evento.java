@@ -23,7 +23,7 @@ public class Evento {
 
     private String actionType;
 
-    @JsonFormat(pattern = "yyyy-dd-MM HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime occurredAt;
 
     public Evento() {
