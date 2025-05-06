@@ -14,30 +14,39 @@ const SecurityLogs = () => {
   const [eventos, setEventos] = useState([]); // Eventos filtrados
   const [eventosOriginales, setEventosOriginales] = useState([]); // Guardar los eventos originales
   const [mensajeError, setMensajeError] = useState("");
+  const [prop, setProp] = useState('null');
   const navigate = useNavigate();
 
-  useEffect(() => {
+  
+
+  const events = async (id = prop?.id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/eventos/all/${id}`);
+      if (!response.ok)
+        throw new Error("No se pudo obtener la lista de eventos");
+      const data = await response.json();
+
+      // Ordena los eventos por fecha (más reciente primero)
+      const eventosOrdenados = data.sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt));
+      
+      setEventosOriginales(eventosOrdenados); // Guardamos los eventos originales ordenados
+      setEventos(eventosOrdenados); // Establecemos los eventos filtrados inicialmente
+    } catch (error) {
+      console.error("Error al obtener eventos:", error);
+    }
+  };
+
+useEffect(() => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
+    setProp(propietario);
     if (propietario?.id) {
       obtenerPropiedades(propietario.id)
         .then(setPropiedades)
         .catch((err) => console.error("Error al obtener propiedades", err));
-      events();
+        console.log(propietario.id);
+      events(propietario.id);
     }
   }, []);
-
-  const events = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/eventos/all");
-      if (!response.ok)
-        throw new Error("No se pudo obtener la lista de eventos");
-      const data = await response.json();
-      setEventosOriginales(data.reverse()); // Guardamos los eventos originales
-      setEventos(data.reverse()); // Establecemos los eventos filtrados inicialmente
-    } catch (error) {
-      console.error("Error al obtener dispositivos:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchDeviceAndEvents = async () => {
@@ -74,14 +83,15 @@ const SecurityLogs = () => {
           setMensajeError("No hay eventos disponibles para esta cerradura.");
         }
 
-        setEventosOriginales(eventosData.reverse()); // Guardamos los eventos originales
-        setEventos(eventosData.reverse()); // Establecemos los eventos filtrados
+        // Ordena los eventos por fecha (más reciente primero)
+        const eventosOrdenados = eventosData.sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt));
+
+        setEventosOriginales(eventosOrdenados); // Guardamos los eventos originales ordenados
+        setEventos(eventosOrdenados); // Establecemos los eventos filtrados
       } catch (error) {
         console.error("Error al obtener dispositivo o eventos:", error);
         setEventos([]);
-        setMensajeError(
-          "No se pudo obtener la cerradura asociada a la propiedad."
-        );
+        setMensajeError("No se pudo obtener la cerradura asociada a la propiedad.");
       }
     };
 
@@ -90,22 +100,22 @@ const SecurityLogs = () => {
 
   // Este useEffect se dispara cuando cambian las fechas de inicio o fin
   useEffect(() => {
-    if (!fechaInicio) return; // Si no hay fecha de inicio, no hacer nada
+    if (!fechaInicio && !fechaFin) {
+      setEventos(eventosOriginales); // Si no hay fechas, mostrar todos los eventos
+      return;
+    }
 
     // Filtrar los eventos según las fechas seleccionadas
-    const fechaInicioTimestamp = new Date(fechaInicio).getTime();
+    const fechaInicioTimestamp = fechaInicio ? new Date(fechaInicio).getTime() : 0;
     const fechaFinTimestamp = fechaFin ? new Date(fechaFin).getTime() : Date.now(); // Si no hay fecha fin, usar el tiempo actual
 
-    // Suponiendo que los eventos están ordenados por 'occurredAt', puedes optimizar el filtrado
-    const eventosFiltrados = [];
-    for (const evento of eventosOriginales) { // Filtramos sobre los eventos originales
+    // Filtrar eventos dentro del rango de fechas
+    const eventosFiltrados = eventosOriginales.filter((evento) => {
       const eventoTimestamp = new Date(evento.occurredAt).getTime();
-
-      if (eventoTimestamp > fechaFinTimestamp) break; // Si el evento está fuera del rango, detenemos el bucle
-      if (eventoTimestamp >= fechaInicioTimestamp) {
-        eventosFiltrados.push(evento); // Agregar solo los eventos dentro del rango
-      }
-    }
+      return (
+        eventoTimestamp >= fechaInicioTimestamp && eventoTimestamp <= fechaFinTimestamp
+      );
+    });
 
     // Actualizar el estado de los eventos filtrados
     setEventos(eventosFiltrados);

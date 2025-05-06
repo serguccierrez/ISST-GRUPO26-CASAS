@@ -32,7 +32,7 @@ IoHome también ofrece funcionalidades adicionales como la integración con **Go
 - 📦 **Maven** → Gestión de dependencias.
 - 🌐 **REST API** → Comunicación con dispositivos.
 - 📅 **Google Calendar API** → Integración para gestión de reservas.
-- 🖥 **Frontend web** (TODO: Agregar detalles de la tecnología utilizada).
+- 🖥 **Frontend web** → REACT.
 
 ---
 

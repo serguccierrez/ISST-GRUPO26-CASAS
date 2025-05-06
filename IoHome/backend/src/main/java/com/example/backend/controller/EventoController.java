@@ -40,8 +40,8 @@ public class EventoController {
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Evento>> obtenerEventosPorPropietario(@RequestParam Long ownerId) {
+    @GetMapping("/all/{ownerId}")
+    public ResponseEntity<List<Evento>> obtenerEventosPorPropietario(@PathVariable Long ownerId) {
         try {
             List<Evento> eventos = eventoService.obtenerEventosPorPropietario(ownerId);
             if (eventos.isEmpty()) {
@@ -65,6 +65,18 @@ public class EventoController {
         } else {
             return ResponseEntity.ok(eventos);
         }
-    }
 
+        
+    }
+    @DeleteMapping("elimina/{id}")
+    public ResponseEntity<Void> eliminarEvento(@PathVariable String id) {
+        try {
+            eventoRepository.deleteById(id);
+            return ResponseEntity.noContent().build(); // Retorna 204 No Content si se elimina correctamente
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(null); // Retorna 404 si no se encuentra el evento
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null); // Manejo de otros errores
+        }
+    }
 }
