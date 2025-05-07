@@ -5,7 +5,6 @@ import logo from "../assets/logo.jpg";
 
 
 
-
 const AuthSwitcher = () => {
   const [tipo, setTipo] = useState("usuario"); // "usuario" o "propietario"
   const [vista, setVista] = useState("login"); // "login" o "register"
