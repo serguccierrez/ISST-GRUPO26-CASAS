@@ -24,8 +24,8 @@ jobs:
 
       - name: Run Postman tests
         run: |
-          newman run test/cerraduras-api.postman_collection.json \
-            --environment test/entorno.postman_environment.json \
+          newman run test/IoHome.postman_collection.json \
+            --environment test/IoHome.postman_environment.json \
             --reporters cli,json \
             --reporter-json-export test/report.json
 
