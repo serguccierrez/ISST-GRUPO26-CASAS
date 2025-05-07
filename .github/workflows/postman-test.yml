@@ -25,7 +25,7 @@ jobs:
       - name: Run Postman tests
         run: |
           newman run loHome/test/IoHome.postman_collection.json \
-            --environment loHome/test/IoHome.postman_environment.json \
+            --environment loHome/test/loHome.postman_environment.json \
             --reporters cli,json \
             --reporter-json-export loHome/test/report.json
 
