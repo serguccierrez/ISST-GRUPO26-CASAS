@@ -50,6 +50,26 @@ const UserProfile = () => {
     }
   };
 
+  const deleteUser = async () => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?")) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/usuarios/${usuario.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) throw new Error("Error al eliminar el usuario");
+        alert("Usuario eliminado correctamente");
+        localStorage.removeItem("usuario");
+        navigate("/login");
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+  }
+
   return (
     <div className="perfil-container">
       <div className="navbar">
@@ -94,6 +114,8 @@ const UserProfile = () => {
           />
 
           <button onClick={handleSave}>Guardar Cambios</button>
+
+          <button className="delete-button" onClick={deleteUser}>Eliminar Usuario</button>
         </div>
       </div>
     </div>

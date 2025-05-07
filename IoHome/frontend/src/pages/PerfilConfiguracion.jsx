@@ -29,6 +29,24 @@ const PerfilConfiguracion = () => {
     }));
   };
 
+  const deleteUser = async () => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?")) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/propietarios/${propietario.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (!response.ok) throw new Error("Error al eliminar el usuario");
+        alert("Usuario eliminado correctamente");
+        localStorage.removeItem("propietario"); // Elimina el propietario de localStorage
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+  };
+
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -98,6 +116,7 @@ const PerfilConfiguracion = () => {
           />
 
           <button onClick={handleSave}>Guardar Cambios</button>
+          <button className="delete-button" onClick={deleteUser}>Eliminar Usuario</button>
         </div>
       </div>
     </div>

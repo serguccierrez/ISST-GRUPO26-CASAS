@@ -71,12 +71,14 @@ public class EventoController {
     @DeleteMapping("elimina/{id}")
     public ResponseEntity<Void> eliminarEvento(@PathVariable String id) {
         try {
-            eventoRepository.deleteById(id);
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content si se elimina correctamente
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(null); // Retorna 404 si no se encuentra el evento
+            if (eventoRepository.existsById(id)) {
+                eventoRepository.deleteById(id);
+                return ResponseEntity.noContent().build(); // Retorna 204 No Content si se elimina correctamente
+            } else {
+                return ResponseEntity.status(404).build(); // Retorna 404 si no se encuentra el evento
+            }
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Manejo de otros errores
+            return ResponseEntity.status(500).build(); // Manejo de otros errores
         }
     }
 }
