@@ -14,12 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -30,23 +24,24 @@ jobs:
 
       - name: Build Spring Boot backend
         run: mvn clean install -DskipTests
-        working-directory: ISST-GRUPO26-CASAS/backend
+        working-directory: IoHome/backend
+
 
       - name: Start backend in background
         run: |
-          nohup mvn spring-boot:run &> spring.log &
-          sleep 30
-        working-directory: ISST-GRUPO26-CASAS/backend
+           nohup mvn spring-boot:run &> spring.log &
+            sleep 30
+        working-directory: IoHome/backend    
 
       - name: Run Postman tests
         run: |
-          newman run ISST-GRUPO26-CASAS/test/IoHome.postman_collection.json \
-            --environment ISST-GRUPO26-CASAS/test/loHome.postman_environment.json \
+          newman run IoHome/test/IoHome.postman_collection.json \
+            --environment IoHome/test/IoHome.postman_environment.json \
             --reporters cli,json \
-            --reporter-json-export ISST-GRUPO26-CASAS/test/report.json
+            --reporter-json-export loHome/test/report.json
 
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: newman-report
-          path: ISST-GRUPO26-CASAS/test/report.json
+          path: loHome/test/report.json
