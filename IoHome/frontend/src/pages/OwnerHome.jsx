@@ -155,7 +155,7 @@ const OwnerHome = () => {
                   <button onClick={login}>Conectar con Google</button>
                 ) : (
                   <div>
-                    <button onClick={() => { googleLogout(); setProp(null); }}>Cerrar sesión</button>
+                    
                     <Calendar
                       localizer={localizer}
                       events={formattedEvents}
@@ -163,6 +163,7 @@ const OwnerHome = () => {
                       endAccessor="end"
                       style={{ height: 600 }}
                     />
+                    <button onClick={() => { googleLogout(); setProp(null); }}>Cerrar sesión</button>
                   </div>
                 )}
               </section>
