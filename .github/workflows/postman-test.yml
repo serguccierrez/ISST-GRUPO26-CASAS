@@ -30,23 +30,23 @@ jobs:
 
       - name: Build Spring Boot backend
         run: mvn clean install -DskipTests
-        working-directory: backend
+        working-directory: ISST-GRUPO26-CASAS/backend
 
       - name: Start backend in background
         run: |
           nohup mvn spring-boot:run &> spring.log &
           sleep 30
-        working-directory: backend
+        working-directory: ISST-GRUPO26-CASAS/backend
 
       - name: Run Postman tests
         run: |
-          newman run test/IoHome.postman_collection.json \
-            --environment test/loHome.postman_environment.json \
+          newman run ISST-GRUPO26-CASAS/test/IoHome.postman_collection.json \
+            --environment ISST-GRUPO26-CASAS/test/loHome.postman_environment.json \
             --reporters cli,json \
-            --reporter-json-export test/report.json
+            --reporter-json-export ISST-GRUPO26-CASAS/test/report.json
 
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: newman-report
-          path: test/report.json
+          path: ISST-GRUPO26-CASAS/test/report.json
