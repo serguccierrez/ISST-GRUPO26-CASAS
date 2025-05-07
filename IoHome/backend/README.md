@@ -16,7 +16,6 @@
 - 📡 **Spring Web** → API REST.
 - 🌐 **Swagger/OpenAPI** → Documentación de la API.
 - 🔑 **JWT (JSON Web Token)** → Autenticación segura.
-- 📅 **Google Calendar API** → Integración de reservas.
 
 ---
 
@@ -125,7 +124,6 @@ Modelos de datos utilizados en la aplicación:
 - 📡 **Spring Web** → REST API.
 - 🌐 **Swagger/OpenAPI** → API documentation.
 - 🔑 **JWT (JSON Web Token)** → Secure authentication.
-- 📅 **Google Calendar API** → Reservation integration.
 
 ---
 
