@@ -108,7 +108,7 @@ const CercaDeMi = () => {
 
   const fetchNearbyPlaces = async (lat, lng) => {
     try {
-      const radius = 30000; // 30km radius
+      const radius = 800; // 30km radius
       const query = `[out:json];
         (
           node(around:${radius},${lat},${lng})[amenity~"restaurant|cafe|pub|pharmacy"];
