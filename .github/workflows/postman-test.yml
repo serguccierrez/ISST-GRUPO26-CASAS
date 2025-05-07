@@ -24,13 +24,13 @@ jobs:
 
       - name: Run Postman tests
         run: |
-          newman run test/IoHome.postman_collection.json \
-            --environment test/IoHome.postman_environment.json \
+          newman run loHome/test/IoHome.postman_collection.json \
+            --environment loHome/test/IoHome.postman_environment.json \
             --reporters cli,json \
-            --reporter-json-export test/report.json
+            --reporter-json-export loHome/test/report.json
 
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: newman-report
-          path: test/report.json
+          path: loHome/test/report.json
