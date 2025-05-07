@@ -14,6 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -22,15 +28,25 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
+      - name: Build Spring Boot backend
+        run: mvn clean install -DskipTests
+        working-directory: iohome/backend
+
+      - name: Start backend in background
+        run: |
+          nohup mvn spring-boot:run &> spring.log &
+          sleep 30
+        working-directory: iohome/backend
+
       - name: Run Postman tests
         run: |
-          newman run IoHome/test/IoHome.postman_collection.json \
-            --environment IoHome/test/IoHome.postman_environment.json \
+          newman run iohome/test/IoHome.postman_collection.json \
+            --environment iohome/test/loHome.postman_environment.json \
             --reporters cli,json \
-            --reporter-json-export loHome/test/report.json
+            --reporter-json-export iohome/test/report.json
 
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: newman-report
-          path: loHome/test/report.json
+          path: iohome/test/report.json
