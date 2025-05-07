@@ -8,7 +8,7 @@
 
 IoHome es una plataforma web diseñada para la gestión de alojamientos turísticos mediante **cerraduras inteligentes**. Permite a los propietarios administrar accesos de manera remota y segura a través de una interfaz intuitiva y una API REST. Además, los huéspedes pueden gestionar la apertura y cierre de las cerraduras del alojamiento al que están intentando acceder. 
 
-IoHome también ofrece funcionalidades adicionales como la integración con **Google Calendar**, gestión de reservas, recomendaciones de actividades cercanas al alojamiento y administración avanzada de usuarios.
+IoHome también ofrece funcionalidades adicionales como la integración con **Google Calendar**, gestión de reservas, recomendacion de lugares cercanas al alojamiento y administración avanzada de usuarios.
 
 ---
 
@@ -97,7 +97,7 @@ IoHome/
 
 IoHome is a web platform designed for managing tourist accommodations using **smart locks**. It allows property owners to remotely and securely manage access through an intuitive interface and a REST API. Additionally, guests can control the opening and closing of the locks of the accommodation they are trying to access.
 
-IoHome also offers additional features such as **Google Calendar** integration, reservation management, nearby activity recommendations, and advanced user administration.
+IoHome also offers additional features such as **Google Calendar** integration, reservation management, nearby places recommendations, and advanced user administration.
 
 ---
 
@@ -121,7 +121,7 @@ IoHome also offers additional features such as **Google Calendar** integration, 
 - 📦 **Maven** → Dependency management.
 - 🌐 **REST API** → Communication with devices.
 - 📅 **Google Calendar API** → Integration for reservation management.
-- 🖥 **Frontend web** (TODO: Add details about the technology used).
+- 🖥 **Frontend web** → REACT.
 
 ---
 
