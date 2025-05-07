@@ -53,7 +53,6 @@ Servicios para la comunicación con el backend:
 ### 📁 `components/`
 Contiene componentes reutilizables para toda la aplicación:
 - **`AuthSwitcher.jsx`** → página de inicio.
-- **`CalendarView.jsx`** → vista de Google Calendar.
 - **`LoginForm.jsx`** → formulario inicio sesión.
 - **`ModificarPropiedad.jsx`** → formulario modifica propiedad propietario.
 - **`ModificarReservaForm.jsx`** → formulario modifica reserva.
@@ -71,7 +70,8 @@ Contiene las vistas principales:
 - **`SecurityLog.jsx`** → Monitorea accesos en tiempo real, gestiona el estado de tus cerraduras y recibe alertas de actividad sospechosa.
 - **`UnaCerradura.jsx`** → Información de la cerradura de la propiedad reservada.
 - **`UserHome.jsx`** → Página principal de usuario.
-- **`UserHome.jsx`** → Página perfil de usuario.
+- **`UserProfile.jsx`** → Página perfil de usuario.
+- **`OwnerHome.jsx`** → Página principal de propietario, incluye las vistas del calendario y sus reservas asociadas.
 
 ---
 
@@ -153,13 +153,11 @@ Services for backend communication:
 - **`authService.js`** → Authentication management and JWT tokens.
 - **`reservaService.js`** → API calls for reservations.
 - **`propiedadService.js`** → Property management.
-- **`calendar.cjs`** → Google Calendar integration.
 
 
 ### 📁 `components/`
 Contains reusable components for the entire application:
 - **`AuthSwitcher.jsx`** → Home page.
-- **`CalendarView.jsx`** → Google Calendar view.
 - **`LoginForm.jsx`** → Login form.
 - **`ModificarPropiedad.jsx`** → Form to modify owner properties.
 - **`ModificarReservaForm.jsx`** → Form to modify reservations.
@@ -178,6 +176,7 @@ Contains the main views:
 - **`UnaCerradura.jsx`** → Information on the reserved property lock.
 - **`UserHome.jsx`** → Main user homepage.
 - **`UserProfile.jsx`** → User profile page.
+- **`OwnerHome.jsx`** → Owner's homepage, it includes the calendar view with the reservations associated.
 
 ---
 

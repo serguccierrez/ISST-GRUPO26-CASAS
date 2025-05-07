@@ -37,6 +37,7 @@ public class ReservaController {
         return ResponseEntity.ok(reservas);
     }
 
+
     // Obtener todas las reservas activas de una propiedad
     @GetMapping("/propiedad/{propiedadId}/activas")
     public ResponseEntity<List<Reserva>> obtenerReservasActivasPorPropiedad(@PathVariable Long propiedadId) {

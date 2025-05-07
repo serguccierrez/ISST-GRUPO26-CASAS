@@ -5,6 +5,15 @@ import "../styles/userHome.css";
 import logo from "../assets/logo.png";
 import CerraduraUsuario from "../components/CerraduraUsuario"; // Asegúrate de la ruta correcta
 import { obtenerUltimaReservaActivaCompleta, asociarReservaPorToken } from "../services/reservaService";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import moment from 'moment';
+
+
+
+const localizer = momentLocalizer(moment);
 
 const UserHome = () => {
   const [nombre, setNombre] = useState("");
@@ -12,8 +21,12 @@ const UserHome = () => {
   const [mostrarCerradura, setMostrarCerradura] = useState(false); // <--- NUEVO ESTADO
   const [token, setToken] = useState(""); // <-- NUEVO ESTADO PARA TOKEN
   const [errorToken, setErrorToken] = useState(""); // <-- NUEVO ESTADO PARA ERRORES
+  const [user, setUser] = useState(null);
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const navigate = useNavigate();
   const servicesRef = useRef(null);
+
+  
 
   useEffect(() => {
     const data = localStorage.getItem("usuario");
@@ -21,9 +34,12 @@ const UserHome = () => {
       const usuario = JSON.parse(data);
       setNombre(usuario.nombre);
       setUsuarioId(usuario.id); // Guardamos el ID del usuario
-      validarReserva(usuario.id); // <--- NUEVA FUNCIÓN
+      if (usuario.id) {
+        validarReserva(usuario.id);
+      }
     }
   }, []);
+
 
   const validarReserva = async (usuarioId) => {
     try {
@@ -83,25 +99,20 @@ const UserHome = () => {
     window.location.href = "http://localhost:3000/";
   };
 
+
   return (
     <div className="user-home">
       <header className="user-header">
         <div className="navbar">
-
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
-
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
-
           <button onClick={redirigirHome}>🌐 </button>
-
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
-
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
-
 
         <div className="infolock">
           {usuarioId && mostrarCerradura ? (
@@ -123,10 +134,9 @@ const UserHome = () => {
               </div>
               {errorToken && <p className="token-error">{errorToken}</p>}
             </div>
-
           )}
         </div>
-      </header >
+      </header>
 
       <section ref={servicesRef} className="user-services">
         <h2>Servicios</h2>
@@ -155,8 +165,10 @@ const UserHome = () => {
       <footer className="user-footer">
         © 2025 IOHOME. Todos los derechos reservados
       </footer>
-    </div >
+    </div>
   );
 };
+
+
 
 export default UserHome;
