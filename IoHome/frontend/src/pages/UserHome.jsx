@@ -11,6 +11,8 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 
+
+
 const localizer = momentLocalizer(moment);
 
 const UserHome = () => {
@@ -24,25 +26,7 @@ const UserHome = () => {
   const navigate = useNavigate();
   const servicesRef = useRef(null);
 
-  const login = useGoogleLogin({
-    scope: "https://www.googleapis.com/auth/calendar.readonly",
-    onSuccess: async (tokenResponse) => {
-      try {
-        const res = await axios.get(
-          "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-            },
-          }
-        );
-        setUser(tokenResponse);
-        setCalendarEvents(res.data.items);
-      } catch (err) {
-        console.error("Error al obtener eventos del calendario", err);
-      }
-    },
-  });
+  
 
   useEffect(() => {
     const data = localStorage.getItem("usuario");
@@ -50,9 +34,12 @@ const UserHome = () => {
       const usuario = JSON.parse(data);
       setNombre(usuario.nombre);
       setUsuarioId(usuario.id); // Guardamos el ID del usuario
-      validarReserva(usuario.id); // <--- NUEVA FUNCIÓN
+      if (usuario.id) {
+        validarReserva(usuario.id);
+      }
     }
   }, []);
+
 
   const validarReserva = async (usuarioId) => {
     try {
@@ -112,11 +99,6 @@ const UserHome = () => {
     window.location.href = "http://localhost:3000/";
   };
 
-  const formattedEvents = calendarEvents.map(ev => ({
-    title: ev.summary,
-    start: new Date(ev.start.dateTime || ev.start.date),
-    end: new Date(ev.end?.dateTime || ev.start.date),
-  }));
 
   return (
     <div className="user-home">
@@ -156,24 +138,6 @@ const UserHome = () => {
         </div>
       </header>
 
-      <section className="user-calendar">
-        <h2>Mi Google Calendar</h2>
-        {!user ? (
-          <button onClick={login}>Conectar con Google</button>
-        ) : (
-          <div>
-            <button onClick={() => { googleLogout(); setUser(null); }}>Cerrar sesión</button>
-            <Calendar
-              localizer={localizer}
-              events={formattedEvents}
-              startAccessor="start"
-              endAccessor="end"
-              style={{ height: 600 }}
-            />
-          </div>
-        )}
-      </section>
-
       <section ref={servicesRef} className="user-services">
         <h2>Servicios</h2>
         <div className="service-buttons">
@@ -204,5 +168,7 @@ const UserHome = () => {
     </div>
   );
 };
+
+
 
 export default UserHome;
