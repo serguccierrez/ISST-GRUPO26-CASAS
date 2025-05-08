@@ -41,9 +41,9 @@ const ReservaForm = ({ propiedades }) => {
     
             // Llamar al servicio para crear la reserva
             await crearReserva(propiedadSeleccionada, reserva);
-            alert("Reserva creada con éxito");
+            console.log("Reserva creada con éxito");
         } catch (err) {
-            alert("Error al crear la reserva: " + err.message);
+            console.log("Error al crear la reserva: " + err.message);
         }
     };
 

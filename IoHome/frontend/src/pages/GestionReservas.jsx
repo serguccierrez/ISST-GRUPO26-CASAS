@@ -41,9 +41,9 @@ const GestionReservas = () => {
     try {
       await eliminarReserva(id);
       setReservas((prev) => prev.filter((reserva) => reserva.id !== id));
-      alert("Reserva eliminada correctamente");
+      console.log("Reserva eliminada correctamente");
     } catch (err) {
-      alert("Error al eliminar la reserva: " + err.message);
+      console.log("Error al eliminar la reserva: " + err.message);
     }
   };
 

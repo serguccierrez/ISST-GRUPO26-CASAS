@@ -43,10 +43,10 @@ const UserProfile = () => {
 
       if (!response.ok) throw new Error("Error al actualizar el perfil");
       const updatedUsuario = await response.json();
-      alert("Perfil actualizado correctamente");
+      console.log("Perfil actualizado correctamente");
       localStorage.setItem("usuario", JSON.stringify(updatedUsuario));
     } catch (err) {
-      alert("Error: " + err.message);
+      console.log("Error: " + err.message);
     }
   };
 
@@ -61,11 +61,11 @@ const UserProfile = () => {
         );
 
         if (!response.ok) throw new Error("Error al eliminar el usuario");
-        alert("Usuario eliminado correctamente");
+        console.log("Usuario eliminado correctamente");
         localStorage.removeItem("usuario");
         navigate("/login");
       } catch (err) {
-        alert("Error: " + err.message);
+        console.log("Error: " + err.message);
       }
     }
   }
