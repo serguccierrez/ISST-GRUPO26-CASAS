@@ -39,10 +39,10 @@ const PerfilConfiguracion = () => {
           }
         );
         if (!response.ok) throw new Error("Error al eliminar el usuario");
-        alert("Usuario eliminado correctamente");
+        console.log("Usuario eliminado correctamente");
         localStorage.removeItem("propietario"); // Elimina el propietario de localStorage
       } catch (err) {
-        alert("Error: " + err.message);
+        console.log("Error: " + err.message);
       }
     }
   };
@@ -61,10 +61,10 @@ const PerfilConfiguracion = () => {
       if (!response.ok) throw new Error("Error al actualizar el perfil");
       const updatedPropietario = await response.json(); // Puedes recibir el propietario actualizado desde el backend
 
-      alert("Perfil actualizado correctamente");
+      console.log("Perfil actualizado correctamente");
       localStorage.setItem("propietario", JSON.stringify(updatedPropietario)); // Guarda el nuevo propietario en localStorage
     } catch (err) {
-      alert("Error: " + err.message);
+      console.log("Error: " + err.message);
     }
   };
 

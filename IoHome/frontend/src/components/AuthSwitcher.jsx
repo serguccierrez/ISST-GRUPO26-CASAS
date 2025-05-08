@@ -3,8 +3,6 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import logo from "../assets/logo.jpg"; 
 
-
-
 const AuthSwitcher = () => {
   const [tipo, setTipo] = useState("usuario"); // "usuario" o "propietario"
   const [vista, setVista] = useState("login"); // "login" o "register"
@@ -19,7 +17,6 @@ const AuthSwitcher = () => {
   };
 
   return (
-  
     <div className="auth-container">
       <div className="auth-header">
         <img src={logo} alt="Logo" id="logo-header" />
@@ -33,7 +30,6 @@ const AuthSwitcher = () => {
         <button onClick={redirigirHome}>🌐  Accede a nuestra Página Web</button>
       </div>
 
-    
       <div className="switch-buttons">
         <button onClick={() => cambiarTipo("usuario")}>👤 Huésped</button>
         <button onClick={() => cambiarTipo("propietario")}>🏠 Propietario</button>
@@ -48,7 +44,7 @@ const AuthSwitcher = () => {
         </>
       ) : (
         <>
-          <RegisterForm tipo={tipo} />
+          <RegisterForm tipo={tipo} setVista={setVista} /> {/* Pasar setVista aquí */}
           <div className="registro-links">
             <button onClick={() => setVista("login")}>Volver al login</button>
           </div>

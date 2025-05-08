@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { registrarUsuario, registrarPropietario } from "../services/authService";
 
-const RegisterForm = ({ tipo }) => {
+const RegisterForm = ({ tipo, setVista }) => {  // Agregar setVista como prop
   const [form, setForm] = useState({
     nombre: "", apellidos: "", dni: "", correoElectronico: "", telefono: "", password: ""
   });
-  
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,13 +15,17 @@ const RegisterForm = ({ tipo }) => {
     try {
       if (tipo === "usuario") {
         await registrarUsuario(form);
-        alert("Usuario registrado correctamente");
+        console.log("Usuario registrado correctamente");
       } else {
         await registrarPropietario(form);
-        alert("Propietario registrado correctamente");
+        console.log("Propietario registrado correctamente");
       }
+
+      // Cambiar a la vista de login después de un registro exitoso
+      setVista("login");  // Aquí es donde se cambia la vista
+
     } catch (err) {
-      alert("Error al registrar: " + err.message);
+      console.log("Error al registrar: " + err.message);
     }
   };
 

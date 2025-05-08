@@ -61,7 +61,7 @@ const GestionPropiedades = () => {
       await eliminarPropiedad(id);
       setPropiedades((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
-      alert("Error al eliminar la propiedad: " + err.message);
+      console.log("Error al eliminar la propiedad: " + err.message);
     }
   };
 
@@ -73,7 +73,7 @@ const GestionPropiedades = () => {
       );
       setPropiedadEdit(null);
     } catch (err) {
-      alert("Error al actualizar la propiedad: " + err.message);
+      console.log("Error al actualizar la propiedad: " + err.message);
     }
   };
 

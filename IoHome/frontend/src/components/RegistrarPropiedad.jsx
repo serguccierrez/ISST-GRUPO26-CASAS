@@ -103,11 +103,11 @@ const RegistrarPropiedad = ({ onPropertyCreated }) => {
         if (!asignarResponse.ok) throw new Error("Error al asignar cerradura a la propiedad");
       }
   
-      alert("Propiedad registrada y cerradura asociada correctamente");
+      console.log("Propiedad registrada y cerradura asociada correctamente");
       onPropertyCreated(nuevaPropiedad);
     } catch (err) {
       console.error("Error al registrar la propiedad:", err);
-      alert("Error: " + err.message);
+      console.log("Error: " + err.message);
     }
   };
 
