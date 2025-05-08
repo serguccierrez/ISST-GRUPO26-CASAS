@@ -33,5 +33,9 @@ jobs:
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
 
+    - name: Create selenium.config.js
+      run: |
+        echo "module.exports = { browsers: [{ browserName: 'firefox' }] };" > selenium.config.js
+
     - name: Run Selenium tests on Firefox
-      run: selenium-side-runner --browser firefox IoHome/test/IoHome.side
+      run: selenium-side-runner IoHome/test/IoHome.side
