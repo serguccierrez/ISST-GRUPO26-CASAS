@@ -1,49 +1,58 @@
-name: Run Selenium IDE Tests on Firefox
+# # Define the name of the workflow
+# name: Run Selenium IDE Tests on Firefox
 
-on:
-  push:
-    branches: [ "*" ]
-  pull_request:
-    branches: [ "*" ]
-  workflow_dispatch:
+# # Specify the events that trigger the workflow
+# on:
+#   push: # Trigger the workflow on any push to any branch
+#     branches: [ "*" ]
+#   pull_request: # Trigger the workflow on any pull request to any branch
+#     branches: [ "*" ]
+#   workflow_dispatch: # Allow manual triggering of the workflow
 
-jobs:
-  selenium-tests:
-    runs-on: ubuntu-latest
+# # Define the jobs to be executed in the workflow
+# jobs:
+#   selenium-tests: # Name of the job
+#     runs-on: ubuntu-latest # Specify the environment to run the job (Ubuntu)
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+#     steps:
+#     # Step 1: Checkout the repository
+#     - name: Checkout repository
+#       uses: actions/checkout@v3 # Use the GitHub Action to checkout the repository
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+#     # Step 2: Install Node.js
+#     - name: Install Node.js
+#       uses: actions/setup-node@v3 # Use the GitHub Action to set up Node.js
+#       with:
+#         node-version: '18' # Specify the Node.js version to install
 
-    - name: Install selenium-side-runner
-      run: npm install -g selenium-side-runner
+#     # Step 3: Install selenium-side-runner globally
+#     - name: Install selenium-side-runner
+#       run: npm install -g selenium-side-runner # Install the Selenium IDE runner
 
-    - name: Install Firefox and Geckodriver
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y firefox
-        GECKO_VERSION=v0.36.0
-        wget https://github.com/mozilla/geckodriver/releases/download/${GECKO_VERSION}/geckodriver-${GECKO_VERSION}-linux64.tar.gz
-        tar -xzf geckodriver-${GECKO_VERSION}-linux64.tar.gz
-        chmod +x geckodriver
-        sudo mv geckodriver /usr/local/bin/
+#     # Step 4: Install Firefox and Geckodriver
+#     - name: Install Firefox and Geckodriver
+#       run: |
+#         sudo apt-get update # Update the package list
+#         sudo apt-get install -y firefox # Install Firefox
+#         GECKO_VERSION=v0.36.0 # Define the Geckodriver version
+#         wget https://github.com/mozilla/geckodriver/releases/download/${GECKO_VERSION}/geckodriver-${GECKO_VERSION}-linux64.tar.gz # Download Geckodriver
+#         tar -xzf geckodriver-${GECKO_VERSION}-linux64.tar.gz # Extract the Geckodriver archive
+#         chmod +x geckodriver # Make the Geckodriver executable
+#         sudo mv geckodriver /usr/local/bin/ # Move Geckodriver to a directory in the PATH
 
-    - name: Create selenium.config.js with temp Firefox profile
-      run: |
-        TEMP_PROFILE=$(mktemp -d -t fxprofile-XXXXXX)
-        echo "module.exports = {
-          browsers: [{
-            browserName: 'firefox',
-            'moz:firefoxOptions': {
-              args: ['--headless', '--profile=$TEMP_PROFILE']
-            }
-          }]
-        };" > selenium.config.js
+#     # Step 5: Create a Selenium configuration file with a temporary Firefox profile
+#     - name: Create selenium.config.js with temp Firefox profile
+#       run: |
+#         TEMP_PROFILE=$(mktemp -d -t fxprofile-XXXXXX) # Create a temporary Firefox profile
+#         echo "module.exports = {
+#           browsers: [{
+#             browserName: 'firefox',
+#             'moz:firefoxOptions': {
+#               args: ['--headless', '--profile=$TEMP_PROFILE'] # Run Firefox in headless mode with the temporary profile
+#             }
+#           }]
+#         };" > selenium.config.js # Write the configuration to a file
 
-    - name: Run Selenium tests on Firefox
-      run: selenium-side-runner IoHome/test/E2E/IoHome.side
+#     # Step 6: Run Selenium tests on Firefox
+#     - name: Run Selenium tests on Firefox
+#       run: selenium-side-runner IoHome/test/E2E/IoHome.side # Execute the Selenium IDE tests
