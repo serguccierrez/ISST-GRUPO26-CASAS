@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Asegúrate de importar useNavigate
-import "../styles/perfilConfiguracion.css"; // Asegúrate de que esta ruta sea correcta
-import logo from "../assets/logo.png"; // Asegúrate de que el logo esté en la carpeta correcta
+import { useNavigate } from "react-router-dom";
+import "../styles/perfilConfiguracion.css";
+import logo from "../assets/logo.png";
 
 const PerfilConfiguracion = () => {
   const [propietario, setPropietario] = useState({
@@ -12,6 +12,7 @@ const PerfilConfiguracion = () => {
     telefono: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState(""); // Estado para el mensaje de éxito
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,10 +60,19 @@ const PerfilConfiguracion = () => {
       );
 
       if (!response.ok) throw new Error("Error al actualizar el perfil");
-      const updatedPropietario = await response.json(); // Puedes recibir el propietario actualizado desde el backend
+      const updatedPropietario = await response.json();
 
       console.log("Perfil actualizado correctamente");
-      localStorage.setItem("propietario", JSON.stringify(updatedPropietario)); // Guarda el nuevo propietario en localStorage
+      localStorage.setItem("propietario", JSON.stringify(updatedPropietario));
+
+      // Mostrar mensaje de éxito
+      setSuccessMessage("Cambios guardados");
+
+      // Ocultar el mensaje después de 1 segundo
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 1000);
+
     } catch (err) {
       console.log("Error: " + err.message);
     }
@@ -118,6 +128,9 @@ const PerfilConfiguracion = () => {
           <button onClick={handleSave}>Guardar Cambios</button>
           <button className="delete-button" onClick={deleteUser}>Eliminar Usuario</button>
         </div>
+
+        {/* Mostrar mensaje de éxito */}
+        {successMessage && <div className="success-message">{successMessage}</div>}
       </div>
     </div>
   );
