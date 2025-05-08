@@ -33,9 +33,17 @@ jobs:
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
 
-    - name: Create selenium.config.js
+    - name: Create selenium.config.js with temp Firefox profile
       run: |
-        echo "module.exports = { browsers: [{ browserName: 'firefox' }] };" > selenium.config.js
+        TEMP_PROFILE=$(mktemp -d -t fxprofile-XXXXXX)
+        echo "module.exports = {
+          browsers: [{
+            browserName: 'firefox',
+            'moz:firefoxOptions': {
+              args: ['--headless', '--profile=$TEMP_PROFILE']
+            }
+          }]
+        };" > selenium.config.js
 
     - name: Run Selenium tests on Firefox
       run: selenium-side-runner IoHome/test/E2E/IoHome.side
