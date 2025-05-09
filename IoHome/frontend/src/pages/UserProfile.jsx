@@ -75,6 +75,16 @@ const UserProfile = () => {
     }
   };
 
+  const handleLogout = () => {
+  // Limpia el localStorage
+  localStorage.removeItem("usuario");
+  localStorage.removeItem("propietario");
+  localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+  // Redirige al usuario a la página principal
+  navigate("/");
+  };
+
   return (
     <div className="perfil-container">
       <div className="navbar">
@@ -87,6 +97,10 @@ const UserProfile = () => {
         <h3 id="nombre" onClick={() => navigate("/usuario")}>
           IoHome
         </h3>
+         <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
       </div>
       <div className="perfil-card">
         <h2>Perfil y Configuración de Usuario</h2>

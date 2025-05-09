@@ -99,19 +99,34 @@ const UserHome = () => {
     window.location.href = "http://localhost:3000/";
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+  };
 
   return (
     <div className="user-home">
       <header className="user-header">
         <div className="navbar">
+
           <img src={logo} alt="Logo" className="logo" />
           <h3>IoHome</h3>
+
           <button className="scroll-button" onClick={scrollToServices}>
             Servicios
           </button>
+
           <button onClick={redirigirHome}>🌐 </button>
+          <button onClick={handleLogout }>Logout</button>
+
         </div>
         <h1>Bienvenido a IOHOME, {nombre || "usuario"}</h1>
+
         <p>Gestiona tus reservas y tu alojamiento de forma sencilla.</p>
 
         <div className="infolock">

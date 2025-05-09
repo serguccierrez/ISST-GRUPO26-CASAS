@@ -90,6 +90,16 @@ const GestionReservas = () => {
       .catch((err) => console.error("Error al obtener reservas", err));
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+  };
+
   return (
     <div className="gestion-container">
       <div className="navbar" onClick={() => navigate("/propietario")}>
@@ -103,6 +113,8 @@ const GestionReservas = () => {
           IoHome
         </h3>
       </div>
+      <button className= "logout-button" onClick={handleLogout}>Logout</button>
+
       <h2>Gestionar Reservas</h2>
       <div>
         {reservas.map((reserva) => (

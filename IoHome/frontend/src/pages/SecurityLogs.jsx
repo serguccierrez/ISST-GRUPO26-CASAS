@@ -122,6 +122,18 @@ useEffect(() => {
 
   }, [fechaInicio, fechaFin, eventosOriginales]); // Dependencias: fechaInicio, fechaFin y eventosOriginales
 
+
+
+    const handleLogout = () => {
+      // Limpia el localStorage
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("propietario");
+      localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+      // Redirige al usuario a la página principal
+      navigate("/");
+    };
+  
   return (
     <div className="security-container">
       <div className="navbar">
@@ -135,6 +147,9 @@ useEffect(() => {
           IoHome
         </h3>
       </div>
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
 
       <div className="header">
         <h2>Seguridad y Control de Accesos</h2>
