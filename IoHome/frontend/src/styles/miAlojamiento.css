@@ -20,7 +20,8 @@
 }
 .logo:hover, #nombre:hover {
     cursor: pointer;
-  }
+}
+
 .navbar h3 {
     font-size: 1.5rem;
     font-weight: normal;
