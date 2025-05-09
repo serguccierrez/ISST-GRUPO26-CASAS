@@ -6,6 +6,16 @@ import '../styles/misCerraduras.css';
 const MisCerraduras = () => {
   const navigate = useNavigate();
 
+const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+};
+
 return (
     <>
         <div className="gestion-container">
@@ -13,6 +23,8 @@ return (
                 <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/propietario")}/>
                 <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
             </div>
+            <button className= "logout-button" onClick={handleLogout}>Logout</button>
+
             <h2>Mis cerraduras</h2>
             <SeamConnect/>
         </div>

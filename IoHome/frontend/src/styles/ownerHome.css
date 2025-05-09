@@ -1,4 +1,5 @@
 .owner-home {
+    position: relative;
     max-width: 500px;
     margin: 30px auto;
     padding: 20px;
@@ -9,6 +10,7 @@
 }
 
 .owner-header {
+    position: relative;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -16,11 +18,13 @@
     color: #2c3e50;
 }
 
-.navbar {
+.navbar {    
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 0px;
+    display: flex;
 }
 
 .logo {
@@ -37,7 +41,7 @@
 }
 
 .scroll-button {
-    margin-left: 160px;
+    margin-left: 80px;
     background-color: #1d4ed8;
 }
 
