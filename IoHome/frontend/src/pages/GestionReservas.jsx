@@ -65,14 +65,14 @@ const GestionReservas = () => {
 
   return (
     <div className="gestion-container">
-      <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
+      <div className="navbar" onClick={() => navigate("/propietario")}>
         <img
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-propietario")}
+          onClick={() => navigate("/propietario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>
           IoHome
         </h3>
       </div>

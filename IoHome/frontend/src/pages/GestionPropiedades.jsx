@@ -80,8 +80,8 @@ const GestionPropiedades = () => {
   return (
     <div className="gestion-container">
       <div className="navbar">
-        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/inicio-propietario")} />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>IoHome</h3>
+        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/propietario")} />
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
       </div>
 
       <h2>Mis propiedades</h2>

@@ -15,11 +15,11 @@ const LoginForm = ({ tipo }) => {
       if (tipo === "usuario") {
         const res = await loginUsuario({ correoElectronico, password });
         localStorage.setItem("usuario", JSON.stringify(res));
-        navigate("/inicio-usuario");
+        navigate("/usuario");
       } else {
         const res = await loginPropietario({ correoElectronico, password });
         localStorage.setItem("propietario", JSON.stringify(res));
-        navigate("/inicio-propietario");
+        navigate("/propietario");
       }
     } catch (err) {
       setError("Error: " + err.message);

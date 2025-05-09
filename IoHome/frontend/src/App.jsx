@@ -19,8 +19,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AuthSwitcher />} />
-        <Route path="/inicio-usuario" element={<UserHome />} />
-        <Route path="/inicio-propietario" element={<OwnerHome />} />
+        <Route path="/usuario" element={<UserHome />} />
+        <Route path="/propietario" element={<OwnerHome />} />
         <Route
           path="/propietario/propiedades"
           element={<GestionPropiedades />}
