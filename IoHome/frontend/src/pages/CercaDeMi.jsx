@@ -3,6 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import '../styles/CercaDeMi.css';
+import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+
+
 
 // Fix Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,6 +17,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const CercaDeMi = () => {
+  const navigate = useNavigate();
   const [userPosition, setUserPosition] = useState(null);
   const [nearbyPlaces, setNearbyPlaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -120,8 +125,33 @@ const CercaDeMi = () => {
     return null;
   };
 
+  const handleLogout = () => {
+    // Limpia el localStorage
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("propietario");
+    localStorage.clear(); // Limpia todo el localStorage si es necesario
+
+    // Redirige al usuario a la página principal
+    navigate("/");
+  };
+
   return (
     <div className="cerca-container">
+        <div className="navbar">
+              <img
+                src={logo}
+                alt="Logo"
+                className="logo"
+                onClick={() => navigate("/usuario")}
+              />
+              <h3 id="nombre" onClick={() => navigate("/usuario")}>
+                IoHome
+              </h3>
+            
+            <button className="logout-button" onClick={handleLogout }>Logout</button>
+
+        </div>
+      
       <div className="map-section">
         <button 
           className="location-button"

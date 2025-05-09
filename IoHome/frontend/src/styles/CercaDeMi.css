@@ -1,5 +1,6 @@
 /* CercaDeMi.css */
 .cerca-container {
+    position: relative;
     max-width: 500px;
     margin: 30px auto;
     padding: 20px;
@@ -11,6 +12,8 @@
     flex-direction: column;
     gap: 20px;
   }
+
+
   
   .map-section {
     height: 40vh;
@@ -163,3 +166,5 @@
   .retry-button:hover {
     background-color: #153db2;
   }
+
+  
