@@ -1,8 +1,7 @@
 // ModificarReservaForm.jsx
 import { useState, useEffect } from "react";
-import { actualizarReserva, obtenerUsuarioPorCorreo } from "../services/reservaService";
+import { actualizarReserva, actualizarEventoDeGoogleCalendar } from "../services/reservaService";
 import { obtenerPropiedades } from "../services/propiedadService";
-
 // Formato correcto de fecha: yyyy-MM-dd HH:mm:ss
 const formatFecha = (fecha) => {
     const date = new Date(fecha);
