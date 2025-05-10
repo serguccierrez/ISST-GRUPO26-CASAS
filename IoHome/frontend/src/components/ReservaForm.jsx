@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { crearReserva, obtenerUsuarioPorCorreo } from "../services/reservaService";
 
-
 // Formato correcto de fecha: yyyy-MM-dd HH:mm:ss
 const formatFecha = (fecha) => {
     const date = new Date(fecha);
@@ -16,9 +15,7 @@ const formatFecha = (fecha) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
-
-const ReservaForm = ({ propiedades }) => {
-    //const [correoUsuario, setCorreoUsuario] = useState("");
+const ReservaForm = ({ propiedades, onReservaCreada }) => {
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
     const [observaciones, setObservaciones] = useState("");
@@ -27,10 +24,6 @@ const ReservaForm = ({ propiedades }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Obtener el ID del usuario a partir del correo
-            //const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
-            //const usuarioId = usuario.id;
-    
             // Crear el objeto reserva con los datos necesarios
             const reserva = {
                 fechaInicio: formatFecha(fechaInicio),
@@ -38,12 +31,22 @@ const ReservaForm = ({ propiedades }) => {
                 observaciones,
             };
             console.log("Reserva a crear:", reserva);
-    
+
             // Llamar al servicio para crear la reserva
-            await crearReserva(propiedadSeleccionada, reserva);
-            console.log("Reserva creada con éxito");
+            const nuevaReserva = await crearReserva(propiedadSeleccionada, reserva);
+            console.log("Reserva creada con éxito:", nuevaReserva);
+
+            if (onReservaCreada) {
+                onReservaCreada(nuevaReserva.id); // Pasar el ID de la nueva reserva
+            }
+
+            // Vaciar el formulario
+            setFechaInicio("");
+            setFechaFin("");
+            setObservaciones("");
+            setPropiedadSeleccionada("");
         } catch (err) {
-            console.log("Error al crear la reserva: " + err.message);
+            console.error("Error al crear la reserva", err);
         }
     };
 
@@ -83,7 +86,7 @@ const ReservaForm = ({ propiedades }) => {
                 value={observaciones}
                 onChange={(e) => setObservaciones(e.target.value)}
             />
-            <button type="submit">Crear Reserva</button>
+            <button type="submit">Guardar</button>
         </form>
     );
 };

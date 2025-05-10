@@ -46,21 +46,21 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Obtener el ID del usuario a partir del correo ingresado
-            //const usuario = await obtenerUsuarioPorCorreo(correoUsuario);
-            //const usuarioId = usuario.id;
-
-            const reservaActualizada = {
+            // Lógica para modificar la reserva
+            const updatedReservaData = {
                 fechaInicio: formatFecha(fechaInicio),
                 fechaFin: formatFecha(fechaFin),
                 observaciones,
             };
 
-            await actualizarReserva(reserva.id, reservaActualizada);
-            console.log("Reserva actualizada con éxito");
-            onUpdate();
+            await actualizarReserva(reserva.id, updatedReservaData);
+            console.log("Reserva modificada con éxito");
+
+            if (onUpdate) {
+                onUpdate(reserva.id); // Pasar el ID de la reserva modificada
+            }
         } catch (err) {
-            console.log("Error al actualizar la reserva: " + err.message);
+            console.error("Error al modificar la reserva", err);
         }
     };
 

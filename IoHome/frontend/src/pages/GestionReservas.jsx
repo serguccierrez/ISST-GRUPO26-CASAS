@@ -1,5 +1,5 @@
 // GestionReservas.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { obtenerReservas, eliminarReserva } from "../services/reservaService";
 import ReservaForm from "../components/ReservaForm";
 import ModificarReservaForm from "../components/ModificarReservaForm";
@@ -7,9 +7,9 @@ import { obtenerPropiedades } from "../services/propiedadService";
 import "../styles/gestionReservas.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
 
 const GestionReservas = () => {
+  const reservasRefs = useRef({}); // Refs dinámicos para cada reserva
   const modifierRef = useRef(null);
   const [reservas, setReservas] = useState([]);
   const [propiedades, setPropiedades] = useState([]);
@@ -22,6 +22,12 @@ const GestionReservas = () => {
         modifierRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }, 100);
+  };
+
+  const scrollToReserva = (id) => {
+    if (reservasRefs.current[id]) {
+      reservasRefs.current[id].scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -55,12 +61,25 @@ const GestionReservas = () => {
     setReservaEdit(null);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (updatedReservaId) => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
     obtenerReservas(propietario.id)
-      .then(setReservas)
+      .then((nuevasReservas) => {
+        setReservas(nuevasReservas);
+        scrollToReserva(updatedReservaId); // Hacer scroll a la reserva modificada
+      })
       .catch((err) => console.error("Error al obtener reservas", err));
     setReservaEdit(null);
+  };
+
+  const handleReservaCreada = (newReservaId) => {
+    const propietario = JSON.parse(localStorage.getItem("propietario"));
+    obtenerReservas(propietario.id)
+      .then((nuevasReservas) => {
+        setReservas(nuevasReservas);
+        scrollToReserva(newReservaId); // Hacer scroll a la nueva reserva
+      })
+      .catch((err) => console.error("Error al obtener reservas", err));
   };
 
   return (
@@ -79,11 +98,14 @@ const GestionReservas = () => {
       <h2>Gestionar Reservas</h2>
       <div>
         {reservas.map((reserva) => (
-          <div key={reserva.id} className="reserva-card">
+          <div
+            key={reserva.id}
+            ref={(el) => (reservasRefs.current[reserva.id] = el)} // Asignar ref dinámico
+            className="reserva-card"
+          >
             <h3>Reserva en {reserva.propiedad?.nombre}</h3>
             <div className="reserva-detalles">
               <p>Dirección: {reserva.propiedad?.direccion}</p>
-
               {reserva.usuario ? (
                 <p>
                   Usuario: {reserva.usuario?.nombre} {reserva.usuario?.apellidos} ({reserva.usuario?.correoElectronico})
@@ -91,12 +113,10 @@ const GestionReservas = () => {
               ) : (
                 <p><strong>Usuario:</strong> No asignado aún</p>
               )}
-
-
               <p>Fecha de Inicio: {reserva.fechaInicio}</p>
               <p>Fecha de Fin: {reserva.fechaFin}</p>
               <p>Observaciones: {reserva.observaciones}</p>
-              <p><strong>Token de acceso:</strong> {reserva.token || "No disponible"}</p> {/* NUEVO */}
+              <p><strong>Token de acceso:</strong> {reserva.token || "No disponible"}</p>
             </div>
             <button id="Modificar" onClick={() => { handleEdit(reserva); scrollToModifyForm2(); }}>Modificar</button>
             <button onClick={() => handleEliminar(reserva.id)}>Eliminar</button>
@@ -109,7 +129,7 @@ const GestionReservas = () => {
           <div className="reserva-form">
             <ModificarReservaForm
               reserva={reservaEdit}
-              onUpdate={handleUpdate}
+              onUpdate={(updatedReservaId) => handleUpdate(updatedReservaId)}
               onCancel={handleCancelEdit}
             />
           </div>
@@ -117,7 +137,10 @@ const GestionReservas = () => {
       )}
       <h3>Crear Nueva Reserva</h3>
       <div className="reserva-form">
-        <ReservaForm propiedades={propiedades} />
+        <ReservaForm 
+          propiedades={propiedades} 
+          onReservaCreada={(newReservaId) => handleReservaCreada(newReservaId)} 
+        />
       </div>
     </div>
   );
