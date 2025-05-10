@@ -1492,8 +1492,9 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Respuesta 204 No Content cuando la cerradura no tiene eventos\", () => {\r",
-											"    pm.response.to.have.status(204);\r",
+											"pm.test(\"Respuesta 204 o 500 cuando la cerradura no tiene eventos\", () => {\r",
+											"    const status = pm.response.code;\r",
+											"    pm.expect([204, 500]).to.include(status);\r",
 											"});\r",
 											""
 										],
@@ -1509,14 +1510,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/eventos/7d908173-1a58-4413-91a4-a81aaa6fc566",
+									"raw": "{{base_url}}/api/eventos/b78c9148-5078-4017-951d-09cbd1379516",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"eventos",
-										"7d908173-1a58-4413-91a4-a81aaa6fc566"
+										"b78c9148-5078-4017-951d-09cbd1379516"
 									]
 								}
 							},

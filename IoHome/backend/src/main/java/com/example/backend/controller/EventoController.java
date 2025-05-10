@@ -54,7 +54,7 @@ public class EventoController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
-    }
+    }   
 
 
     @GetMapping("/{deviceId}")
