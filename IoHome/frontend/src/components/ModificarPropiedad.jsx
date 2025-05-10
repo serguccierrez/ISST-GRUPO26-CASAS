@@ -5,6 +5,7 @@ import SelectCerradurasModificar from "./SelectCerradurasModificar";
 const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({});
   const [cerraduraSeleccionada, setCerraduraSeleccionada] = useState("");
+  
 
   useEffect(() => {
     if (propiedad) {
@@ -12,6 +13,8 @@ const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
       setCerraduraSeleccionada(propiedad.cerraduraId || "");
     }
   }, [propiedad]);
+
+  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,15 +43,16 @@ const ModificarPropiedad = ({ propiedad, onUpdate, onCancel }) => {
         if (!response.ok) throw new Error("Error al asignar la cerradura");
       }
 
-      alert("Propiedad actualizada correctamente");
+      console.log("Propiedad actualizada con éxito");
     } catch (err) {
-      alert("Error al actualizar la propiedad: " + err.message);
+      console.log("Error al actualizar la propiedad: " + err.message);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="property-form">
       <h3>Modificar Propiedad</h3>
+      
       <input
         name="nombre"
         placeholder="Nombre"

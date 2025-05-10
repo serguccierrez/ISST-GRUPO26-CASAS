@@ -48,9 +48,9 @@ const GestionReservas = () => {
       }
       await eliminarReserva(id);
       setReservas((prev) => prev.filter((reserva) => reserva.id !== id));
-      alert("Reserva eliminada correctamente");
+      console.log("Reserva eliminada correctamente");
     } catch (err) {
-      alert("Error al eliminar la reserva: " + err.message);
+      console.log("Error al eliminar la reserva: " + err.message);
     }
   };
 
@@ -91,14 +91,14 @@ const GestionReservas = () => {
 
   return (
     <div className="gestion-container">
-      <div className="navbar" onClick={() => navigate("/inicio-propietario")}>
+      <div className="navbar" onClick={() => navigate("/propietario")}>
         <img
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-propietario")}
+          onClick={() => navigate("/propietario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>
           IoHome
         </h3>
       </div>

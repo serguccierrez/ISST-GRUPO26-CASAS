@@ -43,12 +43,32 @@ const UserProfile = () => {
 
       if (!response.ok) throw new Error("Error al actualizar el perfil");
       const updatedUsuario = await response.json();
-      alert("Perfil actualizado correctamente");
+      console.log("Perfil actualizado correctamente");
       localStorage.setItem("usuario", JSON.stringify(updatedUsuario));
     } catch (err) {
-      alert("Error: " + err.message);
+      console.log("Error: " + err.message);
     }
   };
+
+  const deleteUser = async () => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?")) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/usuarios/${usuario.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) throw new Error("Error al eliminar el usuario");
+        console.log("Usuario eliminado correctamente");
+        localStorage.removeItem("usuario");
+        navigate("/login");
+      } catch (err) {
+        console.log("Error: " + err.message);
+      }
+    }
+  }
 
   return (
     <div className="perfil-container">
@@ -57,9 +77,9 @@ const UserProfile = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-usuario")}
+          onClick={() => navigate("/usuario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
+        <h3 id="nombre" onClick={() => navigate("/usuario")}>
           IoHome
         </h3>
       </div>
@@ -94,6 +114,8 @@ const UserProfile = () => {
           />
 
           <button onClick={handleSave}>Guardar Cambios</button>
+
+          <button className="delete-button" onClick={deleteUser}>Eliminar Usuario</button>
         </div>
       </div>
     </div>

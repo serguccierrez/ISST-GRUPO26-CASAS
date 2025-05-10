@@ -47,7 +47,7 @@ const ReservaForm = ({ propiedades, onReservaCreada }) => {
               
             alert("Reserva creada con éxito");
         } catch (err) {
-            alert("Error al crear la reserva: " + err.message);
+            console.log("Error al crear la reserva: " + err.message);
         }
     };
 

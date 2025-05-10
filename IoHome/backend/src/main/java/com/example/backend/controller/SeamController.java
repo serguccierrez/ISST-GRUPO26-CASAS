@@ -6,8 +6,10 @@ import com.example.backend.service.SeamService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
+import com.example.backend.repository.CerraduraRepository;
 
 @RestController
 @RequestMapping("/seam")
@@ -19,6 +21,9 @@ public class SeamController {
     public SeamController(SeamService seamService) {
         this.seamService = seamService;
     }
+
+    @Autowired
+    private CerraduraRepository cerraduraRepository;
 
     // Obtener información del workspace
     @GetMapping("/workspace")
@@ -98,8 +103,22 @@ public class SeamController {
     }
 
     @GetMapping("/device/events/{since}")
-    public List<Event> obtenerLogsSeam( @PathVariable String since) {
-        return seamService.obtenerLogsDesdeSeam( since);
+    public List<Event> obtenerLogsSeam(@PathVariable String since) {
+        return seamService.obtenerLogsDesdeSeam(since);
+    }
+
+    @DeleteMapping("/device/{id}")
+    public ResponseEntity<Void> eliminarCerradura(@PathVariable String id) {
+        if (!cerraduraRepository.existsById(id)) {
+            return ResponseEntity.notFound().build(); // Devuelve 404 Not Found si no se encuentra la cerradura
+        }
+        try {
+            cerraduraRepository.deleteById(id);
+            return ResponseEntity.noContent().build(); // Devuelve 204 No Content si se eliminó correctamente
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build(); // Devuelve 500 Internal Server Error en caso de error
+        }
     }
 
 }
+

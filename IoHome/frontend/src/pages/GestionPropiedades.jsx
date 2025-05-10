@@ -61,7 +61,7 @@ const GestionPropiedades = () => {
       await eliminarPropiedad(id);
       setPropiedades((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
-      alert("Error al eliminar la propiedad: " + err.message);
+      console.log("Error al eliminar la propiedad: " + err.message);
     }
   };
 
@@ -73,15 +73,15 @@ const GestionPropiedades = () => {
       );
       setPropiedadEdit(null);
     } catch (err) {
-      alert("Error al actualizar la propiedad: " + err.message);
+      console.log("Error al actualizar la propiedad: " + err.message);
     }
   };
 
   return (
     <div className="gestion-container">
       <div className="navbar">
-        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/inicio-propietario")} />
-        <h3 id="nombre" onClick={() => navigate("/inicio-propietario")}>IoHome</h3>
+        <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/propietario")} />
+        <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
       </div>
 
       <h2>Mis propiedades</h2>

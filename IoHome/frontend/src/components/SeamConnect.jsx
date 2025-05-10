@@ -37,7 +37,7 @@ const SeamConnect = () => {
         if (!response.ok) throw new Error("Error al registrar la propiedad");
       }
     } catch (err) {
-      alert("Error: " + err.message);
+      console.log("Error: " + err.message);
     }
   };
 

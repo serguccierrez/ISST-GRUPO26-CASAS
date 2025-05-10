@@ -26,9 +26,9 @@ const MiAlojamiento = () => {
           src={logo}
           alt="Logo"
           className="logo"
-          onClick={() => navigate("/inicio-usuario")}
+          onClick={() => navigate("/usuario")}
         />
-        <h3 id="nombre" onClick={() => navigate("/inicio-usuario")}>
+        <h3 id="nombre" onClick={() => navigate("/usuario")}>
           IoHome
         </h3>
       </div>

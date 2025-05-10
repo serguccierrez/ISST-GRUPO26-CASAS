@@ -2,10 +2,12 @@ package com.example.backend.controller;
 
 import com.example.backend.model.Usuario;
 import com.example.backend.service.UsuarioService;
+import com.example.backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -14,6 +16,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     // Obtener usuario por correo electrónico
     @GetMapping("/correo/{correo}")
@@ -38,5 +43,16 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
-}
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            usuarioRepository.deleteById(id);
+            return ResponseEntity.noContent().build(); // Devuelve 204 No Content si se eliminó correctamente
+        } else {
+            return ResponseEntity.notFound().build(); // Devuelve 404 Not Found si no se encuentra el usuario
+        }
+    }
+
+}

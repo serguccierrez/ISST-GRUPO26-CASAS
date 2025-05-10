@@ -6,6 +6,14 @@
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   }
+  .success-message {
+    background-color: #4CAF50;
+    color: white !important;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 5px;
+  }
   
   .perfil-card {
     
@@ -24,7 +32,20 @@
     margin: 8px 0 4px;
     font-weight: bold;
   }
+  .delete-button {
+    margin-top: 20px; /* Espaciado adicional */
+    background-color: red; /* Color rojo */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  }
   
+  .delete-button:hover {
+    background-color: darkred; /* Color más oscuro al pasar el mouse */
+  }
+
   .perfil-form input {
     width: 95%;
     padding: 8px;

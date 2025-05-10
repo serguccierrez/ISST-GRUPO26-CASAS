@@ -59,7 +59,7 @@ const ModificarReservaForm = ({ reserva, onUpdate, onCancel }) => {
             alert("Reserva actualizada con éxito");
             onUpdate();
         } catch (err) {
-            alert("Error al actualizar la reserva: " + err.message);
+            console.log("Error al actualizar la reserva: " + err.message);
         }
     };
 
