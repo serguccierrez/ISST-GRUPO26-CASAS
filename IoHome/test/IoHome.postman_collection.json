@@ -1472,14 +1472,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/eventos/78626d11-9557-4d09-9638-0160766059be",
+									"raw": "{{base_url}}/api/eventos/dev_abc123",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"eventos",
-										"78626d11-9557-4d09-9638-0160766059be"
+										"dev_abc123"
 									]
 								}
 							},
