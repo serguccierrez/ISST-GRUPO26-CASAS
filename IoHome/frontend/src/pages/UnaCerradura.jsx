@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/unaCerradura.css"; // Asegúrate de que la ruta sea correcta
 import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
@@ -12,10 +11,10 @@ const CerraduraDetalle = () => {
   const [error, setError] = useState(null);
   const [lockSlider, setLockSlider] = useState(0);
   const [unlockSlider, setUnlockSlider] = useState(1);
-  const [lockedNow, setLockedNow] = useState(null); // Estado para el estado actual de la cerradura
-  const [actionType, setActionType] = useState(); // Estado para el tipo de acción
-  const [actionAttemptId, setActionAttemptId] = useState(); // Estado para el ID del intento de acción
-  const [isProcessing, setIsProcessing] = useState(false); // Estado para controlar si la solicitud está en progreso
+  const [lockedNow, setLockedNow] = useState(null);
+  const [actionType, setActionType] = useState();
+  const [actionAttemptId, setActionAttemptId] = useState();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     if (device?.device_id) {
@@ -25,34 +24,30 @@ const CerraduraDetalle = () => {
 
   useEffect(() => {
     if (lockedNow !== undefined && actionType && actionAttemptId) {
-      console.log("Estado de la cerradura después de la acción:", lockedNow);
-      console.log("soy uhaibfkjbdfhaudo", lockSlider);
-      const wasSuccessful = (!lockedNow && lockSlider === 1) || (lockedNow && unlockSlider === 0);
-
+      const wasSuccessful =
+        (!lockedNow && lockSlider === 1) || (lockedNow && unlockSlider === 0);
       const newStatus = wasSuccessful ? "success" : "failed";
-      console.log("Nuevo estado:", newStatus);
 
       guardarEvento(lockedNow, actionType, actionAttemptId, newStatus);
 
       setTimeout(() => {
-        setUnlockSlider(1); // Reinicia el slider de desbloquear
-        setLockSlider(0); // Reinicia el slider de bloquear
-      }, 1000); // Timeout de 1 segundo
+        setUnlockSlider(1);
+        setLockSlider(0);
+      }, 1000);
     }
-  }, [lockedNow, actionType, actionAttemptId]); // Se ejecuta cuando cambia lockedNow
+  }, [lockedNow, actionType, actionAttemptId]);
 
   const fetchDevice = async () => {
     try {
       const response = await fetch("http://localhost:8080/seam/devices");
       if (!response.ok)
         throw new Error("No se pudo obtener la lista de dispositivos");
-      const data = await response.json();
 
+      const data = await response.json();
       const filteredDevice = data.find((d) => d.device_id === device.device_id);
       if (!filteredDevice) throw new Error("Cerradura no encontrada en la API");
 
       setSelectedDevice(filteredDevice);
-      console.log(filteredDevice); // Manejar la respuesta si es necesario
     } catch (err) {
       setError("Error: " + err.message);
     }
@@ -66,30 +61,28 @@ const CerraduraDetalle = () => {
       : `http://localhost:8080/seam/unlock/${device.device_id}`;
 
     try {
-      setIsProcessing(true); // Indicamos que la solicitud está en curso
+      setIsProcessing(true);
       const response = await fetch(endpoint, { method: "POST" });
 
       const data = await response.json();
-      console.log("datos", data); // Manejar la respuesta si es necesario
       if (!response.ok)
         throw new Error(
           `No se pudo ${lock ? "bloquear" : "desbloquear"} la cerradura`
         );
 
-      // Esperar a que se procese la acción y luego obtener el nuevo estado
       setTimeout(async () => {
         await fetchDevice();
-        setIsProcessing(false); // Indicamos que la solicitud ha terminado
+        setIsProcessing(false);
 
         setTimeout(async () => {
           setActionType(data.action_type);
           setLockedNow(selectedDevice?.properties?.locked);
-          setActionAttemptId(data.action_attempt_id); // Guardamos el ID del intento de acción
-        }, 500); // Esperamos 2 segundos después de la llamada a fetchDevice
-      }, 8000); // Primer timeout de 8 segundos
+          setActionAttemptId(data.action_attempt_id);
+        }, 500);
+      }, 8000);
     } catch (err) {
       setError("Error: " + err.message);
-    } 
+    }
   };
 
   const guardarEvento = async (
@@ -107,7 +100,7 @@ const CerraduraDetalle = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: new URLSearchParams({
-            eventId: action_attempt_id || "unknown", // Usa el ID del intento de acción
+            eventId: action_attempt_id || "unknown",
             deviceId: selectedDevice.device_id,
             descripcion: `Cerradura: ${
               lock
@@ -120,9 +113,7 @@ const CerraduraDetalle = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("No se pudo guardar el evento");
-      }
+      if (!response.ok) throw new Error("No se pudo guardar el evento");
 
       const data = await response.json();
       console.log("Evento guardado:", data);
@@ -131,7 +122,6 @@ const CerraduraDetalle = () => {
     }
   };
 
-  // Manejar el slider de bloquear
   const handleLockChange = (value) => {
     setLockSlider(value);
     if (value === 1) {
@@ -139,7 +129,6 @@ const CerraduraDetalle = () => {
     }
   };
 
-  // Manejar el slider de desbloquear
   const handleUnlockChange = (value) => {
     setUnlockSlider(value);
     if (value === 0) {
@@ -147,13 +136,31 @@ const CerraduraDetalle = () => {
     }
   };
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const handleEliminarCerradura = async () => {
+    const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar esta cerradura?");
+    if (!confirmacion) return;
 
-  if (!selectedDevice) {
-    return <div>Cargando detalles de la cerradura...</div>;
-  }
+    try {
+      const response = await fetch(`http://localhost:8080/seam/device/${device.device_id}`, {
+        method: "DELETE",
+      });
+
+      if (response.status === 204) {
+        alert("Cerradura eliminada correctamente.");
+        navigate("/propietario/cerraduras");
+      } else if (response.status === 404) {
+        alert("La cerradura no fue encontrada.");
+      } else {
+        throw new Error("Error al eliminar la cerradura.");
+      }
+    } catch (err) {
+      alert("Ocurrió un error al eliminar la cerradura.");
+      console.error(err);
+    }
+  };
+
+  if (error) return <div>{error}</div>;
+  if (!selectedDevice) return <div>Cargando detalles de la cerradura...</div>;
 
   return (
     <div className="lock-container">
@@ -197,16 +204,13 @@ const CerraduraDetalle = () => {
             <strong>Nivel de batería: </strong>
             {isNaN(selectedDevice.properties.battery_level)
               ? "Desconocido"
-              : (selectedDevice.properties.battery_level * 100).toFixed(0) +
-                "%"}
+              : (selectedDevice.properties.battery_level * 100).toFixed(0) + "%"}
           </p>
 
-          {/* Indicador de procesamiento */}
           {isProcessing && (
             <div className="processing-message">Enviando solicitud...</div>
           )}
 
-          {/* Slider para bloquear la cerradura */}
           <div className="lock-slider-container">
             <label className="lock-slider-label">Bloquear Cerradura</label>
             <input
@@ -220,7 +224,6 @@ const CerraduraDetalle = () => {
             />
           </div>
 
-          {/* Slider para desbloquear la cerradura */}
           <div className="lock-slider-container">
             <label className="lock-slider-label">Desbloquear Cerradura</label>
             <input
@@ -232,6 +235,13 @@ const CerraduraDetalle = () => {
               onChange={(e) => handleUnlockChange(Number(e.target.value))}
               className="lock-slider"
             />
+          </div>
+
+          {/* Botón para eliminar cerradura */}
+          <div className="eliminar-cerradura-container">
+            <button className="btn-eliminar" onClick={handleEliminarCerradura}>
+              Eliminar Cerradura
+            </button>
           </div>
         </div>
       </div>
