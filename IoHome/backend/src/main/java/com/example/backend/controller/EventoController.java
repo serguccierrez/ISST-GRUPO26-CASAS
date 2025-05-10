@@ -54,14 +54,14 @@ public class EventoController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
-    }
+    }   
 
 
     @GetMapping("/{deviceId}")
     public ResponseEntity<List<Evento>> obtenerEventosPorDeviceId(@PathVariable String deviceId) {
         List<Evento> eventos = eventoService.obtenerEventos(deviceId);
         if (eventos.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent().build();  
         } else {
             return ResponseEntity.ok(eventos);
         }
