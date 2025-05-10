@@ -39,6 +39,7 @@ const PerfilConfiguracion = () => {
             method: "DELETE",
           }
         );
+        navigate("/"); // Redirige a la página de inicio después de eliminar el usuario
         if (!response.ok) throw new Error("Error al eliminar el usuario");
         console.log("Usuario eliminado correctamente");
         localStorage.removeItem("propietario"); // Elimina el propietario de localStorage

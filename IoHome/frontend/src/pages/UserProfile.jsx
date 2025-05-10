@@ -1,4 +1,3 @@
-// UserProfile.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/perfilConfiguracion.css";
@@ -13,6 +12,7 @@ const UserProfile = () => {
     telefono: "",
   });
 
+  const [mensajeExito, setMensajeExito] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,9 +42,13 @@ const UserProfile = () => {
       );
 
       if (!response.ok) throw new Error("Error al actualizar el perfil");
+
       const updatedUsuario = await response.json();
-      console.log("Perfil actualizado correctamente");
       localStorage.setItem("usuario", JSON.stringify(updatedUsuario));
+      console.log("Perfil actualizado correctamente");
+
+      setMensajeExito("Cambios guardados correctamente");
+      setTimeout(() => setMensajeExito(""), 1000); // Oculta el mensaje tras 1 segundo
     } catch (err) {
       console.log("Error: " + err.message);
     }
@@ -61,14 +65,15 @@ const UserProfile = () => {
         );
 
         if (!response.ok) throw new Error("Error al eliminar el usuario");
+
         console.log("Usuario eliminado correctamente");
         localStorage.removeItem("usuario");
-        navigate("/login");
+        navigate("/");
       } catch (err) {
         console.log("Error: " + err.message);
       }
     }
-  }
+  };
 
   return (
     <div className="perfil-container">
@@ -85,6 +90,11 @@ const UserProfile = () => {
       </div>
       <div className="perfil-card">
         <h2>Perfil y Configuración de Usuario</h2>
+
+        {mensajeExito && (
+          <p className="mensaje-exito">{mensajeExito}</p>
+        )}
+
         <div className="perfil-form">
           <label>Nombre:</label>
           <input name="nombre" value={usuario.nombre} onChange={handleChange} />
@@ -114,8 +124,9 @@ const UserProfile = () => {
           />
 
           <button onClick={handleSave}>Guardar Cambios</button>
-
-          <button className="delete-button" onClick={deleteUser}>Eliminar Usuario</button>
+          <button className="delete-button" onClick={deleteUser}>
+            Eliminar Usuario
+          </button>
         </div>
       </div>
     </div>
