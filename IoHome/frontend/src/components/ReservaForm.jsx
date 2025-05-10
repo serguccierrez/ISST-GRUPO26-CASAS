@@ -17,7 +17,7 @@ const formatFecha = (fecha) => {
 };
 
 
-const ReservaForm = ({ propiedades }) => {
+const ReservaForm = ({ propiedades, onReservaCreada }) => {
     //const [correoUsuario, setCorreoUsuario] = useState("");
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
@@ -41,7 +41,11 @@ const ReservaForm = ({ propiedades }) => {
     
             // Llamar al servicio para crear la reserva
             await crearReserva(propiedadSeleccionada, reserva);
-            console.log("Reserva creada con éxito");
+            if (onReservaCreada) {
+                onReservaCreada(); // Llama al callback
+              }
+              
+            alert("Reserva creada con éxito");
         } catch (err) {
             console.log("Error al crear la reserva: " + err.message);
         }

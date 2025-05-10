@@ -22,27 +22,32 @@ const OwnerHome = () => {
   const login = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/calendar.readonly",
     onSuccess: async (tokenResponse) => {
-      try {
-        const res = await axios.get(
-          "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-            },
-          }
-        );
+      localStorage.setItem("google_token", tokenResponse.access_token);
+      setProp(tokenResponse);
     
-        setProp(tokenResponse);
-        setCalendarEvents(res.data.items);
+      const propietario = JSON.parse(localStorage.getItem("propietario"));
+      if (propietario?.id) {
+        try {
+          // Sincroniza reservas primero
+          await sincronizarReservasConCalendar(tokenResponse.access_token, propietario.id);  
+
     
-        const propietario = JSON.parse(localStorage.getItem("propietario"));
-        if (propietario?.id) {
-          await sincronizarReservasConCalendar(tokenResponse.access_token, propietario.id);
+          // Luego vuelve a cargar los eventos actualizados desde Google Calendar
+          const resActualizado = await axios.get(
+            "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+            {
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+              },              
+            }
+          );
+          setCalendarEvents(resActualizado.data.items);
+    
+        } catch (err) {
+          console.error("Error durante sincronización o carga de eventos", err);
         }
-      } catch (err) {
-        console.error("Error al obtener eventos del calendario", err);
       }
-    },    
+    }       
   });
 
   const sincronizarReservasConCalendar = async (accessToken, propietarioId) => {
@@ -54,7 +59,7 @@ const OwnerHome = () => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`
-          }
+          }          
         }
       );
       const eventosExistentes = res.data.items;
@@ -100,8 +105,8 @@ const OwnerHome = () => {
       console.error("Error al sincronizar reservas:", error);
     }
   };
-  
 
+  
   useEffect(() => {
     const data = localStorage.getItem("propietario");
     if (data) {
@@ -164,6 +169,7 @@ const OwnerHome = () => {
                       style={{ height: 600 }}
                     />
                     <button onClick={() => { googleLogout(); setProp(null); }}>Cerrar sesión</button>
+
                   </div>
                 )}
               </section>
