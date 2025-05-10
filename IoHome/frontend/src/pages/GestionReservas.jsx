@@ -7,7 +7,7 @@ import { obtenerPropiedades } from "../services/propiedadService";
 import "../styles/gestionReservas.css";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { actualizarReserva } from "../services/reservaService";
 import { eliminarEventoDeGoogleCalendar} from "../services/reservaService";
 
 
@@ -69,22 +69,12 @@ const GestionReservas = () => {
     setReservaEdit(null);
   };
 
-  const handleUpdate = async () => {
-    try {
-      // Primero, actualiza la reserva en el backend (si es necesario)
-      const propietario = JSON.parse(localStorage.getItem("propietario"));
-      await actualizarReserva(reservaEdit.id, reservaEdit);
-
-  
-      // Actualizar la lista de reservas
-      obtenerReservas(propietario.id)
-        .then(setReservas)
-        .catch((err) => console.error("Error al obtener reservas", err));
-  
-      setReservaEdit(null);
-    } catch (error) {
-      console.error("Error al actualizar la reserva:", error);
-    }
+  const handleUpdate = () => {
+    const propietario = JSON.parse(localStorage.getItem("propietario"));
+    obtenerReservas(propietario.id)
+      .then(setReservas)
+      .catch((err) => console.error("Error al obtener reservas", err));
+    setReservaEdit(null);
   };
   
 
