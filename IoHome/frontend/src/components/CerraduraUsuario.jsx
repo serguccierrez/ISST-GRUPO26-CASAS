@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/unaCerradura.css";
 import logo from "../assets/logo.png";
 import { obtenerCerraduraUsuario } from "../services/cerraduraService";
 import { obtenerPropiedadDeUltimaReserva } from "../services/reservaService";
-import { useNavigate } from "react-router-dom";
 
 const CerraduraUsuario = ({ usuarioId }) => {
   const [cerradura, setCerradura] = useState(null);
@@ -11,6 +11,7 @@ const CerraduraUsuario = ({ usuarioId }) => {
   const [error, setError] = useState(null);
   const [lockSlider, setLockSlider] = useState(0);
   const [unlockSlider, setUnlockSlider] = useState(1);
+  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,21 @@ const CerraduraUsuario = ({ usuarioId }) => {
       fetchPropiedad();
     }
   }, [usuarioId]);
+
+  useEffect(() => {
+    if (cerradura?.properties?.locked !== undefined) {
+      const wasSuccessful =
+        (cerradura.properties.locked && lockSlider === 1) ||
+        (!cerradura.properties.locked && unlockSlider === 0);
+
+      if (wasSuccessful) {
+        setTimeout(() => {
+          setLockSlider(0);
+          setUnlockSlider(1);
+        }, 5000); // Resetea los sliders después de 5 segundos
+      }
+    }
+  }, [cerradura?.properties?.locked, lockSlider, unlockSlider]);
 
   const fetchCerradura = async () => {
     try {
@@ -46,6 +62,35 @@ const CerraduraUsuario = ({ usuarioId }) => {
     }
   };
 
+  const guardarEvento = async (lock, actionType, actionAttemptId, newStatus) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/eventos/guardar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          eventId: actionAttemptId || "unknown",
+          deviceId: cerradura.device_id,
+          descripcion: `Cerradura: ${
+            lock
+              ? "Intento de cierre de una cerradura"
+              : "Intento de abrir una cerradura"
+          }`,
+          status: newStatus || "unknown",
+          actionType: actionType || "unknown",
+        }),
+      });
+
+      if (!response.ok) throw new Error("No se pudo guardar el evento");
+
+      const data = await response.json();
+      console.log("Evento guardado:", data);
+    } catch (err) {
+      console.error("Error al guardar el evento:", err.message);
+    }
+  };
+
   const toggleLock = async (lock) => {
     if (!cerradura) return;
 
@@ -54,18 +99,30 @@ const CerraduraUsuario = ({ usuarioId }) => {
       : `http://localhost:8080/seam/unlock/${cerradura.device_id}`;
 
     try {
-      console.log("Llamando a la API para cambiar el estado de la cerradura...");
-      console.log("Endpoint:", cerradura);
+      setIsProcessing(true);
       const response = await fetch(endpoint, { method: "POST" });
+      const data = await response.json();
+
       if (!response.ok) {
         throw new Error(
           `No se pudo ${lock ? "bloquear" : "desbloquear"} la cerradura`
         );
       }
-      setTimeout(() => {
-        fetchCerradura();
-        console.log(cerradura);
-      }, 10000);
+
+      const actionType = data.action_type;
+      const actionAttemptId = data.action_attempt_id;
+
+      setTimeout(async () => {
+        await fetchCerradura();
+        setIsProcessing(false);
+
+        const wasSuccessful =
+          (!lock && cerradura.properties?.locked) ||
+          (lock && !cerradura.properties?.locked);
+        const newStatus = wasSuccessful ? "success" : "failed";
+
+        guardarEvento(lock, actionType, actionAttemptId, newStatus);
+      }, 8000);
     } catch (err) {
       setError("Error: " + err.message);
     }
@@ -75,7 +132,9 @@ const CerraduraUsuario = ({ usuarioId }) => {
     setLockSlider(value);
     if (value === 1) {
       toggleLock(true);
-      setTimeout(() => setLockSlider(0), 500);
+      setTimeout(() => {
+        setLockSlider(0); // Regresa el slider a la posición inicial
+      }, 5000); // Mantiene el slider en la posición 1 durante 5 segundos
     }
   };
 
@@ -83,7 +142,9 @@ const CerraduraUsuario = ({ usuarioId }) => {
     setUnlockSlider(value);
     if (value === 0) {
       toggleLock(false);
-      setTimeout(() => setUnlockSlider(1), 500);
+      setTimeout(() => {
+        setUnlockSlider(1); // Regresa el slider a la posición inicial
+      }, 5000); // Mantiene el slider en la posición 0 durante 5 segundos
     }
   };
 
@@ -97,15 +158,15 @@ const CerraduraUsuario = ({ usuarioId }) => {
 
   return (
     <div className="lock-card">
-      <div className="navbar">
-        
-      </div>
-
       <h2>
-        Cerradura de {propiedad?.nombre || "Propiedad desconocida"} 
+        Cerradura de {propiedad?.nombre || "Propiedad desconocida"}
         {propiedad?.direccion ? ` (${propiedad.direccion})` : ""}
       </h2>
-      <img src={cerradura.properties.image_url} alt="Cerradura" className="lock-image" />
+      <img
+        src={cerradura.properties.image_url}
+        alt="Cerradura"
+        className="lock-image"
+      />
       <h3>{cerradura.properties?.name || "Sin nombre"}</h3>
       <div className="lock-info">
         <p className="lock-detail">
@@ -127,6 +188,10 @@ const CerraduraUsuario = ({ usuarioId }) => {
           </span>
         </p>
       </div>
+
+      {isProcessing && (
+        <div className="processing-message">Enviando solicitud...</div>
+      )}
 
       <div className="lock-slider-container">
         <label className="lock-slider-label">Bloquear Cerradura</label>

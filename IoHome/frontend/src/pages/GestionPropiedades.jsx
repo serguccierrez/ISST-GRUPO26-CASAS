@@ -21,45 +21,50 @@ const GestionPropiedades = () => {
     }, 100);
   };
 
-  useEffect(() => {
+  const cargarPropiedades = async () => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
     if (propietario?.id) {
-      obtenerPropiedades(propietario.id)
-        .then(async (propiedades) => {
-          setPropiedades(propiedades);
+      try {
+        const propiedades = await obtenerPropiedades(propietario.id);
+        setPropiedades(propiedades);
 
-          // Obtener las cerraduras de cada propiedad
-          const cerradurasMap = {};
-          for (const propiedad of propiedades) {
-            try {
-              const response = await fetch(
-                `http://localhost:8080/seam/device/propiedad/${propiedad.id}`
-              );
-              if (response.ok) {
-                const cerradura = await response.json();
-                cerradurasMap[propiedad.id] = cerradura.nombre;
-              } else {
-                cerradurasMap[propiedad.id] = "Sin Cerradura Asignada";
-              }
-            } catch (err) {
-              console.error("Error al obtener la cerradura:", err);
+        // Obtener las cerraduras de cada propiedad
+        const cerradurasMap = {};
+        for (const propiedad of propiedades) {
+          try {
+            const response = await fetch(
+              `http://localhost:8080/seam/device/propiedad/${propiedad.id}`
+            );
+            if (response.ok) {
+              const cerradura = await response.json();
+              cerradurasMap[propiedad.id] = cerradura.nombre;
+            } else {
               cerradurasMap[propiedad.id] = "Sin Cerradura Asignada";
             }
+          } catch (err) {
+            console.error("Error al obtener la cerradura:", err);
+            cerradurasMap[propiedad.id] = "Sin Cerradura Asignada";
           }
-          setCerraduras(cerradurasMap);
-        })
-        .catch((err) => console.error("Error al obtener propiedades", err));
+        }
+        setCerraduras(cerradurasMap);
+      } catch (err) {
+        console.error("Error al obtener propiedades", err);
+      }
     }
+  };
+
+  useEffect(() => {
+    cargarPropiedades();
   }, []);
 
-  const handlePropertyCreated = (newProperty) => {
-    setPropiedades((prev) => [...prev, newProperty]);
+  const handlePropertyCreated = async (newProperty) => {
+    await cargarPropiedades(); // Recargar todas las propiedades
   };
 
   const handleEliminar = async (id) => {
     try {
       await eliminarPropiedad(id);
-      setPropiedades((prev) => prev.filter((p) => p.id !== id));
+      await cargarPropiedades(); // Recargar todas las propiedades
     } catch (err) {
       console.log("Error al eliminar la propiedad: " + err.message);
     }
@@ -68,9 +73,7 @@ const GestionPropiedades = () => {
   const handleUpdate = async (propiedad) => {
     try {
       await actualizarPropiedad(propiedad.id, propiedad);
-      setPropiedades((prev) =>
-        prev.map((p) => (p.id === propiedad.id ? propiedad : p))
-      );
+      await cargarPropiedades(); // Recargar todas las propiedades
       setPropiedadEdit(null);
     } catch (err) {
       console.log("Error al actualizar la propiedad: " + err.message);
@@ -93,7 +96,7 @@ const GestionPropiedades = () => {
         <img src={logo} alt="Logo" className="logo" onClick={() => navigate("/propietario")} />
         <h3 id="nombre" onClick={() => navigate("/propietario")}>IoHome</h3>
       </div>
-      <button className="logout-button" onClick={handleLogout }>Logout</button>
+      <button className="logout-button" onClick={handleLogout}>Logout</button>
 
       <h2>Mis propiedades</h2>
       {propiedades.map((p, index) => (
