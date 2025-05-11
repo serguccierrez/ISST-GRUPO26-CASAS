@@ -35,9 +35,6 @@ export const eliminarReserva = async (reservaId) => {
 };
 
 
-
-
-
 export const obtenerUltimaReservaActiva = async (usuarioId) => {
     const res = await fetch(`http://localhost:8080/api/reservas/usuario/${usuarioId}/ultima-activa`);
     if (!res.ok) throw new Error("No hay reservas activas");

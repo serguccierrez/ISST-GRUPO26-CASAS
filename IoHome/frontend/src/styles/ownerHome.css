@@ -14,7 +14,7 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    text-align: left;
+    text-align: center;
     color: #2c3e50;
 }
 
@@ -230,6 +230,8 @@
     padding: 4px 6px;
     font-size: 0.85rem;
   }
+
+  
   
   .loading-message {
   text-align: center;

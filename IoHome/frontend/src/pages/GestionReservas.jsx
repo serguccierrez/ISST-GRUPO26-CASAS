@@ -78,7 +78,6 @@ const GestionReservas = () => {
   };
   
 
-  
 
   const handleReservaCreada = (newReservaId) => {
     const propietario = JSON.parse(localStorage.getItem("propietario"));
